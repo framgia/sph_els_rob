@@ -1,0 +1,82 @@
+[2022-02-14 09:30:00] local.ERROR: filemtime(): stat failed for /Users/sun-asterisk/sph_els_rob/back-end/e-learning/.env {"exception":"[object] (ErrorException(code: 0): filemtime(): stat failed for /Users/sun-asterisk/sph_els_rob/back-end/e-learning/.env at /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php:66)
+[stacktrace]
+#0 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'filemtime(): st...', '/Users/sun-aste...', 66)
+#1 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Console/ServeCommand.php(66): filemtime('/Users/sun-aste...')
+#2 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Foundation\\Console\\ServeCommand->handle()
+#3 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Util.php(40): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()
+#4 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))
+#5 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))
+#6 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(653): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)
+#7 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Console/Command.php(136): Illuminate\\Container\\Container->call(Array)
+#8 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/symfony/console/Command/Command.php(298): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#9 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Console/Command.php(121): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))
+#10 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/symfony/console/Application.php(1015): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#11 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/symfony/console/Application.php(299): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Foundation\\Console\\ServeCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#12 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/symfony/console/Application.php(171): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#13 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Console/Application.php(94): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#14 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(129): Illuminate\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#15 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 {main}
+"} 
+[2022-02-14 09:30:00] local.ERROR: include(/Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/../filp/whoops/src/Whoops/Handler/Handler.php): Failed to open stream: No such file or directory {"exception":"[object] (ErrorException(code: 0): include(/Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/../filp/whoops/src/Whoops/Handler/Handler.php): Failed to open stream: No such file or directory at /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php:571)
+[stacktrace]
+#0 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/sun-aste...', 571)
+#1 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include()
+#2 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile('/Users/sun-aste...')
+#3 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Handler.php(17): Composer\\Autoload\\ClassLoader->loadClass('Whoops\\\\Handler\\\\...')
+#4 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include('/Users/sun-aste...')
+#5 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile('/Users/sun-aste...')
+#6 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php(58): Composer\\Autoload\\ClassLoader->loadClass('NunoMaduro\\\\Coll...')
+#7 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(873): NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider->NunoMaduro\\Collision\\Adapters\\Laravel\\{closure}(Object(Illuminate\\Foundation\\Application), Array)
+#8 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(758): Illuminate\\Container\\Container->build(Object(Closure))
+#9 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(851): Illuminate\\Container\\Container->resolve('NunoMaduro\\\\Coll...', Array, true)
+#10 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(694): Illuminate\\Foundation\\Application->resolve('NunoMaduro\\\\Coll...', Array)
+#11 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(836): Illuminate\\Container\\Container->make('NunoMaduro\\\\Coll...', Array)
+#12 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(65): Illuminate\\Foundation\\Application->make('NunoMaduro\\\\Coll...')
+#13 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(378): NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler->renderForConsole(Object(Symfony\\Component\\Console\\Output\\ConsoleOutput), Object(ErrorException))
+#14 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(133): Illuminate\\Foundation\\Console\\Kernel->renderException(Object(Symfony\\Component\\Console\\Output\\ConsoleOutput), Object(ErrorException))
+#15 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#16 {main}
+"} 
+[2022-02-14 09:30:00] local.ERROR: Uncaught ErrorException: include(/Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/../filp/whoops/src/Whoops/Handler/Handler.php): Failed to open stream: No such file or directory in /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php:571
+Stack trace:
+#0 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): Illuminate\Foundation\Bootstrap\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/sun-aste...', 571)
+#1 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include()
+#2 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/Users/sun-aste...')
+#3 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Handler.php(17): Composer\Autoload\ClassLoader->loadClass('Whoops\\Handler\\...')
+#4 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include('/Users/sun-aste...')
+#5 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\Autoload\includeFile('/Users/sun-aste...')
+#6 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php(58): Composer\Autoload\ClassLoader->loadClass('NunoMaduro\\Coll...')
+#7 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(873): NunoMaduro\Collision\Adapters\Laravel\CollisionServiceProvider->NunoMaduro\Collision\Adapters\Laravel\{closure}(Object(Illuminate\Foundation\Application), Array)
+#8 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(758): Illuminate\Container\Container->build(Object(Closure))
+#9 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(851): Illuminate\Container\Container->resolve('NunoMaduro\\Coll...', Array, true)
+#10 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(694): Illuminate\Foundation\Application->resolve('NunoMaduro\\Coll...', Array)
+#11 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(836): Illuminate\Container\Container->make('NunoMaduro\\Coll...', Array)
+#12 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(65): Illuminate\Foundation\Application->make('NunoMaduro\\Coll...')
+#13 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(182): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->renderForConsole(Object(Symfony\Component\Console\Output\ConsoleOutput), Object(ErrorException))
+#14 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(168): Illuminate\Foundation\Bootstrap\HandleExceptions->renderForConsole(Object(ErrorException))
+#15 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->handleException(Object(ErrorException))
+#16 {main}
+  thrown {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Uncaught ErrorException: include(/Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/../filp/whoops/src/Whoops/Handler/Handler.php): Failed to open stream: No such file or directory in /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php:571
+Stack trace:
+#0 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleError(2, 'include(/Users/...', '/Users/sun-aste...', 571)
+#1 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include()
+#2 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile('/Users/sun-aste...')
+#3 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Handler.php(17): Composer\\Autoload\\ClassLoader->loadClass('Whoops\\\\Handler\\\\...')
+#4 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(571): include('/Users/sun-aste...')
+#5 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php(428): Composer\\Autoload\\includeFile('/Users/sun-aste...')
+#6 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/CollisionServiceProvider.php(58): Composer\\Autoload\\ClassLoader->loadClass('NunoMaduro\\\\Coll...')
+#7 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(873): NunoMaduro\\Collision\\Adapters\\Laravel\\CollisionServiceProvider->NunoMaduro\\Collision\\Adapters\\Laravel\\{closure}(Object(Illuminate\\Foundation\\Application), Array)
+#8 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(758): Illuminate\\Container\\Container->build(Object(Closure))
+#9 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(851): Illuminate\\Container\\Container->resolve('NunoMaduro\\\\Coll...', Array, true)
+#10 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Container/Container.php(694): Illuminate\\Foundation\\Application->resolve('NunoMaduro\\\\Coll...', Array)
+#11 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Application.php(836): Illuminate\\Container\\Container->make('NunoMaduro\\\\Coll...', Array)
+#12 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(65): Illuminate\\Foundation\\Application->make('NunoMaduro\\\\Coll...')
+#13 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(182): NunoMaduro\\Collision\\Adapters\\Laravel\\ExceptionHandler->renderForConsole(Object(Symfony\\Component\\Console\\Output\\ConsoleOutput), Object(ErrorException))
+#14 /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(168): Illuminate\\Foundation\\Bootstrap\\HandleExceptions->renderForConsole(Object(ErrorException))
+#15 [internal function]: Illuminate\\Foundation\\Bootstrap\\HandleExceptions->handleException(Object(ErrorException))
+#16 {main}
+  thrown at /Users/sun-asterisk/sph_els_rob/back-end/e-learning/vendor/composer/ClassLoader.php:571)
+[stacktrace]
+#0 {main}
+"} 
