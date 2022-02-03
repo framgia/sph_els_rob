@@ -28,8 +28,7 @@ class UserController extends Controller
   }
 
   public function me(){
-  	$user = User::find(auth()->user()->id);
-    return response($user, 201);
+    return response(auth()->user(), 201);
   }
 
 	public function logout(){
