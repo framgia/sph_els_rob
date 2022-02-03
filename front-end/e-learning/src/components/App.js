@@ -1,16 +1,23 @@
-import React from 'react';
+/** @format */
 
-import Login from './Login';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-class App extends React.Component {
+import Login from "./Login";
+import Dashboard from "./Dashboard";
 
-  render() {
-    return (
-      <div>
-        <Login />
-      </div>
-    );
-  }
-}
+const App = () => {
+  // const [token, setToken] = useState('')
+  return (
+    <div>
+      <Router>
+        <Routes>
+          <Route path='/' exact element={<Login />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Routes>
+      </Router>
+    </div>
+  );
+};
 
 export default App;

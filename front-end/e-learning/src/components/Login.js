@@ -16,7 +16,7 @@ import Link from "@mui/material/Link";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-const Login = ({ logIn, auth }) => {
+const Login = ({ logIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
