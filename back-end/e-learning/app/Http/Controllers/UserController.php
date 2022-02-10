@@ -10,16 +10,16 @@ class UserController extends Controller
 {
   function login(Request $request)
   {
-    $user= User::where('email', $request->email)->first();
+    $user = User::where('email', $request->email)->first();
     if (!$user || !Hash::check($request->password, $user->password)) {
       return response([
         'message' => ['These credentials do not match our records.']
       ], 404);
     }
 
-    $token = $user->createToken($user->email.'my-app-token')->plainTextToken;    
-            
-		$response = [
+    $token = $user->createToken($user->email.'my-app-token')->plainTextToken;
+    
+    $response = [
       'user' => $user,
       'token' => $token
     ];
@@ -27,14 +27,16 @@ class UserController extends Controller
   	return response($response, 201);
   }
 
-  public function me(){
+  public function me()
+  {
     return response(auth()->user(), 201);
   }
 
-	public function logout(){
-		auth()->user()->tokens()->delete();
-		return [
-			'message' => 'Logout'
-		];
+	public function logout()
+  {
+    auth()->user()->tokens()->delete();
+    return [
+      'message' => 'Logout'
+    ];
 	}
 }
