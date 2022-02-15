@@ -43,11 +43,13 @@ class UserController extends Controller
   public function signup(Request $request)
   {
     $user = new User();
-    $user->first_name = $request->first_name;
-    $user->last_name = $request->last_name;
-    $user->email = $request->email;
-    $user->password = Hash::make($request->password);
-    $user->role = 'member';
+    $user->fill([
+      'first_name' => $request->first_name,
+      'last_name' => $request->last_name,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+      'role' => 'member'
+    ]);
     if($user->save()) return response([
       'message' => 'Successfully registered user.'
     ], 201);
