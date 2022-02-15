@@ -14,7 +14,7 @@ import Link from "@mui/material/Link";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
-const Login = ({ logIn }) => {
+const Login = ({ logIn, auth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -40,7 +40,7 @@ const Login = ({ logIn }) => {
             alignItems: "center",
           }}
         >
-          <Typography component='h1' variant='h5'>
+          <Typography component='h1' variant='h5' sx={{ mb: 5 }}>
             Log in
           </Typography>
           <form>
@@ -70,6 +70,18 @@ const Login = ({ logIn }) => {
               control={<Checkbox value='remember' color='primary' />}
               label='Remember me'
             />
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                color: "red",
+              }}
+            >
+              {auth === null || auth.error_message === undefined
+                ? ""
+                : auth.error_message}
+            </Box>
             <Button
               onClick={onLogin}
               type='submit'
