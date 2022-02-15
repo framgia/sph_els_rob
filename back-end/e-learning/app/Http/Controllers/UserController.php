@@ -31,12 +31,12 @@ class UserController extends Controller
   {
     return response(auth()->user(), 201);
   }
-
-	public function logout()
+  
+  public function logout()
   {
     auth()->user()->tokens()->delete();
     return [
       'message' => 'Logout'
     ];
-	}
+  }
 }
