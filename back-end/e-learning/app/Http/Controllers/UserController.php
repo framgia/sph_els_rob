@@ -31,12 +31,30 @@ class UserController extends Controller
   {
     return response(auth()->user(), 201);
   }
-  
+
   public function logout()
   {
     auth()->user()->tokens()->delete();
-    return [
+    return response([
       'message' => 'Logout'
-    ];
+    ], 201);
+  }
+
+  public function signup(Request $request)
+  {
+    $user = new User();
+    $user->fill([
+      'first_name' => $request->first_name,
+      'last_name' => $request->last_name,
+      'email' => $request->email,
+      'password' => Hash::make($request->password),
+      'role' => 'member'
+    ]);
+    if($user->save()) return response([
+      'message' => 'Successfully registered user.'
+    ], 201);
+    else return response([
+      'message' => 'Unsuccessfully registered user.' 
+    ], 500);
   }
 }
