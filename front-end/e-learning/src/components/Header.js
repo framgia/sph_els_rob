@@ -21,7 +21,7 @@ const Header = () => {
           <Link
             variant='button'
             color='text.primary'
-            href='#'
+            href='/signup'
             underline='none'
             sx={{ my: 1, mx: 1.5, color: "white" }}
           >
@@ -30,7 +30,7 @@ const Header = () => {
           <Link
             variant='button'
             color='text.primary'
-            href='#'
+            href='/'
             underline='none'
             sx={{ my: 1, mx: 1.5, color: "white" }}
           >
