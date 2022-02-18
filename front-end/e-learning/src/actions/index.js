@@ -29,3 +29,24 @@ export const signUp = formValues => async dispatch =>{
     });
   }
 };
+
+export const createCategory = (formValues, token) => async dispatch =>{
+  try {
+    const response = await axios.post("/api/create-category", formValues, {
+      headers: {
+        "Authorization": `Bearer ${token}` 
+      }
+    });
+    dispatch({
+      type: "CREATE_CATEGORY",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "CREATE_CATEGORY",
+      payload: null,
+      error: e.message
+    });
+  }
+}
