@@ -29,7 +29,7 @@ const Category = ({auth}) =>{
             justifyContent: 'flex-end',
           }}
         >
-          <Create />
+          <Create token={cookies.token} user={cookies.user} />
         </Box>
       </Container>
     </div>

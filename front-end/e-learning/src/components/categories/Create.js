@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { isNull } from "lodash";
-import { useCookies } from 'react-cookie';
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -17,13 +16,12 @@ import MuiAlert from '@mui/material/Alert';
 
 import { createCategory } from "../../actions";
 
-const Create = ({ createCategory, categories }) => {
+const Create = ({ createCategory, categories, token, user }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [open, setOpen] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
-	const [cookies, setCookie] = useCookies(['user']);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -34,7 +32,7 @@ const Create = ({ createCategory, categories }) => {
       title: title,
       description: description,
     };
-    createCategory(data, cookies.token);
+    createCategory(data, token);
     setSubmit(true);
   };
 
