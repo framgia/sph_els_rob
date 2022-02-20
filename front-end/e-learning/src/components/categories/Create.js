@@ -12,7 +12,7 @@ import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
 import SendIcon from "@mui/icons-material/Send";
 import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from '@mui/material/Alert';
+import MuiAlert from "@mui/material/Alert";
 
 import { createCategory } from "../../actions";
 
@@ -22,18 +22,36 @@ const Create = ({ createCategory, categories, token, user }) => {
   const [open, setOpen] = useState(false);
   const [submit, setSubmit] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
+  const [error_title, setErrorTitle] = useState("");
+  const [error_description, setErrorDescription] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const onCreate = e => {
+  const validate = () => {
+    var no_error = true;
+    if (title === "") {
+      setErrorTitle("Field is required!");
+      no_error = false;
+    } else setErrorTitle("");
+    if (description === "") {
+      setErrorDescription("Field is required!");
+      no_error = false;
+    } else setErrorDescription("");
+    return no_error;
+  };
+
+  const onCreate = (e) => {
     e.preventDefault();
     const data = {
       title: title,
       description: description,
     };
-    createCategory(data, token);
-    setSubmit(true);
+    if (validate()) {
+      console.log(token);
+      createCategory(data, token);
+      setSubmit(true);
+    }
   };
 
   const Alert = React.forwardRef(function Alert(props, ref) {
@@ -56,7 +74,7 @@ const Create = ({ createCategory, categories, token, user }) => {
   }, [categories]);
 
   return (
-    <div className='container'>
+    <div className="container">
       <Button
         onClick={handleOpen}
         sx={{
@@ -91,42 +109,33 @@ const Create = ({ createCategory, categories, token, user }) => {
           <CardContent>
             <form>
               <TextField
-                margin='normal'
+                margin="normal"
                 required
                 fullWidth
-                id='title'
-                label='Title'
-                name='title'
-                autoComplete='title'
+                id="title"
+                label="Title"
+                name="title"
+                autoComplete="title"
                 autoFocus
-                onChange={e => setTitle(e.target.value)}
+                error={error_title === "" ? false : true}
+                helperText={error_title}
+                onChange={(e) => setTitle(e.target.value)}
               />
               <TextField
-                margin='normal'
+                margin="normal"
                 required
                 fullWidth
                 multiline
                 rows={4}
-                name='description'
-                label='Description'
-                type='description'
-                id='description'
-                autoComplete='description'
-                onChange={e => setDescription(e.target.value)}
+                name="description"
+                label="Description"
+                type="description"
+                id="description"
+                autoComplete="description"
+                error={error_description === "" ? false : true}
+                helperText={error_description}
+                onChange={(e) => setDescription(e.target.value)}
               />
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  flexDirection: "column",
-                  color: "red",
-                }}
-              >
-                {categories.create_error === undefined ||
-                categories.create_error === null
-                  ? ""
-                  : "Fields are required"}
-              </Box>
               <CardActions
                 disableSpacing
                 sx={{
@@ -136,9 +145,9 @@ const Create = ({ createCategory, categories, token, user }) => {
               >
                 <Button
                   onClick={onCreate}
-                  type='submit'
-                  width='50'
-                  variant='contained'
+                  type="submit"
+                  width="50"
+                  variant="contained"
                   endIcon={<SendIcon />}
                   sx={{
                     mt: 2,
@@ -157,28 +166,32 @@ const Create = ({ createCategory, categories, token, user }) => {
           </CardContent>
         </Card>
       </Modal>
-      {categories.create_error === null && submit == true ? 
+      {categories.create_error === null && submit == true ? (
         <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
-        open={openNotification}
-        onClose={handleNotificationClose}
-        autoHideDuration={3000}
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          open={openNotification}
+          onClose={handleNotificationClose}
+          autoHideDuration={3000}
         >
-          <Alert onClose={handleNotificationClose} severity="success" sx={{ width: '100%', bgcolor: '#464E2E' }}>
+          <Alert
+            onClose={handleNotificationClose}
+            severity="success"
+            sx={{ width: "100%", bgcolor: "#464E2E" }}
+          >
             Successfully added category!
           </Alert>
         </Snackbar>
-        :
+      ) : (
         ""
-      }
+      )}
     </div>
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     categories: state.categories,
   };
 };
 
-export default connect(mapStateToProps, {createCategory})(Create);
+export default connect(mapStateToProps, { createCategory })(Create);
