@@ -1,6 +1,6 @@
 import axios from "../apis/api";
 
-export const logIn = formValues => async dispatch => {
+export const logIn = (formValues) => async (dispatch) => {
   try {
     const response = await axios.post("/api/login", formValues);
     dispatch({
@@ -15,7 +15,7 @@ export const logIn = formValues => async dispatch => {
   }
 };
 
-export const signUp = formValues => async dispatch =>{
+export const signUp = (formValues) => async (dispatch) => {
   try {
     const response = await axios.post("/api/signup", formValues);
     dispatch({
@@ -30,12 +30,12 @@ export const signUp = formValues => async dispatch =>{
   }
 };
 
-export const createCategory = (formValues, token) => async dispatch =>{
+export const createCategory = (formValues, token) => async (dispatch) => {
   try {
     const response = await axios.post("/api/create-category", formValues, {
       headers: {
-        "Authorization": `Bearer ${token}` 
-      }
+        Authorization: `Bearer ${token}`,
+      },
     });
     dispatch({
       type: "CREATE_CATEGORY",
@@ -46,7 +46,7 @@ export const createCategory = (formValues, token) => async dispatch =>{
     dispatch({
       type: "CREATE_CATEGORY",
       payload: null,
-      error: e.message
+      error: e.message,
     });
   }
-}
+};

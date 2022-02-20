@@ -48,7 +48,6 @@ const Create = ({ createCategory, categories, token, user }) => {
       description: description,
     };
     if (validate()) {
-      console.log(token);
       createCategory(data, token);
       setSubmit(true);
     }
@@ -64,13 +63,14 @@ const Create = ({ createCategory, categories, token, user }) => {
   };
 
   useEffect(() => {
+    console.log(categories);
     if (categories.create_error === undefined) setOpen(false);
     else if (isNull(categories.create_error)) {
       setOpen(false);
       setTitle("");
       setDescription("");
       setOpenNotification(true);
-    } else setOpen(true);
+    }
   }, [categories]);
 
   return (
