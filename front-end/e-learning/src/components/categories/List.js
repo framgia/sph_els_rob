@@ -20,17 +20,17 @@ const List = ({ listCategory, categories, token, user }) => {
 
   const columns = [
     {
-			id: "id",
-			label: "ID",
-			minWidth: "5%",
-			align: "center"
-		},
+      id: "id",
+      label: "ID",
+      minWidth: "5%",
+      align: "center",
+    },
     {
-			id: "title",
-			label: "Title",
-			minWidth: "25%",
-			align: "center"
-		},
+      id: "title",
+      label: "Title",
+      minWidth: "25%",
+      align: "left",
+    },
     {
       id: "description",
       label: "Description",
@@ -42,7 +42,7 @@ const List = ({ listCategory, categories, token, user }) => {
       label: "Actions",
       minWidth: "15%",
       align: "center",
-      format: value => value.toFixed(2),
+      format: (value) => value.toFixed(2),
     },
   ];
 
@@ -61,12 +61,12 @@ const List = ({ listCategory, categories, token, user }) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
 
-  const printCategory = values => {
+  const printCategory = (values) => {
     console.log(values);
   };
 
@@ -76,12 +76,12 @@ const List = ({ listCategory, categories, token, user }) => {
   }, [page]);
 
   return (
-    <Paper sx={{ width: "95%", overflow: "hidden", margin: 'auto' }}>
+    <Paper sx={{ width: "95%", overflow: "hidden", margin: "auto" }}>
       <TableContainer sx={{ maxHeight: 500 }}>
-        <Table stickyHeader aria-label='sticky table'>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map(column => (
+              {columns.map((column) => (
                 <StyledTableCell
                   key={column.id}
                   align={column.align}
@@ -95,39 +95,42 @@ const List = ({ listCategory, categories, token, user }) => {
           <TableBody>
             {categories
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(category => {
-                if(!isNull(category))
-									if (category.id !== undefined)
-										return (
-											<TableRow
-												key={category.id}
-												hover
-												role='checkbox'
-												tabIndex={-1}
-											>
-												<StyledTableCell
-													component='th'
-													scope='row'
-													style={{ width: "5%" }}
-													align='left'
-												>
-													{category.id}
-												</StyledTableCell>
-												<StyledTableCell style={{ width: "25%" }} align='left'>
-													{category.title}
-												</StyledTableCell>
-												<StyledTableCell style={{ width: "55%" }} align='left'>
-													{category.description}
-												</StyledTableCell>
-											</TableRow>
-										);
+              .map((category) => {
+                if (!isNull(category))
+                  if (category.id !== undefined)
+                    return (
+                      <TableRow
+                        key={category.id}
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                      >
+                        <StyledTableCell
+                          component="th"
+                          scope="row"
+                          style={{ width: "5%" }}
+                          align="center"
+                        >
+                          {category.id}
+                        </StyledTableCell>
+                        <StyledTableCell style={{ width: "25%" }} align="left">
+                          {category.title}
+                        </StyledTableCell>
+                        <StyledTableCell
+                          style={{ width: "55%" }}
+                          align="center"
+                        >
+                          {category.description}
+                        </StyledTableCell>
+                      </TableRow>
+                    );
               })}
           </TableBody>
         </Table>
       </TableContainer>
       <TablePagination
         rowsPerPageOptions={[10, 25, 50, 100]}
-        component='div'
+        component="div"
         count={categories.length}
         rowsPerPage={rowsPerPage}
         page={page}
@@ -138,7 +141,7 @@ const List = ({ listCategory, categories, token, user }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   console.log(state.categories);
   return {
     categories: Object.values(state.categories),
