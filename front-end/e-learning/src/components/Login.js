@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate } from 'react-router-dom'; 
+import { useCookies } from 'react-cookie';
 
 import Header from "./Header";
 import { logIn } from "../actions";
@@ -15,8 +17,10 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 
 const Login = ({ logIn, auth }) => {
+  let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [cookies, setCookie] = useCookies(['user']);
 
   const onLogin = e => {
     e.preventDefault();
@@ -27,6 +31,20 @@ const Login = ({ logIn, auth }) => {
     logIn(data);
   };
 
+  useEffect(() => {
+    if(auth!== null){
+      if(auth.token !== undefined || auth.token !== null)
+      { 
+        navigate('/admin-category');
+        setCookie('user', auth.user, { path: '/' });
+        setCookie('token', auth.token, { path: '/' });
+      }
+    }
+    if(cookies.token !== undefined){
+      console.log(cookies.token);
+      navigate('/admin-category');
+    }
+  }, [auth]);
   return (
     <div>
       <Header />
@@ -119,7 +137,6 @@ const Login = ({ logIn, auth }) => {
 };
 
 const mapStateToProps = state => {
-  console.log(state.auth);
   return {
     auth: state.auth,
   };
