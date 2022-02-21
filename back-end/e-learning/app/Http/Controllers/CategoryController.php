@@ -37,4 +37,26 @@ class CategoryController extends Controller
 	{
 		return response(Category::all(), 201);
 	}
+
+	public function update(Request $request, $id)
+	{
+		if(is_null($request->title) || is_null($request->description))
+		{
+			return response([
+				'message'=> 'Data is required.'
+			], 400);
+		}
+		$category = Category::find($id);
+		if($category){
+			$category->fill([
+				'title' => $request->title,
+				'description' => $request->description
+			]);
+			$category->save();
+			return response($category, 201);
+		}
+		else return response([
+			'message' => 'ID not found!'
+		], 404); 
+	}
 }

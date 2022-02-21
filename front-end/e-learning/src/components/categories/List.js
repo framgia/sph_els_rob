@@ -10,13 +10,22 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Tooltip from "@mui/material/Tooltip";
 
 import { listCategory } from "../../actions";
+import Update from "./Update";
 import { isNull } from "lodash";
 
 const List = ({ listCategory, categories, token, user }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [edit, setEdit] = useState(null);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [message, setMessage] = useState("");
 
   const columns = [
     {
@@ -46,6 +55,14 @@ const List = ({ listCategory, categories, token, user }) => {
     },
   ];
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleNotificationClose = () => {
+    setOpenNotification(false);
+  };
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       background: "#BB6464",
@@ -57,6 +74,10 @@ const List = ({ listCategory, categories, token, user }) => {
     },
   }));
 
+  const StyledEditIcon = styled(ModeEditIcon)(({ theme }) => ({
+    color: "#464E2E",
+  }));
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -66,12 +87,7 @@ const List = ({ listCategory, categories, token, user }) => {
     setPage(0);
   };
 
-  const printCategory = (values) => {
-    console.log(values);
-  };
-
   useEffect(() => {
-    console.log(categories);
     listCategory(token);
   }, [page]);
 
@@ -142,7 +158,6 @@ const List = ({ listCategory, categories, token, user }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.categories);
   return {
     categories: Object.values(state.categories),
   };

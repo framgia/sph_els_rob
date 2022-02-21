@@ -69,3 +69,32 @@ export const listCategory = (token) => async (dispatch) => {
     });
   }
 };
+
+export const updateCategory = (id, formValues, token) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/api/update-category/${id}`, formValues, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "UPDATE_CATEGORY",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "UPDATE_CATEGORY",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
+export const errorReset = (type) => (dispatch) => {
+  dispatch({
+    type: type,
+    payload: null,
+    error: null,
+  });
+};
