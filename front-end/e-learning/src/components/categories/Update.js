@@ -29,10 +29,25 @@ const Update = ({
   const [title, setTitle] = useState(data.title);
   const [description, setDescription] = useState(data.description);
   const [open, setOpen] = useState(isOpen);
+  const [error_title, setErrorTitle] = useState("");
+  const [error_description, setErrorDescription] = useState("");
 
   const handleClose = () => {
     setOpen(false);
     onSetState(0);
+  };
+
+  const validate = () => {
+    var no_error = true;
+    if (title === "") {
+      setErrorTitle("Field is required!");
+      no_error = false;
+    } else setErrorTitle("");
+    if (description === "") {
+      setErrorDescription("Field is required!");
+      no_error = false;
+    } else setErrorDescription("");
+    return no_error;
   };
 
   const onUpdate = (e) => {
@@ -41,7 +56,7 @@ const Update = ({
       title: title,
       description: description,
     };
-    updateCategory(data.id, formValues, token);
+    if (validate()) updateCategory(data.id, formValues, token);
   };
 
   useEffect(() => {
@@ -82,6 +97,8 @@ const Update = ({
               autoComplete="title"
               autoFocus
               value={title}
+              error={error_title === "" ? false : true}
+              helperText={error_title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <TextField
@@ -96,21 +113,10 @@ const Update = ({
               id="description"
               autoComplete="description"
               value={description}
+              error={error_description === "" ? false : true}
+              helperText={error_description}
               onChange={(e) => setDescription(e.target.value)}
             />
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                flexDirection: "column",
-                color: "red",
-              }}
-            >
-              {categories.update_error === undefined ||
-              categories.update_error === "no error"
-                ? ""
-                : "Fields are required"}
-            </Box>
             <CardActions
               disableSpacing
               sx={{
