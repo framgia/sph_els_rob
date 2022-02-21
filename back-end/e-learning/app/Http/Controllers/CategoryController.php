@@ -31,4 +31,8 @@ class CategoryController extends Controller
 			'message' => 'Error in adding the lesson.'
 		], 500); 
 	}
+
+	public function list(){
+		return response(Category::all(), 201);
+	}
 }

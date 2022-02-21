@@ -26,6 +26,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::group(['middleware' => 'role'], function(){
     Route::post('create-category', [CategoryController::class, 'create']);
   });
+
+  Route::get("list-category",[CategoryController::class,'list']);
 });
 
 Route::post('login', [UserController::class, 'login']);
