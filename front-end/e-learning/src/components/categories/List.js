@@ -138,6 +138,26 @@ const List = ({ listCategory, categories, token, user }) => {
                         >
                           {category.description}
                         </StyledTableCell>
+                        <StyledTableCell style={{ width: 150 }} align="center">
+                          <Tooltip title="Update" placement="top">
+                            <IconButton onClick={() => setEdit(category.id)}>
+                              <StyledEditIcon />
+                            </IconButton>
+                          </Tooltip>
+                          {category.id === edit ? (
+                            <Update
+                              data={category}
+                              onSetState={setEdit}
+                              onSetOpenNotification={setOpenNotification}
+                              onSetMessage={setMessage}
+                              isOpen={true}
+                              token={token}
+                              user={user}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </StyledTableCell>
                       </TableRow>
                     );
               })}
