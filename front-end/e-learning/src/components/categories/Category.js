@@ -8,6 +8,7 @@ import Box from "@mui/material/Box";
 
 import Header from "../Header";
 import Create from "./Create";
+import List from "./List";
 
 const Category = ({auth}) =>{
   const [cookies, setCookie] = useCookies(['user']);
@@ -32,6 +33,7 @@ const Category = ({auth}) =>{
           <Create token={cookies.token} user={cookies.user} />
         </Box>
       </Container>
+      <List token={cookies.token} user={cookies.user} />
     </div>
   );
 }

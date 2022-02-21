@@ -8,7 +8,8 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-	public function create(Request $request){
+	public function create(Request $request)
+	{
 		$validator = Validator::make($request->all(), [
 			'title' => 'required',
 			'description' => 'required'
@@ -30,5 +31,10 @@ class CategoryController extends Controller
 		else return response([
 			'message' => 'Error in adding the lesson.'
 		], 500); 
+	}
+
+	public function list()
+	{
+		return response(Category::all(), 201);
 	}
 }

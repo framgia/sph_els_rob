@@ -50,3 +50,22 @@ export const createCategory = (formValues, token) => async (dispatch) => {
     });
   }
 };
+
+export const listCategory = (token) => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/list-category", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LIST_CATEGORY",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LIST_CATEGORY",
+      payload: { error_message: e.message },
+    });
+  }
+};

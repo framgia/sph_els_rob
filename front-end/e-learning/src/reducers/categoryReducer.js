@@ -14,6 +14,8 @@ export default (state = {}, action) => {
         if(!_.isNull(action.error)) return { ...state, create_error: action.error };
         else return { ...state, create_error: "no error" };
       }
+    case "LIST_CATEGORY":
+      return { ...state, ..._.mapKeys(action.payload, "id") };
     default:
       return state;
   }
