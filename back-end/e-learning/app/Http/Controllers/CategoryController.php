@@ -15,7 +15,7 @@ class CategoryController extends Controller
 			'description' => 'required'
 		]);
 		
-		if($validator->fails())
+		if ($validator->fails())
 		{
 			return response([
 				'message'=> 'Data is required.'
@@ -27,7 +27,8 @@ class CategoryController extends Controller
 			'title' => $request->title,
 			'description' => $request->description
 		]);
-		if($category->save()) return response($category, 201);
+		
+		if ($category->save()) return response($category, 201);
 		else return response([
 			'message' => 'Error in adding the lesson.'
 		], 500); 
@@ -40,14 +41,15 @@ class CategoryController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		if(is_null($request->title) || is_null($request->description))
+		if (is_null($request->title) || is_null($request->description))
 		{
 			return response([
 				'message'=> 'Data is required.'
 			], 400);
 		}
+
 		$category = Category::find($id);
-		if($category){
+		if ($category){
 			$category->fill([
 				'title' => $request->title,
 				'description' => $request->description
