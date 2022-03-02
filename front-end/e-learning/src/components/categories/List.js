@@ -10,13 +10,22 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import IconButton from "@mui/material/IconButton";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
+import Tooltip from "@mui/material/Tooltip";
 
 import { listCategory } from "../../actions";
+import Update from "./Update";
 import { isNull } from "lodash";
 
 const List = ({ listCategory, categories, token, user }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [edit, setEdit] = useState(null);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [message, setMessage] = useState("");
 
   const columns = [
     {
@@ -29,7 +38,7 @@ const List = ({ listCategory, categories, token, user }) => {
       id: "title",
       label: "Title",
       minWidth: "25%",
-      align: "left",
+      align: "center",
     },
     {
       id: "description",
@@ -46,6 +55,14 @@ const List = ({ listCategory, categories, token, user }) => {
     },
   ];
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleNotificationClose = () => {
+    setOpenNotification(false);
+  };
+
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       background: "#BB6464",
@@ -57,6 +74,10 @@ const List = ({ listCategory, categories, token, user }) => {
     },
   }));
 
+  const StyledEditIcon = styled(ModeEditIcon)(({ theme }) => ({
+    color: "#464E2E",
+  }));
+
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -66,83 +87,119 @@ const List = ({ listCategory, categories, token, user }) => {
     setPage(0);
   };
 
-  const printCategory = (values) => {
-    console.log(values);
-  };
-
   useEffect(() => {
-    console.log(categories);
     listCategory(token);
   }, [page]);
 
   return (
-    <Paper sx={{ width: "95%", overflow: "hidden", margin: "auto" }}>
-      <TableContainer sx={{ maxHeight: 500 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <StyledTableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </StyledTableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {categories
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((category) => {
-                if (!isNull(category))
-                  if (category.id !== undefined)
-                    return (
-                      <TableRow
-                        key={category.id}
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                      >
-                        <StyledTableCell
-                          component="th"
-                          scope="row"
-                          style={{ width: "5%" }}
-                          align="center"
+    <div>
+      <Paper sx={{ width: "96%", overflow: "hidden", margin: "auto" }}>
+        <TableContainer sx={{ maxHeight: 500 }}>
+          <Table stickyHeader aria-label="sticky table">
+            <TableHead>
+              <TableRow>
+                {columns.map((column) => (
+                  <StyledTableCell
+                    key={column.id}
+                    align={column.align}
+                    style={{ minWidth: column.minWidth }}
+                  >
+                    {column.label}
+                  </StyledTableCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {categories
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((category) => {
+                  if (!isNull(category))
+                    if (category.id !== undefined)
+                      return (
+                        <TableRow
+                          key={category.id}
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
                         >
-                          {category.id}
-                        </StyledTableCell>
-                        <StyledTableCell style={{ width: "25%" }} align="left">
-                          {category.title}
-                        </StyledTableCell>
-                        <StyledTableCell
-                          style={{ width: "55%" }}
-                          align="center"
-                        >
-                          {category.description}
-                        </StyledTableCell>
-                      </TableRow>
-                    );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 50, 100]}
-        component="div"
-        count={categories.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+                          <StyledTableCell
+                            component="th"
+                            scope="row"
+                            style={{ width: "5%" }}
+                            align="left"
+                          >
+                            {category.id}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            style={{ width: "25%" }}
+                            align="left"
+                          >
+                            {category.title}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            style={{ width: "55%" }}
+                            align="left"
+                          >
+                            {category.description}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            style={{ width: 150 }}
+                            align="center"
+                          >
+                            <Tooltip title="Update" placement="top">
+                              <IconButton onClick={() => setEdit(category.id)}>
+                                <StyledEditIcon />
+                              </IconButton>
+                            </Tooltip>
+                            {category.id === edit ? (
+                              <Update
+                                data={category}
+                                onSetState={setEdit}
+                                onSetOpenNotification={setOpenNotification}
+                                onSetMessage={setMessage}
+                                isOpen={true}
+                                token={token}
+                                user={user}
+                              />
+                            ) : (
+                              ""
+                            )}
+                          </StyledTableCell>
+                        </TableRow>
+                      );
+                })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 50, 100]}
+          component="div"
+          count={categories.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={openNotification}
+        onClose={handleNotificationClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleNotificationClose}
+          severity="success"
+          sx={{ width: "100%", bgcolor: "#464E2E" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.categories);
   return {
     categories: Object.values(state.categories),
   };
