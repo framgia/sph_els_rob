@@ -16,8 +16,9 @@ import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Link from "@mui/material/Link";
 
-import { listUser } from "../actions";
+import { listUser, changeRole } from "../actions";
 import Header from "./Header";
 
 const columns = [
@@ -40,15 +41,15 @@ const columns = [
     align: "center",
   },
   {
-    id: "actions",
-    label: "Actions",
+    id: "role",
+    label: "Role",
     minWidth: "15%",
     align: "center",
     format: (value) => value.toFixed(2),
   },
 ];
 
-const User = ({ listUser, users }) => {
+const User = ({ listUser, users, changeRole }) => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -150,7 +151,23 @@ const User = ({ listUser, users }) => {
                           <StyledTableCell
                             style={{ width: 150 }}
                             align="center"
-                          ></StyledTableCell>
+                          >
+                            <Link
+                              component="button"
+                              variant="caption"
+                              underline="hover"
+                              onClick={() => {
+                                changeRole(user.id, cookies.token);
+                                console.log(cookies.token);
+                              }}
+                              sx={{
+                                fontSize: 14,
+                                color: "#05386b",
+                              }}
+                            >
+                              {user.role}
+                            </Link>
+                          </StyledTableCell>
                         </TableRow>
                       );
                 })}
@@ -159,7 +176,7 @@ const User = ({ listUser, users }) => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
-          component="Box"
+          component="div"
           count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
@@ -199,4 +216,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { listUser })(User);
+export default connect(mapStateToProps, { listUser, changeRole })(User);

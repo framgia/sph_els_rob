@@ -15,10 +15,6 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-  return $request->user();
-});
-
 Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('me', [UserController::class, 'me']);
   Route::post('logout', [UserController::class, 'logout']);
@@ -27,6 +23,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::group(['middleware' => 'role'], function(){
     Route::post('create-category', [CategoryController::class, 'create']);
     Route::put('update-category/{id}', [CategoryController::class, 'update']);
+
+    Route::get('change-role/{id}', [UserController::class, 'changeRole']);
   });
 
   Route::get('list-category', [CategoryController::class, 'list']);  
