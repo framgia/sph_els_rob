@@ -91,6 +91,25 @@ export const updateCategory = (id, formValues, token) => async (dispatch) => {
   }
 };
 
+export const listUser = (token) => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LIST_USERS",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LIST_USERS",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

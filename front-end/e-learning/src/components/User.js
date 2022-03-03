@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { connect } from "react-redux";
+import { isNull } from "lodash";
 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
@@ -10,58 +13,47 @@ import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
 import { styled } from "@mui/material/styles";
-import ModeEditIcon from "@mui/icons-material/ModeEdit";
-import IconButton from "@mui/material/IconButton";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-import Tooltip from "@mui/material/Tooltip";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
 
-import { listCategory } from "../../actions";
-import Update from "./Update";
-import { isNull } from "lodash";
+import { listUser } from "../actions";
+import Header from "./Header";
 
-const List = ({ listCategory, categories, token, user }) => {
+const columns = [
+  {
+    id: "id",
+    label: "ID",
+    minWidth: "5%",
+    align: "center",
+  },
+  {
+    id: "Name",
+    label: "Name",
+    minWidth: "35%",
+    align: "center",
+  },
+  {
+    id: "email",
+    label: "Email",
+    minWidth: "45%",
+    align: "center",
+  },
+  {
+    id: "actions",
+    label: "Actions",
+    minWidth: "15%",
+    align: "center",
+    format: (value) => value.toFixed(2),
+  },
+];
+
+const User = ({ listUser, users }) => {
+  const [cookies, setCookie] = useCookies(["user"]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [edit, setEdit] = useState(null);
-  const [openNotification, setOpenNotification] = useState(false);
-  const [message, setMessage] = useState("");
 
-  const columns = [
-    {
-      id: "id",
-      label: "ID",
-      minWidth: "5%",
-      align: "center",
-    },
-    {
-      id: "title",
-      label: "Title",
-      minWidth: "25%",
-      align: "center",
-    },
-    {
-      id: "description",
-      label: "Description",
-      minWidth: "55%",
-      align: "center",
-    },
-    {
-      id: "actions",
-      label: "Actions",
-      minWidth: "15%",
-      align: "center",
-      format: (value) => value.toFixed(2),
-    },
-  ];
-
-  const Alert = React.forwardRef(function Alert(props, ref) {
-    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-  });
-
-  const handleNotificationClose = () => {
-    setOpenNotification(false);
-  };
+  let navigate = useNavigate();
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -74,10 +66,6 @@ const List = ({ listCategory, categories, token, user }) => {
     },
   }));
 
-  const StyledEditIcon = styled(ModeEditIcon)(({ theme }) => ({
-    color: "#464E2E",
-  }));
-
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -88,13 +76,30 @@ const List = ({ listCategory, categories, token, user }) => {
   };
 
   useEffect(() => {
-    listCategory(token);
-  }, [page]);
+    if (cookies.token === undefined) {
+      navigate("/");
+    }
+    listUser(cookies.token);
+  }, []);
 
   return (
     <div>
-      <Paper sx={{ width: "96%", overflow: "hidden", margin: "auto" }}>
-        <TableContainer sx={{ maxHeight: 500 }}>
+      <Header title={cookies.user.role === "admin" ? "Admin" : ""} />
+      <Container maxWidth="xl">
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            justifyContent: "flex-start",
+          }}
+        >
+          <Typography variant="h4" color="inherit">
+            Users
+          </Typography>
+        </Box>
+      </Container>
+      <Paper sx={{ width: "70%", overflow: "hidden", margin: "auto" }}>
+        <TableContainer sx={{ maxHeight: 500, mt: "20px" }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -110,14 +115,14 @@ const List = ({ listCategory, categories, token, user }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories
+              {users
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((category) => {
-                  if (!isNull(category))
-                    if (category.id !== undefined)
+                .map((user) => {
+                  if (!isNull(user))
+                    if (user.id !== undefined)
                       return (
                         <TableRow
-                          key={category.id}
+                          key={user.id}
                           hover
                           role="checkbox"
                           tabIndex={-1}
@@ -128,43 +133,24 @@ const List = ({ listCategory, categories, token, user }) => {
                             style={{ width: "5%" }}
                             align="left"
                           >
-                            {category.id}
+                            {user.id}
                           </StyledTableCell>
                           <StyledTableCell
-                            style={{ width: "25%" }}
+                            style={{ width: "35%" }}
                             align="left"
                           >
-                            {category.title}
+                            {user.first_name} {user.last_name}
                           </StyledTableCell>
                           <StyledTableCell
-                            style={{ width: "55%" }}
+                            style={{ width: "45%" }}
                             align="left"
                           >
-                            {category.description}
+                            {user.email}
                           </StyledTableCell>
                           <StyledTableCell
                             style={{ width: 150 }}
                             align="center"
-                          >
-                            <Tooltip title="Update" placement="top">
-                              <IconButton onClick={() => setEdit(category.id)}>
-                                <StyledEditIcon />
-                              </IconButton>
-                            </Tooltip>
-                            {category.id === edit ? (
-                              <Update
-                                data={category}
-                                onSetState={setEdit}
-                                onSetOpenNotification={setOpenNotification}
-                                onSetMessage={setMessage}
-                                isOpen={true}
-                                token={token}
-                                user={user}
-                              />
-                            ) : (
-                              ""
-                            )}
-                          </StyledTableCell>
+                          ></StyledTableCell>
                         </TableRow>
                       );
                 })}
@@ -173,8 +159,8 @@ const List = ({ listCategory, categories, token, user }) => {
         </TableContainer>
         <TablePagination
           rowsPerPageOptions={[10, 25, 50, 100]}
-          component="div"
-          count={categories.length}
+          component="Box"
+          count={users.length}
           rowsPerPage={rowsPerPage}
           page={page}
           onPageChange={handleChangePage}
@@ -202,28 +188,15 @@ const List = ({ listCategory, categories, token, user }) => {
           }}
         />
       </Paper>
-      <Snackbar
-        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-        open={openNotification}
-        onClose={handleNotificationClose}
-        autoHideDuration={3000}
-      >
-        <Alert
-          onClose={handleNotificationClose}
-          severity="success"
-          sx={{ width: "100%", bgcolor: "#464E2E" }}
-        >
-          {message}
-        </Alert>
-      </Snackbar>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
+  console.log(state.users);
   return {
-    categories: Object.values(state.categories),
+    users: Object.values(state.users),
   };
 };
 
-export default connect(mapStateToProps, { listCategory })(List);
+export default connect(mapStateToProps, { listUser })(User);
