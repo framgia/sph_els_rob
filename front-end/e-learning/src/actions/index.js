@@ -91,6 +91,28 @@ export const updateCategory = (id, formValues, token) => async (dispatch) => {
   }
 };
 
+export const deleteCategory = (id, token) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/remove-category/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    dispatch({
+      type: "DELETE_CATEGORY",
+      payload: id,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "DELETE_CATEGORY",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

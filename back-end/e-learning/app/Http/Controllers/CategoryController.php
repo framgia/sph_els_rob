@@ -8,15 +8,13 @@ use App\Models\Category;
 
 class CategoryController extends Controller
 {
-	public function create(Request $request)
-	{
+	public function create(Request $request) {
 		$validator = Validator::make($request->all(), [
 			'title' => 'required',
 			'description' => 'required'
 		]);
 		
-		if ($validator->fails())
-		{
+		if ($validator->fails()) {
 			return response([
 				'message'=> 'Data is required.'
 			], 400);
@@ -34,28 +32,38 @@ class CategoryController extends Controller
 		], 500); 
 	}
 
-	public function list()
-	{
+	public function list() {
 		return response(Category::all(), 201);
 	}
 
-	public function update(Request $request, $id)
-	{
-		if (is_null($request->title) || is_null($request->description))
-		{
+	public function update(Request $request, $id) {
+		if (is_null($request->title) || is_null($request->description)) {
 			return response([
 				'message'=> 'Data is required.'
 			], 400);
 		}
-
+		
 		$category = Category::find($id);
-		if ($category){
+		if ($category) {
 			$category->fill([
 				'title' => $request->title,
 				'description' => $request->description
 			]);
 			$category->save();
 			return response($category, 201);
+		}
+		else return response([
+			'message' => 'ID not found!'
+		], 404); 
+	}
+	
+	public function remove($id) {
+		$category = Category::find($id);
+		if ($category) {
+			$category->delete();
+			return response([
+				'message' => 'Successfully deleted lesson.'
+			], 201);
 		}
 		else return response([
 			'message' => 'ID not found!'

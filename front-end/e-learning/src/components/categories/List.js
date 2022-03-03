@@ -15,15 +15,18 @@ import IconButton from "@mui/material/IconButton";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
+import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 
 import { listCategory } from "../../actions";
 import Update from "./Update";
+import Delete from "./Delete";
 import { isNull } from "lodash";
 
 const List = ({ listCategory, categories, token, user }) => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [edit, setEdit] = useState(null);
+  const [del, setDelete] = useState(null);
   const [openNotification, setOpenNotification] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -76,6 +79,10 @@ const List = ({ listCategory, categories, token, user }) => {
 
   const StyledEditIcon = styled(ModeEditIcon)(({ theme }) => ({
     color: "#464E2E",
+  }));
+
+  const StyledDeleteIcon = styled(DeleteRoundedIcon)(({ theme }) => ({
+    color: "#BB6464",
   }));
 
   const handleChangePage = (event, newPage) => {
@@ -151,10 +158,30 @@ const List = ({ listCategory, categories, token, user }) => {
                                 <StyledEditIcon />
                               </IconButton>
                             </Tooltip>
+                            <Tooltip title="Remove" placement="top">
+                              <IconButton
+                                onClick={() => setDelete(category.id)}
+                              >
+                                <StyledDeleteIcon />
+                              </IconButton>
+                            </Tooltip>
                             {category.id === edit ? (
                               <Update
                                 data={category}
                                 onSetState={setEdit}
+                                onSetOpenNotification={setOpenNotification}
+                                onSetMessage={setMessage}
+                                isOpen={true}
+                                token={token}
+                                user={user}
+                              />
+                            ) : (
+                              ""
+                            )}
+                            {category.id === del ? (
+                              <Delete
+                                data={category}
+                                onSetState={setDelete}
                                 onSetOpenNotification={setOpenNotification}
                                 onSetMessage={setMessage}
                                 isOpen={true}
