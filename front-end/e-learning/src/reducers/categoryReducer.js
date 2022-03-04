@@ -9,9 +9,9 @@ export default (state = {}, action) => {
           [action.payload.id]: action.payload,
           create_error: action.error,
         };
-      else
-      {
-        if(!_.isNull(action.error)) return { ...state, create_error: action.error };
+      else {
+        if (!_.isNull(action.error))
+          return { ...state, create_error: action.error };
         else return { ...state, create_error: "no error" };
       }
     case "LIST_CATEGORY":
@@ -23,11 +23,14 @@ export default (state = {}, action) => {
           [action.payload.id]: action.payload,
           update_error: action.error,
         };
-      else
-      {
-        if(!_.isNull(action.error)) return { ...state, update_error: action.error };
+      else {
+        if (!_.isNull(action.error))
+          return { ...state, update_error: action.error };
         else return { ...state, update_error: "no error" };
       }
+    case "DELETE_CATEGORY":
+      if (!_.isNull(action.payload)) return _.omit(state, action.payload);
+      else return { ...state, delete_error: action.error };
     default:
       return state;
   }
