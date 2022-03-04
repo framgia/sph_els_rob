@@ -113,6 +113,27 @@ export const deleteCategory = (id, token) => async (dispatch) => {
   }
 };
 
+export const createWord = (formValues, token, id) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/create-word/${id}`, formValues, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "CREATE_WORD",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "CREATE_WORD",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

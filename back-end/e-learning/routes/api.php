@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\WordController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,9 +28,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('create-category', [CategoryController::class, 'create']);
     Route::put('update-category/{id}', [CategoryController::class, 'update']);
     Route::delete('remove-category/{id}', [CategoryController::class, 'remove']);
+
+    Route::post('create-word/{id}', [WordController::class, 'create']);
   });
 
-  Route::get("list-category",[CategoryController::class,'list']);
+  Route::get('list-category', [CategoryController::class, 'list']);
 });
 
 Route::post('login', [UserController::class, 'login']);

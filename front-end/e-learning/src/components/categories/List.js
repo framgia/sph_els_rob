@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
@@ -16,6 +17,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
+import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
 
 import { listCategory } from "../../actions";
 import Update from "./Update";
@@ -29,6 +31,12 @@ const List = ({ listCategory, categories, token, user }) => {
   const [del, setDelete] = useState(null);
   const [openNotification, setOpenNotification] = useState(false);
   const [message, setMessage] = useState("");
+
+  let navigate = useNavigate();
+
+  const navigateTo = (id) => {
+    navigate(`/word_choices/${id}`);
+  };
 
   const columns = [
     {
@@ -83,6 +91,10 @@ const List = ({ listCategory, categories, token, user }) => {
 
   const StyledDeleteIcon = styled(DeleteRoundedIcon)(({ theme }) => ({
     color: "#BB6464",
+  }));
+
+  const StyledViewIcon = styled(DoubleArrowRoundedIcon)(({ theme }) => ({
+    color: "#05386b",
   }));
 
   const handleChangePage = (event, newPage) => {
@@ -163,6 +175,13 @@ const List = ({ listCategory, categories, token, user }) => {
                                 onClick={() => setDelete(category.id)}
                               >
                                 <StyledDeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="View" placement="top">
+                              <IconButton
+                                onClick={() => navigateTo(category.id)}
+                              >
+                                <StyledViewIcon />
                               </IconButton>
                             </Tooltip>
                             {category.id === edit ? (
