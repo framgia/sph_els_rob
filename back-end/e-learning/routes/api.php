@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
     Route::post('create-word/{id}', [WordController::class, 'create']);
     Route::put('update-word/{id}', [WordController::class, 'update']);
+    Route::delete('remove-word/{id}', [WordController::class, 'remove']);
   });
 
   Route::get('list-category', [CategoryController::class, 'list']);

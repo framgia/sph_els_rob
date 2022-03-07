@@ -174,6 +174,27 @@ export const updateWord = (id, formValues, token) => async (dispatch) => {
   }
 };
 
+export const deleteWord = (id, token) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/remove-word/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "DELETE_WORD",
+      payload: id,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "DELETE_WORD",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

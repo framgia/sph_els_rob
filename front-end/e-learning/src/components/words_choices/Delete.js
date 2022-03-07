@@ -9,17 +9,14 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Slide from "@mui/material/Slide";
 
-import { deleteCategory, errorReset } from "../../actions";
+import { deleteWord } from "../../actions";
 
 const Delete = ({
-  errorReset,
-  deleteCategory,
-  categories,
-  data,
+  deleteWord,
+  category_word,
   onSetState,
   isOpen,
   token,
-  user,
   onSetOpenNotification,
   onSetMessage,
 }) => {
@@ -27,11 +24,11 @@ const Delete = ({
 
   const onRemove = (e) => {
     e.preventDefault();
-    deleteCategory(data.id, token);
+    deleteWord(category_word.id, token);
     setOpen(false);
     onSetState(0);
     onSetOpenNotification(true);
-    onSetMessage("Successfully removed category ID #" + data.id + "!");
+    onSetMessage(`Successfully removed word ${category_word.value}!`);
   };
 
   const handleClose = () => {
@@ -51,10 +48,10 @@ const Delete = ({
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>{"Removing Category ID #" + data.id}</DialogTitle>
+      <DialogTitle>{`Removing Word ${category_word.value}`}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
-          Do you really want to remove this category?
+          Do you really want to remove this word?
         </DialogContentText>
       </DialogContent>
       <DialogActions>
@@ -85,14 +82,10 @@ const Delete = ({
   );
 };
 
-const mapDispatchToProps = {
-  deleteCategory,
-  errorReset,
-};
 const mapStateToProps = (state) => {
   return {
-    categories: state.categories,
+    words_choices: state.words_choices,
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Delete);
+export default connect(mapStateToProps, { deleteWord })(Delete);

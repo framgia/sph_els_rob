@@ -106,4 +106,19 @@ class WordController extends Controller
 
 		return response($response, 201);
 	}
+
+	public function remove($id)
+	{
+		$word = Word::find($id);
+		if ($word)
+		{
+			$word->delete();
+			return response([
+				'message' => 'Successfully deleted lesson.'
+			], 201);
+		}
+		else return response([
+			'message' => 'ID not found!'
+		], 404); 
+	}
 }
