@@ -134,6 +134,25 @@ export const createWord = (formValues, token, id) => async (dispatch) => {
   }
 };
 
+export const listWord = (token, id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/list-word/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LIST_WORD",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LIST_WORD",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,
