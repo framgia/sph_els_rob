@@ -59,4 +59,51 @@ class WordController extends Controller
 		
 		return response($collection, 201);
 	}
+
+	public function update(Request $request, $id)
+	{
+		$collection = new Collection();
+
+		$word = Word::find($id);
+		$word->value = $request->word;
+		$word->save();
+
+		$choices = Choice::where('word_id', $id)->get();
+		for ($x=0;$x < count($request->choices); $x++)
+		{
+			if (!is_null($request->choices[$x]['value']))
+			{
+				if ($x < count($choices))
+				{
+					$choices[$x]['value'] = $request->choices[$x]['value'];
+					$choices[$x]['is_correct_answer'] = $request->choices[$x]['is_correct_answer'];
+					$choices[$x]->save();
+
+					$collection->push($choices[$x]);
+				}
+				else
+				{
+					$choice = new Choice();
+					$choice->fill([
+						'value' => $request->choices[$x]['value'],
+						'is_correct_answer' => $request->choices[$x]['is_correct_answer']
+					]);
+					$word->choice()->save($choice);
+
+					$collection->push($choice);
+				}
+			}
+			else {
+				if (count($choices) > $collection->count())
+					$choices[$x]->forceDelete();
+			}
+		}
+		
+		$response = [
+			'word' => $word,
+			'choices' => $collection
+		];
+
+		return response($response, 201);
+	}
 }
