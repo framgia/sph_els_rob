@@ -21,7 +21,7 @@ class Category extends Model
 		'deleted_at',
 	];
 
-	public function word()
+	public function words()
 	{
 		return $this->hasMany(Word::class);
 	}

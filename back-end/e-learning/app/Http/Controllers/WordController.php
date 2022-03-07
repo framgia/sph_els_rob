@@ -18,7 +18,7 @@ class WordController extends Controller
 		$word->value = $request->word;
 
 		$category = Category::find($id);
-		$category->word()->save($word);
+		$category->words()->save($word);
 
 		foreach ($request->choices as $ch)
 		{
@@ -29,7 +29,7 @@ class WordController extends Controller
 					'value' => $ch['value'],
 					'is_correct_answer' => $ch['is_correct_answer']
 				]);
-				$word->choice()->save($choice);
+				$word->choices()->save($choice);
 				
 				$collection->push($choice);
 			}
