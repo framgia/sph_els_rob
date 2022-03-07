@@ -118,7 +118,6 @@ const List = ({ listWord, words_choices, token, id }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.words_choices);
   return {
     words_choices: Object.values(state.words_choices),
   };
