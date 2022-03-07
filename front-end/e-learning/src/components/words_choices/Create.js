@@ -272,7 +272,6 @@ const Create = ({ createWord, words_choices, token, id }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.words_choices);
   return {
     words_choices: state.words_choices,
   };
