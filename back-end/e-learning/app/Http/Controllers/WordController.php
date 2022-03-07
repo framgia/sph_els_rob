@@ -88,13 +88,13 @@ class WordController extends Controller
 						'value' => $request->choices[$x]['value'],
 						'is_correct_answer' => $request->choices[$x]['is_correct_answer']
 					]);
-					$word->choice()->save($choice);
+					$word->choices()->save($choice);
 
 					$collection->push($choice);
 				}
 			}
 			else {
-				if (count($choices) > $collection->count())
+				if (count($choices) >= $x)
 					$choices[$x]->forceDelete();
 			}
 		}
