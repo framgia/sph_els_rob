@@ -50,11 +50,17 @@ class UserController extends Controller
       'password' => Hash::make($request->password),
       'role' => 'member'
     ]);
+
     if($user->save()) return response([
       'message' => 'Successfully registered user.'
     ], 201);
     else return response([
       'message' => 'Unsuccessfully registered user.' 
     ], 500);
+  }
+
+  public function user()
+  {
+    return response(User::all(), 201);
   }
 }
