@@ -42,4 +42,21 @@ class WordController extends Controller
 
 		return response($response, 201);
 	}
+
+	public function list($id)
+	{
+		$collection = new Collection();
+
+		$words = Word::where('category_id', $id)->get();
+		foreach ($words as $word)
+		{
+			$choices = Choice::where('word_id', $word['id'])->get();
+			$collection->push([
+				'word' => $word,
+				'choices' => $choices
+			]);
+		}
+		
+		return response($collection, 201);
+	}
 }

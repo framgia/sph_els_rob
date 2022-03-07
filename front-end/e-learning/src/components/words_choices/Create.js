@@ -106,8 +106,8 @@ const Create = ({ createWord, words_choices, token, id }) => {
   };
 
   useEffect(() => {
-    if (words_choices.create_error === undefined) setOpen(false);
-    else if (isNull(words_choices.create_error)) {
+    if (words_choices.create_word_error === undefined) setOpen(false);
+    else if (isNull(words_choices.create_word_error)) {
       setOpen(false);
       setOpenNotification(true);
     } else setOpen(true);
@@ -171,7 +171,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
                   Make two or more options | Choose one correct answer
                 </Typography>
                 {fields.map((field, index) => (
-                  <Grid container spacing={1} columns={12}>
+                  <Grid container spacing={1} columns={12} key={index}>
                     <Grid
                       item
                       xs={1}
@@ -249,7 +249,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
           </CardContent>
         </Card>
       </Modal>
-      {words_choices.create_error === null && submit == true ? (
+      {words_choices.create_word_error === null && submit == true ? (
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
           open={openNotification}

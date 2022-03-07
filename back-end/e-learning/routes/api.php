@@ -33,6 +33,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   });
 
   Route::get('list-category', [CategoryController::class, 'list']);
+
+  Route::get('list-word/{id}', [WordController::class, 'list']);
 });
 
 Route::post('login', [UserController::class, 'login']);

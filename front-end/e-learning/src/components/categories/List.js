@@ -108,6 +108,7 @@ const List = ({ listCategory, categories, token, user }) => {
 
   useEffect(() => {
     listCategory(token);
+    console.log(categories);
   }, [page]);
 
   return (

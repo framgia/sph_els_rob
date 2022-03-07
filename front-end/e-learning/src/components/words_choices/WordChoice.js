@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 
 import Header from "../Header";
 import Create from "./Create";
+import List from "./List";
 
 const WordChoice = ({ auth }) => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -59,6 +60,7 @@ const WordChoice = ({ auth }) => {
           </Grid>
         </Box>
       </Container>
+      <List token={cookies.token} user={cookies.user} id={id} />
     </div>
   );
 };

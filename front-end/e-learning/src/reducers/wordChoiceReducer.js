@@ -6,14 +6,16 @@ export default (state = {}, action) => {
       if (!_.isNull(action.payload))
         return {
           ...state,
-          [action.payload.id]: action.payload,
-          create_error: action.error,
+          [action.payload.word.id]: action.payload,
+          create_word_error: action.error,
         };
       else {
         if (!_.isNull(action.error))
-          return { ...state, create_error: action.error };
-        else return { ...state, create_error: "no error" };
+          return { ...state, create_word_error: action.error };
+        else return { ...state, create_word_error: "no error" };
       }
+    case "LIST_WORD":
+      return { ..._.mapKeys(action.payload, "word.id") };
     default:
       return state;
   }
