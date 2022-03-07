@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Word;
+
 class Category extends Model
 {
 	use HasFactory, SoftDeletes;
@@ -18,4 +20,9 @@ class Category extends Model
 	protected $dates = [
 		'deleted_at',
 	];
+
+	public function words()
+	{
+		return $this->hasMany(Word::class);
+	}
 }
