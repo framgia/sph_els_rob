@@ -78,8 +78,6 @@ const Update = ({
       choices: fields,
     };
 
-    console.log(data);
-
     if (validate()) {
       updateWord(category_word.id, data, token);
     }

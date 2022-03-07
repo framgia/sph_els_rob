@@ -63,7 +63,6 @@ const Create = ({ createCategory, categories, token, user }) => {
   };
 
   useEffect(() => {
-    console.log(categories);
     if (categories.create_error === undefined) setOpen(false);
     else if (isNull(categories.create_error)) {
       setOpen(false);

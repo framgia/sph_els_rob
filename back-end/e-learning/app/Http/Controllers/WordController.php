@@ -68,8 +68,8 @@ class WordController extends Controller
 		$word->value = $request->word;
 		$word->save();
 
-		$choices = Choice::where('word_id', $id)->get();
-		for ($x=0;$x < count($request->choices); $x++)
+		$choices = $word->choices()->get();
+		for ($x=0; $x < count($request->choices); $x++)
 		{
 			if (!is_null($request->choices[$x]['value']))
 			{
