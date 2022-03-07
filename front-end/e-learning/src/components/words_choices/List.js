@@ -4,6 +4,7 @@ import { isNull } from "lodash";
 
 import { listWord } from "../../actions";
 import Update from "./Update";
+import Delete from "./Delete";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -124,6 +125,19 @@ const List = ({ listWord, words_choices, token, id }) => {
                           category_word={word_choice.word}
                           choices={word_choice.choices}
                           onSetState={setEdit}
+                          onSetOpenNotification={setOpenNotification}
+                          onSetMessage={setMessage}
+                          isOpen={true}
+                          token={token}
+                          id={id}
+                        />
+                      ) : (
+                        ""
+                      )}
+                      {word_choice.word.id === del ? (
+                        <Delete
+                          category_word={word_choice.word}
+                          onSetState={setDelete}
                           onSetOpenNotification={setOpenNotification}
                           onSetMessage={setMessage}
                           isOpen={true}

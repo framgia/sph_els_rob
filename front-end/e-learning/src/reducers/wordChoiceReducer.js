@@ -28,6 +28,9 @@ export default (state = {}, action) => {
           return { ...state, update_word_error: action.error };
         else return { ...state, update_word_error: "no error" };
       }
+    case "DELETE_WORD":
+      if (!_.isNull(action.payload)) return _.omit(state, action.payload);
+      else return { ...state, delete_word_error: action.error };
     default:
       return state;
   }
