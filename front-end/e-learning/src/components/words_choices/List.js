@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { isNull } from "lodash";
 
 import { listWord } from "../../actions";
+import Update from "./Update";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -18,10 +19,14 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 const List = ({ listWord, words_choices, token, id }) => {
   const [edit, setEdit] = useState(null);
   const [del, setDelete] = useState(null);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [message, setMessage] = useState("");
 
   const StyledEditIcon = styled(ModeEditIcon)(({ theme }) => ({
     color: "#464E2E",
@@ -31,9 +36,17 @@ const List = ({ listWord, words_choices, token, id }) => {
     color: "#BB6464",
   }));
 
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleNotificationClose = () => {
+    setOpenNotification(false);
+  };
+
   useEffect(() => {
     listWord(token, id);
-  }, []);
+  }, [edit]);
 
   return (
     <Container maxWidth="96%">
@@ -54,7 +67,6 @@ const List = ({ listWord, words_choices, token, id }) => {
                     <Grid item key={index} xs={12} sm={6} md={3}>
                       <Card
                         sx={{
-                          p: "10px",
                           height: "100%",
                           display: "flex",
                           flexDirection: "column",
@@ -107,12 +119,40 @@ const List = ({ listWord, words_choices, token, id }) => {
                           </Tooltip>
                         </CardActions>
                       </Card>
+                      {word_choice.word.id === edit ? (
+                        <Update
+                          category_word={word_choice.word}
+                          choices={word_choice.choices}
+                          onSetState={setEdit}
+                          onSetOpenNotification={setOpenNotification}
+                          onSetMessage={setMessage}
+                          isOpen={true}
+                          token={token}
+                          id={id}
+                        />
+                      ) : (
+                        ""
+                      )}
                     </Grid>
                   );
             })}
           </Grid>
         </Box>
       </Paper>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={openNotification}
+        onClose={handleNotificationClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleNotificationClose}
+          severity="success"
+          sx={{ width: "100%", bgcolor: "#464E2E" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </Container>
   );
 };

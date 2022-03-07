@@ -153,6 +153,27 @@ export const listWord = (token, id) => async (dispatch) => {
   }
 };
 
+export const updateWord = (id, formValues, token) => async (dispatch) => {
+  try {
+    const response = await axios.put(`/api/update-word/${id}`, formValues, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "UPDATE_WORD",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "UPDATE_WORD",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,
