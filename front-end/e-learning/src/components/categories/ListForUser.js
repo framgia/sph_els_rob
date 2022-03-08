@@ -19,7 +19,6 @@ const ListForUser = ({ listCategory, categories }) => {
   const [cookies, setCookie] = useCookies(["user"]);
 
   useEffect(() => {
-    console.log(cookies.token);
     listCategory(cookies.token);
   }, []);
 
