@@ -18,6 +18,7 @@ import MuiAlert from "@mui/material/Alert";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
+import Typography from "@mui/material/Typography";
 
 import { listCategory } from "../../actions";
 import Update from "./Update";
@@ -159,7 +160,16 @@ const List = ({ listCategory, categories, token, user }) => {
                             style={{ width: "55%" }}
                             align="left"
                           >
-                            {category.description}
+                            <Typography
+                              paragraph={false}
+                              align="justify"
+                              style={{
+                                display: "inline-block",
+                                whiteSpace: "pre-line",
+                              }}
+                            >
+                              {category.description}
+                            </Typography>
                           </StyledTableCell>
                           <StyledTableCell
                             style={{ width: 150 }}
@@ -266,10 +276,8 @@ const List = ({ listCategory, categories, token, user }) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    categories: Object.values(state.categories),
-  };
-};
+const mapStateToProps = (state) => ({
+  categories: Object.values(state.categories),
+});
 
 export default connect(mapStateToProps, { listCategory })(List);

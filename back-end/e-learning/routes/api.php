@@ -16,10 +16,6 @@ use App\Http\Controllers\WordController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-  return $request->user();
-});
-
 Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('me', [UserController::class, 'me']);
   Route::post('logout', [UserController::class, 'logout']);
@@ -33,6 +29,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('create-word/{id}', [WordController::class, 'create']);
     Route::put('update-word/{id}', [WordController::class, 'update']);
     Route::delete('remove-word/{id}', [WordController::class, 'remove']);
+
+    Route::get('change-role/{id}', [UserController::class, 'changeRole']);
   });
 
   Route::get('list-category', [CategoryController::class, 'list']);

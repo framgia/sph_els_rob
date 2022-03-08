@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from 'react-router-dom'; 
-import { useCookies } from 'react-cookie';
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import Header from "./Header";
 import { logIn } from "../actions";
@@ -20,9 +20,9 @@ const Login = ({ logIn, auth }) => {
   let navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [cookies, setCookie] = useCookies(['user']);
+  const [cookies, setCookie] = useCookies(["user"]);
 
-  const onLogin = e => {
+  const onLogin = (e) => {
     e.preventDefault();
     const data = {
       email: email,
@@ -32,23 +32,23 @@ const Login = ({ logIn, auth }) => {
   };
 
   useEffect(() => {
-    if(auth!== null){
-      if(auth.token !== undefined || auth.token !== null)
-      { 
-        navigate('/admin-category');
-        setCookie('user', auth.user, { path: '/' });
-        setCookie('token', auth.token, { path: '/' });
+    if (auth !== null) {
+      if (auth.token !== undefined || auth.token !== null) {
+        console.log(auth);
+        navigate("/admin-category");
+        setCookie("user", auth.user, { path: "/" });
+        setCookie("token", auth.token, { path: "/" });
       }
     }
-    if(cookies.token !== undefined){
+    if (cookies.token !== undefined) {
       console.log(cookies.token);
-      navigate('/admin-category');
+      navigate("/admin-category");
     }
   }, [auth]);
   return (
     <div>
       <Header />
-      <Container maxWidth='xs'>
+      <Container maxWidth="xs">
         <Box
           onSubmit={onLogin}
           sx={{
@@ -58,35 +58,35 @@ const Login = ({ logIn, auth }) => {
             alignItems: "center",
           }}
         >
-          <Typography component='h1' variant='h5' sx={{ mb: 5 }}>
+          <Typography component="h1" variant="h5" sx={{ mb: 5 }}>
             Log in
           </Typography>
           <form>
             <TextField
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              id='email'
-              label='Email'
-              name='email'
-              autoComplete='email'
+              id="email"
+              label="Email"
+              name="email"
+              autoComplete="email"
               autoFocus
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <TextField
-              margin='normal'
+              margin="normal"
               required
               fullWidth
-              name='password'
-              label='Password'
-              type='password'
-              id='password'
-              autoComplete='current-password'
-              onChange={e => setPassword(e.target.value)}
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <FormControlLabel
-              control={<Checkbox value='remember' color='primary' />}
-              label='Remember me'
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
             />
             <Box
               sx={{
@@ -102,9 +102,9 @@ const Login = ({ logIn, auth }) => {
             </Box>
             <Button
               onClick={onLogin}
-              type='submit'
+              type="submit"
               fullWidth
-              variant='contained'
+              variant="contained"
               sx={{
                 mt: 2,
                 mb: 2,
@@ -120,12 +120,12 @@ const Login = ({ logIn, auth }) => {
           </form>
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link href="#" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
-              <Link href='/signup' variant='body2'>
+              <Link href="/signup" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
@@ -136,7 +136,8 @@ const Login = ({ logIn, auth }) => {
   );
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
+  console.log(state.auth);
   return {
     auth: state.auth,
   };
