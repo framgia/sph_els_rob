@@ -50,11 +50,19 @@ class UserController extends Controller
       'password' => Hash::make($request->password),
       'role' => 'member'
     ]);
+    $user->save();
 
-    if($user->save()) return response([
-      'message' => 'Successfully registered user.'
-    ], 201);
-    else return response([
+    $token = $user->createToken($user->email.'my-app-token')->plainTextToken;
+    
+    $response = [
+      'user' => $user,
+      'token' => $token
+    ];
+
+    if ($user)
+      return response($response, 201);
+    else
+      return response([
       'message' => 'Unsuccessfully registered user.' 
     ], 500);
   }
@@ -72,7 +80,7 @@ class UserController extends Controller
     else
       $user->role = "admin";
     
-    if($user->save())
-    return response($user, 201);
+    if ($user->save())
+      return response($user, 201);
   }
 }
