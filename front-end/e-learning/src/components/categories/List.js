@@ -225,6 +225,27 @@ const List = ({ listCategory, categories, token, user }) => {
           page={page}
           onPageChange={handleChangePage}
           onRowsPerPageChange={handleChangeRowsPerPage}
+          labelRowsPerPage={<span>Rows:</span>}
+          labelDisplayedRows={({ page }) => {
+            return `Page: ${page + 1}`;
+          }}
+          backIconButtonProps={{
+            color: "secondary",
+          }}
+          nextIconButtonProps={{ color: "secondary" }}
+          SelectProps={{
+            inputProps: {
+              "aria-label": "page number",
+            },
+          }}
+          showFirstButton={true}
+          showLastButton={true}
+          sx={{
+            ".MuiTablePagination-selectLabel, .MuiTablePagination-displayedRows":
+              {
+                margin: "auto",
+              },
+          }}
         />
       </Paper>
       <Snackbar

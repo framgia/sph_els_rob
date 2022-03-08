@@ -98,7 +98,6 @@ export const deleteCategory = (id, token) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-
     dispatch({
       type: "DELETE_CATEGORY",
       payload: id,
@@ -148,7 +147,6 @@ export const listWord = (token, id) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: "LIST_WORD",
-      payload: { error_message: e.message },
     });
   }
 };
@@ -191,6 +189,26 @@ export const deleteWord = (id, token) => async (dispatch) => {
       type: "DELETE_WORD",
       payload: null,
       error: e.message,
+    });
+  }
+};
+
+export const listUser = (token) => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/users", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LIST_WORD",
+      type: "LIST_USERS",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LIST_USERS",
+      payload: { error_message: e.message },
     });
   }
 };
