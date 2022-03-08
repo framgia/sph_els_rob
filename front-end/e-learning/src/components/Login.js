@@ -34,14 +34,12 @@ const Login = ({ logIn, auth }) => {
   useEffect(() => {
     if (auth !== null) {
       if (auth.token !== undefined || auth.token !== null) {
-        console.log(auth);
-        navigate("/admin-category");
         setCookie("user", auth.user, { path: "/" });
         setCookie("token", auth.token, { path: "/" });
+        navigate("/admin-category");
       }
     }
     if (cookies.token !== undefined) {
-      console.log(cookies.token);
       navigate("/admin-category");
     }
   }, [auth]);
@@ -137,7 +135,6 @@ const Login = ({ logIn, auth }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.auth);
   return {
     auth: state.auth,
   };
