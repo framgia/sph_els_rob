@@ -213,6 +213,28 @@ export const listUser = (token) => async (dispatch) => {
   }
 };
 
+export const changeRole = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/change-role/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log(response);
+    dispatch({
+      type: "CHANGE_ROLE",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "CHANGE_ROLE",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

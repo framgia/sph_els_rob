@@ -63,4 +63,16 @@ class UserController extends Controller
   {
     return response(User::all(), 201);
   }
+
+  public function changeRole($id)
+  {
+    $user = User::find($id);
+    if ($user->role == "admin")
+      $user->role = "member";
+    else
+      $user->role = "admin";
+    
+    if($user->save())
+    return response($user, 201);
+  }
 }

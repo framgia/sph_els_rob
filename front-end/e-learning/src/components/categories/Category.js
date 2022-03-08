@@ -14,6 +14,7 @@ import Header from "../Header";
 import Create from "./Create";
 import List from "./List";
 import { bgcolor } from "@mui/system";
+import ListForUser from "./ListForUser";
 
 const Category = ({ auth }) => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -56,12 +57,20 @@ const Category = ({ auth }) => {
               xs={6}
               sx={{ display: "flex", justifyContent: "flex-end" }}
             >
-              <Create token={cookies.token} user={cookies.user} />
+              {cookies.role === "admin" ? (
+                <Create token={cookies.token} user={cookies.user} />
+              ) : (
+                ""
+              )}
             </Grid>
           </Grid>
         </Box>
       </Container>
-      <List token={cookies.token} user={cookies.user} />
+      {cookies.role === "admin" ? (
+        <List token={cookies.token} user={cookies.user} />
+      ) : (
+        <ListForUser token={cookies.token} user={cookies.user} />
+      )}
     </div>
   );
 };
