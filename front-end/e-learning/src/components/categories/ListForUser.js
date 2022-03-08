@@ -71,7 +71,9 @@ const ListForUser = ({ listCategory, categories }) => {
                               whiteSpace: "pre-line",
                             }}
                           >
-                            {category.description.substring(0, 300)}...
+                            {category.description.length >= 300
+                              ? `${category.description.substring(0, 300)}...`
+                              : category.description}
                           </Typography>
                         </CardContent>
                         <CardActions
