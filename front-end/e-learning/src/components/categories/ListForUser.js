@@ -3,7 +3,8 @@ import { connect } from "react-redux";
 import { isNull } from "lodash";
 import { useCookies } from "react-cookie";
 
-import { listCategory } from "../../actions";
+import { listCategory, addQuiz } from "../../actions";
+import Question from "../quizzes/Question";
 
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -14,13 +15,16 @@ import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
+import Modal from "@mui/material/Modal";
 
-const ListForUser = ({ listCategory, categories }) => {
+const ListForUser = ({ listCategory, categories, addQuiz }) => {
   const [cookies, setCookie] = useCookies(["user"]);
+  const [start, setStart] = useState(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     listCategory(cookies.token);
-  }, []);
+  }, [start]);
 
   return (
     <Container maxWidth="96%">
@@ -81,7 +85,11 @@ const ListForUser = ({ listCategory, categories }) => {
                           sx={{ display: "flex", justifyContent: "flex-end" }}
                         >
                           <Button
-                            onClick={() => console.log("start")}
+                            onClick={() => {
+                              addQuiz(category.id);
+                              setOpen(true);
+                              setStart(category.id);
+                            }}
                             sx={{
                               "&:hover": {
                                 backgroundColor: "#464E2E",
@@ -91,6 +99,27 @@ const ListForUser = ({ listCategory, categories }) => {
                           >
                             Start
                           </Button>
+                          {category.id === start ? (
+                            <Modal
+                              open={open}
+                              BackdropProps={{
+                                style: {
+                                  backgroundColor: "black",
+                                  opacity: 0.8,
+                                },
+                              }}
+                            >
+                              <Question
+                                data={category}
+                                onSetState={setStart}
+                                onSetOpen={setOpen}
+                                isOpen={true}
+                                token={cookies.token}
+                              />
+                            </Modal>
+                          ) : (
+                            ""
+                          )}
                         </CardActions>
                       </Card>
                     </Grid>
@@ -109,4 +138,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { listCategory })(ListForUser);
+export default connect(mapStateToProps, { listCategory, addQuiz })(ListForUser);

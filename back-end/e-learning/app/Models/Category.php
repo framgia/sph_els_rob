@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Word;
+use App\Models\UserCategory;
 
 class Category extends Model
 {
@@ -24,5 +25,10 @@ class Category extends Model
 	public function words()
 	{
 		return $this->hasMany(Word::class);
+	}
+
+	public function userCategories()
+	{
+		return $this->hasMany(UserCategory::class);
 	}
 }
