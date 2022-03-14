@@ -31,13 +31,18 @@ const Create = ({ createCategory, categories, token, user }) => {
   const validate = () => {
     var no_error = true;
     if (title === "") {
-      setErrorTitle("Field is required!");
+      setErrorTitle("Title is required!");
+      no_error = false;
+    } else if (title.length > 255) {
+      setErrorTitle("Title is limited to 255 characters!");
       no_error = false;
     } else setErrorTitle("");
+
     if (description === "") {
-      setErrorDescription("Field is required!");
+      setErrorDescription("Description is required!");
       no_error = false;
     } else setErrorDescription("");
+
     return no_error;
   };
 

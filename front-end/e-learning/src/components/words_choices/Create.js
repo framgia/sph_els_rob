@@ -47,24 +47,36 @@ const Create = ({ createWord, words_choices, token, id }) => {
     let newArr = [...fields];
     let empty_choice_count = 0;
     let is_correct_answer_selected = false;
+    let is_choice_length_valid = true;
+
     for (var x = 0; x < fields.length; x++) {
       if (newArr[x]["value"] === "") {
         empty_choice_count++;
       }
       if (newArr[x]["is_correct_answer"] === true)
         is_correct_answer_selected = true;
+      if (newArr[x]["value"].length > 255) is_choice_length_valid = false;
     }
+
     if (empty_choice_count >= 3) {
       setChoiceError("Choices must be more than one!");
       no_error = false;
     } else if (is_correct_answer_selected === false) {
       setChoiceError("Please select the correct answer!");
       no_error = false;
+    } else if (is_choice_length_valid === false) {
+      setChoiceError("Option is limited to 255 characters!");
+      no_error = false;
     } else setChoiceError("");
+
     if (word === "") {
       setWordError("Word must not be empty!");
       no_error = false;
+    } else if (word.length > 255) {
+      setWordError("Word is limited to 255 characters!");
+      no_error = false;
     } else setWordError("");
+
     return no_error;
   };
 
