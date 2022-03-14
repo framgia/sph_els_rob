@@ -132,6 +132,7 @@ const List = ({ listCategory, categories, token, user }) => {
             <TableBody>
               {categories
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .reverse()
                 .map((category) => {
                   if (!isNull(category))
                     if (category.id !== undefined)
