@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserCategory::class);
     }
+
+    public function getUserCategory($id)
+    {
+        return $this->userCategories()->where('category_id', $id)->first();
+    }
 }

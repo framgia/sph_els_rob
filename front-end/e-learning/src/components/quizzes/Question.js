@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-// import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -28,12 +27,10 @@ const Question = ({
   onSetState,
   token,
 }) => {
-  // const [cookies, setCookie] = useCookies(["user"]);
   const [currentWord, setCurrentWord] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [count, setCount] = useState(0);
 
-  // let { id } = useParams();
   let navigate = useNavigate();
 
   const StyledNextIcon = styled(ArrowForwardIosRoundedIcon)(({ theme }) => ({
@@ -45,11 +42,14 @@ const Question = ({
   }));
 
   const onAnswer = (word_id, choice_id) => {
-    if (answers[word_id] === undefined) setCount(count + 1);
+    if (answers[word_id] === undefined) {
+      setCount(count + 1);
+    }
     saveAnswer(data.id, word_id, choice_id, token);
     setAnswers({ ...answers, [word_id]: choice_id });
-    if (words_choices.length != currentWord + 1)
+    if (words_choices.length != currentWord + 1) {
       setCurrentWord(currentWord + 1);
+    }
   };
 
   useEffect(() => {
