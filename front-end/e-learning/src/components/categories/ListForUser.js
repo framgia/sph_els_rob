@@ -39,7 +39,7 @@ const ListForUser = ({ listCategory, categories, addQuiz }) => {
       >
         <Box marginTop="10px" sx={{ maxHeight: 600 }}>
           <Grid container spacing={2}>
-            {categories.map((category, index) => {
+            {categories.reverse().map((category, index) => {
               if (!isNull(category))
                 if (category !== undefined)
                   return (
