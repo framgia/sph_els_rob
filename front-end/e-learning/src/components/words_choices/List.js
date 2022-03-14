@@ -22,6 +22,12 @@ import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import Listmui from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import RadioButtonUncheckedRoundedIcon from "@mui/icons-material/RadioButtonUncheckedRounded";
+import CircleRoundedIcon from "@mui/icons-material/CircleRounded";
 
 const List = ({ listWord, words_choices, token, id }) => {
   const [edit, setEdit] = useState(null);
@@ -79,23 +85,44 @@ const List = ({ listWord, words_choices, token, id }) => {
                       >
                         <CardHeader title={word_choice.word.value} />
                         <CardContent sx={{ flexGrow: 1 }}>
+                          <Typography
+                            align="center"
+                            variant="caption"
+                            display="block"
+                            gutterBottom
+                          >
+                            Options
+                          </Typography>
                           {word_choice.choices.map((choice) => (
                             <Grid spacing={2} key={choice.id}>
-                              <Grid
-                                item
-                                sx={{
-                                  margin: "8px",
-                                }}
-                              >
-                                <Typography
-                                  color={
-                                    choice.is_correct_answer === 1
-                                      ? "#32CD32"
-                                      : ""
-                                  }
-                                >
-                                  {choice.value}
-                                </Typography>
+                              <Grid item>
+                                <Listmui disablePadding>
+                                  <ListItem>
+                                    <ListItemIcon>
+                                      {choice.is_correct_answer === 1 ? (
+                                        <CircleRoundedIcon fontSize="small" />
+                                      ) : (
+                                        <RadioButtonUncheckedRoundedIcon fontSize="small" />
+                                      )}
+                                    </ListItemIcon>
+                                    <ListItemText
+                                      primary={
+                                        <Typography
+                                          color={
+                                            choice.is_correct_answer === 1
+                                              ? "#32CD32"
+                                              : ""
+                                          }
+                                          sx={{ display: "inline" }}
+                                          component="span"
+                                          variant="body1"
+                                        >
+                                          {choice.value}
+                                        </Typography>
+                                      }
+                                    />
+                                  </ListItem>
+                                </Listmui>
                               </Grid>
                             </Grid>
                           ))}
