@@ -220,7 +220,6 @@ export const changeRole = (id, token) => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(response);
     dispatch({
       type: "CHANGE_ROLE",
       payload: response.data,
@@ -229,6 +228,48 @@ export const changeRole = (id, token) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: "CHANGE_ROLE",
+      payload: null,
+      error: e.message,
+    });
+  }
+};
+
+export const saveAnswer =
+  (category_id, word_id, choice_id, token) => async (dispatch) => {
+    try {
+      const response = await axios.post(
+        `/api/save-answer/${category_id}/${word_id}/${choice_id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      dispatch({
+        type: "SAVE_ANSWER",
+        payload: response.data,
+        error: null,
+      });
+    } catch (e) {
+      dispatch({
+        type: "SAVE_ANSWER",
+        payload: null,
+        error: e.message,
+      });
+    }
+  };
+
+export const addQuiz = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/add-quiz/${id}`);
+    dispatch({
+      type: "ADD_QUIZ",
+      payload: response.data,
+      error: null,
+    });
+  } catch (e) {
+    dispatch({
+      type: "ADD_QUIZ",
       payload: null,
       error: e.message,
     });

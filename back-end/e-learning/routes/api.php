@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WordController;
+use App\Http\Controllers\UserCategoryController;
+use App\Http\Controllers\UserAnswerController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +39,10 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('list-category', [CategoryController::class, 'list']);
 
   Route::get('list-word/{id}', [WordController::class, 'list']);
+
+  Route::post('add-quiz/{id}', [UserCategoryController::class, 'create']);
+
+  Route::post('save-answer/{category_id}/{word_id}/{choice_id}', [UserAnswerController::class, 'saveAnswer']);
 });
 
 Route::post('login', [UserController::class, 'login']);

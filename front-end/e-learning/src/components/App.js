@@ -6,9 +6,8 @@ import Signup from "./Signup";
 import Dashboard from "./Dashboard";
 import Category from "./categories/Category";
 import WordChoice from "./words_choices/WordChoice";
-import Create from "./words_choices/Create";
 import User from "./User";
-import ListForUser from "./categories/ListForUser";
+import Question from "./quizzes/Question";
 
 const App = () => {
   return (
@@ -22,6 +21,7 @@ const App = () => {
           <Route path="/word_choices/:id" exact element={<WordChoice />} />
           <Route path="/category" exact element={<Category />} />
           <Route path="/admin-users" exact element={<User />} />
+          <Route path="/quiz/:id" exact element={<Question />} />
         </Routes>
       </Router>
     </div>

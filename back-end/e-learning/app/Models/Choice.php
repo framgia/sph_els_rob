@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Models\Word;
+use App\Models\UserAnswer;
 
 class Choice extends Model
 {
@@ -26,4 +27,8 @@ class Choice extends Model
         return $this->belongsTo(Word::class);
     }
 
+    public function userAnswers()
+    {
+        return $this->hasMany(UserAnswer::class);
+    }
 }
