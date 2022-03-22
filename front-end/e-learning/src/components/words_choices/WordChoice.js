@@ -47,7 +47,7 @@ const WordChoice = ({ auth }) => {
           <Grid container spacing={2}>
             <Grid item xs={6}>
               <Typography variant="h4" color="inherit">
-                Words for Category ID #{id}
+                Words for {cookies.category.title}
               </Typography>
             </Grid>
             <Grid
