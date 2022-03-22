@@ -69,7 +69,7 @@ const Update = ({
       handleClose();
       errorReset("UPDATE_CATEGORY");
       onSetOpenNotification(true);
-      onSetMessage("Successfully updated category ID #" + data.id + "!");
+      onSetMessage(`Successfully updated ${data.title}!`);
     } else setOpen(true);
   }, [categories.update_error]);
 
@@ -89,7 +89,7 @@ const Update = ({
           boxShadow: 12,
         }}
       >
-        <CardHeader title={"Update Category ID #" + data.id} />
+        <CardHeader title={`Update ${data.title}`} />
         <CardContent>
           <form>
             <TextField

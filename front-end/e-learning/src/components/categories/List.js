@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 import TableCell, { tableCellClasses } from "@mui/material/TableCell";
 import Paper from "@mui/material/Paper";
@@ -26,6 +27,7 @@ import Delete from "./Delete";
 import { isNull } from "lodash";
 
 const List = ({ listCategory, categories, token, user }) => {
+  const [cookies, setCookie] = useCookies(["user"]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [edit, setEdit] = useState(null);
@@ -35,8 +37,9 @@ const List = ({ listCategory, categories, token, user }) => {
 
   let navigate = useNavigate();
 
-  const navigateTo = (id) => {
-    navigate(`/word_choices/${id}`);
+  const navigateTo = (category) => {
+    setCookie("category", category, { path: "/" });
+    navigate(`/word_choices/${category.id}`);
   };
 
   const columns = [
@@ -189,9 +192,7 @@ const List = ({ listCategory, categories, token, user }) => {
                               </IconButton>
                             </Tooltip>
                             <Tooltip title="View" placement="top">
-                              <IconButton
-                                onClick={() => navigateTo(category.id)}
-                              >
+                              <IconButton onClick={() => navigateTo(category)}>
                                 <StyledViewIcon />
                               </IconButton>
                             </Tooltip>

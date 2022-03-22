@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { isNull } from "lodash";
+import { useCookies } from "react-cookie";
 
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -26,6 +27,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
     { id: "c", value: "", is_correct_answer: false },
     { id: "d", value: "", is_correct_answer: false },
   ];
+  const [cookies, setCookie] = useCookies(["user"]);
   const [word, setWord] = useState("");
   const [open, setOpen] = useState(false);
   const [submit, setSubmit] = useState(false);
@@ -157,7 +159,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
             boxShadow: 12,
           }}
         >
-          <CardHeader title={`Add word for category ID #${id}`} />
+          <CardHeader title={`Add word for ${cookies.category.title}`} />
           <CardContent>
             <form>
               <TextField
