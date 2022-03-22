@@ -31,7 +31,7 @@ const Delete = ({
     setOpen(false);
     onSetState(0);
     onSetOpenNotification(true);
-    onSetMessage("Successfully removed category ID #" + data.id + "!");
+    onSetMessage(`Successfully removed ${data.title}!`);
   };
 
   const handleClose = () => {
@@ -51,7 +51,7 @@ const Delete = ({
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>{"Removing Category ID #" + data.id}</DialogTitle>
+      <DialogTitle>{`Removing ${data.title}`}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
           Do you really want to remove this category?

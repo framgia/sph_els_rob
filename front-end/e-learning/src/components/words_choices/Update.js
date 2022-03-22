@@ -142,7 +142,7 @@ const Update = ({
       handleClose();
       errorReset("UPDATE_WORD");
       onSetOpenNotification(true);
-      onSetMessage("Successfully updated word ID #" + category_word.id + "!");
+      onSetMessage(`Successfully updated ${category_word.value}!`);
     } else setOpen(true);
   }, [words_choices.update_word_error]);
 
@@ -162,7 +162,7 @@ const Update = ({
           boxShadow: 12,
         }}
       >
-        <CardHeader title={`Update word for category ID #${id}`} />
+        <CardHeader title={`Update ${category_word.value}`} />
         <CardContent>
           <form>
             <TextField
