@@ -94,8 +94,7 @@ class WordController extends Controller
 				}
 			}
 			else {
-				if (count($choices) >= $x)
-					$choices[$x]->forceDelete();
+				if (count($choices) > $x) $choices[$x]->forceDelete();
 			}
 		}
 		
