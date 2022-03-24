@@ -21,6 +21,7 @@ class UserController extends Controller
       ];
       return response($response, 201);
     }
+    return response(['message' => 'Unauthorized!'], 401);
   }
 
   public function me()
@@ -48,15 +49,15 @@ class UserController extends Controller
     ]);
     $user->save();
 
-    $token = $user->createToken($user->email.'my-app-token')->plainTextToken;
-    
-    $response = [
-      'user' => $user,
-      'token' => $token
-    ];
-
-    if ($user)
+    $credentials = $request->only("email", "password");
+    if (Auth::attempt($credentials)) {
+      $token = auth()->user()->createToken("api_token")->plainTextToken;
+      $response = [
+        'user' => Auth::user(),
+        'token' => $token
+      ];
       return response($response, 201);
+    }
     else
       return response([
       'message' => 'Unsuccessfully registered user.' 

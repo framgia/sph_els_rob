@@ -295,6 +295,25 @@ export const userCategory = (token) => async (dispatch) => {
   }
 };
 
+export const logOut = (token) => async (dispatch) => {
+  try {
+    const response = await axios.post("/api/logout", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LOG_OUT",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LOG_OUT",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,

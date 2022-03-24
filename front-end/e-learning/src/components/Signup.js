@@ -30,15 +30,15 @@ const Signup = ({ signUp, auth }) => {
   const validate = () => {
     var no_error = true;
     if (firstname === "") {
-      setErrorFirstname("Field is required!");
+      setErrorFirstname("First name is required!");
       no_error = false;
     } else setErrorFirstname("");
     if (lastname === "") {
-      setErrorLastname("Field is required!");
+      setErrorLastname("Last name is required!");
       no_error = false;
     } else setErrorLastname("");
     if (email === "") {
-      setErrorEmail("Field is required!");
+      setErrorEmail("Email is required!");
       no_error = false;
     } else if (
       !/^[ ]*([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})[ ]*$/i.test(email)
@@ -47,14 +47,14 @@ const Signup = ({ signUp, auth }) => {
       no_error = false;
     } else setErrorEmail("");
     if (password === "") {
-      setErrorPassword("Field is required!");
+      setErrorPassword("Password is required!");
       no_error = false;
     } else setErrorPassword("");
     if (password !== confirm_password) {
       setErrorConfirmPassword("Confirm password does not match!");
       no_error = false;
     } else if (confirm_password === "") {
-      setErrorConfirmPassword("Field is required!");
+      setErrorConfirmPassword("Confirm password is required!");
       no_error = false;
     } else setErrorConfirmPassword("");
     return no_error;
@@ -75,7 +75,7 @@ const Signup = ({ signUp, auth }) => {
 
   useEffect(() => {
     if (auth !== null) {
-      if (auth.token !== undefined || auth.token !== null) {
+      if (auth.token !== undefined) {
         setCookie("user", auth.user, { path: "/" });
         setCookie("token", auth.token, { path: "/" });
         navigate("/admin-category");
@@ -147,7 +147,7 @@ const Signup = ({ signUp, auth }) => {
                   name="email"
                   autoComplete="email"
                   autoFocus
-                  error={error_email === "" ? false : true}
+                  error={error_email !== "" ? true : false}
                   helperText={error_email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -183,6 +183,18 @@ const Signup = ({ signUp, auth }) => {
                 />
               </Grid>
             </Grid>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+                color: "red",
+              }}
+            >
+              {auth === null || auth.error_message === undefined
+                ? ""
+                : "Email is not available!"}
+            </Box>
             <Button
               onClick={onSignup}
               type="submit"
