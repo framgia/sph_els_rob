@@ -37,7 +37,7 @@ const Category = ({ auth }) => {
 
   return (
     <div>
-      <Header title="Admin" />
+      <Header title={cookies.role === "admin" ? "Admin" : ""} />
       <Container maxWidth="xl">
         <Box
           sx={{

@@ -8,6 +8,7 @@ import userReducer from "./userReducer";
 import userAnswerReducer from "./userAnswerReducer";
 import lessonReducer from "./lessonReducer";
 import userCategoryReducer from "./userCategoryReducer";
+import resultReducer from "./resultReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
   answers: userAnswerReducer,
   lessons: lessonReducer,
   user_categories: userCategoryReducer,
+  results: resultReducer,
 });

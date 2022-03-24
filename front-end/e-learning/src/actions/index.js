@@ -201,7 +201,6 @@ export const listUser = (token) => async (dispatch) => {
       },
     });
     dispatch({
-      type: "LIST_WORD",
       type: "LIST_USERS",
       payload: response.data,
     });
@@ -309,6 +308,25 @@ export const logOut = (token) => async (dispatch) => {
   } catch (e) {
     dispatch({
       type: "LOG_OUT",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
+export const result = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/result/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "QUIZ_RESULT",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "QUIZ_RESULT",
       payload: { error_message: e.message },
     });
   }

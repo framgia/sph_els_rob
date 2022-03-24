@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('user-category', [UserCategoryController::class, 'list']);
 
   Route::post('save-answer/{category_id}/{word_id}/{choice_id}', [UserAnswerController::class, 'saveAnswer']);
+  Route::get('result/{id}', [UserAnswerController::class, 'result']);
 });
 
 Route::post('login', [UserController::class, 'login']);
