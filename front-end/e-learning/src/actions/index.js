@@ -276,6 +276,25 @@ export const addQuiz = (id, token) => async (dispatch) => {
   }
 };
 
+export const userCategory = (token) => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/user-category", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "USER_CATEGORY",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "USER_CATEGORY",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,
