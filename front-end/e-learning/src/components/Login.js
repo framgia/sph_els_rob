@@ -33,7 +33,7 @@ const Login = ({ logIn, auth }) => {
 
   useEffect(() => {
     if (auth !== null) {
-      if (auth.token !== undefined || auth.token !== null) {
+      if (auth.token !== undefined) {
         setCookie("user", auth.user, { path: "/" });
         setCookie("token", auth.token, { path: "/" });
         navigate("/admin-category");
@@ -96,7 +96,7 @@ const Login = ({ logIn, auth }) => {
             >
               {auth === null || auth.error_message === undefined
                 ? ""
-                : auth.error_message}
+                : "Unauthorized!"}
             </Box>
             <Button
               onClick={onLogin}

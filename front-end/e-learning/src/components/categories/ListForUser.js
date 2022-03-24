@@ -160,7 +160,7 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
                               BackdropProps={{
                                 style: {
                                   backgroundColor: "black",
-                                  opacity: 0.8,
+                                  opacity: 0.9,
                                 },
                               }}
                             >

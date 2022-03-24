@@ -1,23 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import { useCookies } from "react-cookie";
+import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Link from "@mui/material/Link";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
+
+import { logOut } from "../actions";
 
 const roles = ["admin", "member"];
 
-const Header = ({ title }) => {
-  const [cookies, setCookie] = useCookies(["user"]);
+const Header = ({ title, logOut }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [anchorCategory, setAnchorCategory] = React.useState(null);
 
   let navigate = useNavigate();
@@ -32,6 +30,12 @@ const Header = ({ title }) => {
     if (role === "admin") {
       navigate("/admin-category");
     } else navigate("/category");
+  };
+
+  const onLogout = () => {
+    logOut(cookies.token);
+    removeCookie("user");
+    removeCookie("token");
   };
 
   return (
@@ -73,7 +77,14 @@ const Header = ({ title }) => {
               color="text.primary"
               href="/admin-users"
               underline="none"
-              sx={{ my: 1, mx: 1.5, color: "white" }}
+              sx={{
+                my: 1,
+                mx: 1.5,
+                color: "white",
+                "&:hover": {
+                  color: "#BB6464",
+                },
+              }}
             >
               Users
             </Link>
@@ -84,7 +95,14 @@ const Header = ({ title }) => {
                 color="text.primary"
                 underline="none"
                 onClick={handleOpenCategoryMenu}
-                sx={{ my: 1, mx: 1.5, color: "white" }}
+                sx={{
+                  my: 1,
+                  mx: 1.5,
+                  color: "white",
+                  "&:hover": {
+                    color: "#BB6464",
+                  },
+                }}
               >
                 Category
               </Link>
@@ -94,7 +112,14 @@ const Header = ({ title }) => {
                 color="text.primary"
                 href="/admin-category"
                 underline="none"
-                sx={{ my: 1, mx: 1.5, color: "white" }}
+                sx={{
+                  my: 1,
+                  mx: 1.5,
+                  color: "white",
+                  "&:hover": {
+                    color: "#BB6464",
+                  },
+                }}
               >
                 Category
               </Link>
@@ -129,7 +154,15 @@ const Header = ({ title }) => {
               color="text.primary"
               href="/"
               underline="none"
-              sx={{ my: 1, mx: 1.5, color: "white" }}
+              onClick={onLogout}
+              sx={{
+                my: 1,
+                mx: 1.5,
+                color: "white",
+                "&:hover": {
+                  color: "#BB6464",
+                },
+              }}
             >
               Logout
             </Link>
@@ -140,4 +173,10 @@ const Header = ({ title }) => {
   );
 };
 
-export default Header;
+const mapStateToProps = (state) => {
+  return {
+    auth: state.auth,
+  };
+};
+
+export default connect(mapStateToProps, { logOut })(Header);
