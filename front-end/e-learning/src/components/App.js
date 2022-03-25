@@ -9,6 +9,9 @@ import WordChoice from "./words_choices/WordChoice";
 import User from "./User";
 import Question from "./quizzes/Question";
 import Result from "./quizzes/Result";
+import Home from "./dashboard/Home";
+import Profile from "./Profile";
+import UserList from "./UserList";
 
 const App = () => {
   return (
@@ -24,6 +27,9 @@ const App = () => {
           <Route path="/admin-users" exact element={<User />} />
           <Route path="/quiz/:id" exact element={<Question />} />
           <Route path="/result/:id" exact element={<Result />} />
+          <Route path="/home" exact element={<Home />} />
+          <Route path="/profile/:id" exact element={<Profile />} />
+          <Route path="/users" exact element={<UserList />} />
         </Routes>
       </Router>
     </div>

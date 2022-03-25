@@ -80,4 +80,19 @@ class UserController extends Controller
     if ($user->save())
       return response($user, 201);
   }
+
+  public function profile($id)
+  {
+    $user = User::find($id);
+    
+    $user_categories = $user->userCategories()->get();
+
+    $count = 0;
+    foreach ($user_categories as $user_category)
+    {
+      $correct_counts = $user_category->countCorrectAnswers();
+      $count += $correct_counts;
+    }
+    return response(['profile' => $user, 'words_learned' => $count], 201);
+  }
 }

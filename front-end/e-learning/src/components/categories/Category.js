@@ -33,7 +33,7 @@ const Category = ({ auth }) => {
     if (cookies.token === undefined) {
       navigate("/");
     }
-  }, [auth]);
+  }, []);
 
   return (
     <div>

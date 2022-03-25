@@ -23,6 +23,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::get('me', [UserController::class, 'me']);
   Route::post('logout', [UserController::class, 'logout']);
   Route::get('users', [UserController::class, 'user']);
+  Route::get('profile/{id}', [UserController::class, 'profile']);
 
   Route::group(['middleware' => 'role'], function(){
     Route::post('create-category', [CategoryController::class, 'create']);

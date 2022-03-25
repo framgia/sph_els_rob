@@ -332,6 +332,27 @@ export const result = (id, token) => async (dispatch) => {
   }
 };
 
+export const profile = (id, token) => async (dispatch) => {
+  console.log(id);
+  console.log(token);
+  try {
+    const response = await axios.get(`/api/profile/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "PROFILE",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "PROFILE",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
 export const errorReset = (type) => (dispatch) => {
   dispatch({
     type: type,
