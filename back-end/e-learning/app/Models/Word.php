@@ -37,13 +37,13 @@ class Word extends Model
     	return $this->choices()->where('is_correct_answer', 1)->first();
 	}
 
-	function userAnswer()
+	public function userAnswers()
 	{
 		return $this->hasMany(UserAnswer::class);
 	}
 
 	function getUserAnswer($id)
 	{
-		return $this->userAnswer()->where('user_category_id', $id)->first();
+		return $this->userAnswers()->where('user_category_id', $id)->first();
 	}
 }

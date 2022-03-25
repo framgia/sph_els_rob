@@ -8,6 +8,7 @@ import Category from "./categories/Category";
 import WordChoice from "./words_choices/WordChoice";
 import User from "./User";
 import Question from "./quizzes/Question";
+import Result from "./quizzes/Result";
 
 const App = () => {
   return (
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/category" exact element={<Category />} />
           <Route path="/admin-users" exact element={<User />} />
           <Route path="/quiz/:id" exact element={<Question />} />
+          <Route path="/result/:id" exact element={<Result />} />
         </Routes>
       </Router>
     </div>

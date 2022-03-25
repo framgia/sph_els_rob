@@ -18,15 +18,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 
 import { listWord, saveAnswer } from "../../actions";
 
-const Question = ({
-  listWord,
-  words_choices,
-  saveAnswer,
-  data,
-  onSetOpen,
-  onSetState,
-  token,
-}) => {
+const Question = ({ listWord, words_choices, saveAnswer, data, token }) => {
   const [currentWord, setCurrentWord] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [count, setCount] = useState(0);
@@ -201,8 +193,7 @@ const Question = ({
                 <Button
                   color="primary"
                   onClick={() => {
-                    onSetState(0);
-                    onSetOpen(false);
+                    navigate(`/result/${data.id}`);
                   }}
                 >
                   Submit

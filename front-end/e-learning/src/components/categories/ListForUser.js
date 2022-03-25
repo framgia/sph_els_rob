@@ -144,6 +144,9 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
                               addQuiz(user_category.id);
                               setOpen(true);
                               setStart(user_category.id);
+                              setCookie("category", user_category, {
+                                path: "/",
+                              });
                             }}
                             sx={{
                               "&:hover": {
