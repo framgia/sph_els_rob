@@ -370,7 +370,6 @@ export const follow = (id, token) => async (dispatch) => {
       type: "FOLLOW",
       payload: response.data,
     });
-    console.log(response.data);
   } catch (e) {
     dispatch({
       type: "FOLLOW",
@@ -432,6 +431,26 @@ export const followingList = (id, token) => async (dispatch) => {
     dispatch({
       type: "FOLLOWINGS",
       payload: null,
+    });
+  }
+};
+
+export const updateProf = (formValues, token) => async (dispatch) => {
+  try {
+    const response = await axios.post("/api/update-profile", formValues, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    dispatch({
+      type: "UPDATE_PROFILE",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "UPDATE_PROFILE",
+      payload: { error_message: e.message },
     });
   }
 };

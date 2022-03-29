@@ -6,6 +6,8 @@ export default (state = null, action) => {
       return action.payload;
     case "LOG_OUT":
       return action.payload;
+    case "UPDATE_PROFILE":
+      return action.payload;
     default:
       return state;
   }
