@@ -32,7 +32,6 @@ class FollowerController extends Controller
 
     public function following($id)
     {
-
         return response(User::find($id)->followings()->get(), 201);
     }
     

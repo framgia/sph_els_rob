@@ -72,14 +72,8 @@ class User extends Authenticatable
     public function isFollowing($id)
     {
         $following = $this->followings()->where('user_following_id', $id)->first();
-        if (is_null($following))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
+        
+        return !is_null($following);
     }
 
     public function getFollower($id)
