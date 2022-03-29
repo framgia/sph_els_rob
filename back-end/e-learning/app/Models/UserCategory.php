@@ -37,4 +37,9 @@ class UserCategory extends Model
 	{
 		return $this->hasMany(UserAnswer::class);
 	}
+
+	public function countCorrectAnswers()
+	{
+		return $this->userAnswers()->where('is_correct', 1)->count();
+	}
 }

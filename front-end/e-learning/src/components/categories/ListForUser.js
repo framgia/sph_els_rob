@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { isNull } from "lodash";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 import { userCategory, addQuiz } from "../../actions";
 import Question from "../quizzes/Question";
@@ -22,6 +23,7 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [start, setStart] = useState(null);
   const [open, setOpen] = useState(false);
+  let navigate = useNavigate();
 
   useEffect(() => {
     userCategory(cookies.token);
@@ -30,6 +32,7 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
   return (
     <Container maxWidth="96%">
       <Paper
+        variant="outlined"
         sx={{
           width: "100%",
           overflow: "auto",
@@ -139,24 +142,45 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
                           disableSpacing
                           sx={{ display: "flex", justifyContent: "flex-end" }}
                         >
-                          <Button
-                            onClick={() => {
-                              addQuiz(user_category.id);
-                              setOpen(true);
-                              setStart(user_category.id);
-                              setCookie("category", user_category, {
-                                path: "/",
-                              });
-                            }}
-                            sx={{
-                              "&:hover": {
-                                backgroundColor: "#464E2E",
-                                color: "white",
-                              },
-                            }}
-                          >
-                            {user_category.status === 1 ? "•Retake" : "Start"}
-                          </Button>
+                          {user_category.status !== 1 ? (
+                            <Button
+                              onClick={() => {
+                                addQuiz(user_category.id);
+                                setOpen(true);
+                                setStart(user_category.id);
+                                setCookie("category", user_category, {
+                                  path: "/",
+                                });
+                              }}
+                              sx={{
+                                "&:hover": {
+                                  backgroundColor: "#464E2E",
+                                  color: "white",
+                                },
+                              }}
+                            >
+                              Start
+                            </Button>
+                          ) : (
+                            <Button
+                              onClick={() => {
+                                setCookie("category", user_category, {
+                                  path: "/",
+                                });
+                                navigate(`/result/${user_category.id}`);
+                              }}
+                              sx={{
+                                color: "green",
+                                "&:hover": {
+                                  backgroundColor: "#464E2E",
+                                  color: "white",
+                                },
+                              }}
+                            >
+                              Result
+                            </Button>
+                          )}
+
                           {user_category.id === start ? (
                             <Modal
                               open={open}

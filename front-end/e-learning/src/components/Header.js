@@ -34,8 +34,10 @@ const Header = ({ title, logOut }) => {
 
   const onLogout = () => {
     logOut(cookies.token);
-    removeCookie("user");
-    removeCookie("token");
+    removeCookie("user", { path: "/" });
+    removeCookie("token", { path: "/" });
+    removeCookie("category", { path: "/" });
+    removeCookie("role", { path: "/" });
   };
 
   return (
@@ -149,6 +151,22 @@ const Header = ({ title, logOut }) => {
                 </MenuItem>
               ))}
             </Menu>
+            <Link
+              variant="button"
+              color="text.primary"
+              href={`/profile/${cookies.user.id}`}
+              underline="none"
+              sx={{
+                my: 1,
+                mx: 1.5,
+                color: "white",
+                "&:hover": {
+                  color: "#BB6464",
+                },
+              }}
+            >
+              Profile
+            </Link>
             <Link
               variant="button"
               color="text.primary"

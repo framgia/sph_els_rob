@@ -58,11 +58,13 @@ const List = ({ listWord, words_choices, token, id }) => {
   return (
     <Container maxWidth="96%">
       <Paper
+        variant="outlined"
         sx={{
           width: "100%",
           overflow: "auto",
           margin: "auto",
           p: "1%",
+          border: 0,
         }}
       >
         <Box marginTop="10px" sx={{ maxHeight: 600 }}>
