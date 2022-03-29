@@ -4,7 +4,8 @@ import { useCookies } from "react-cookie";
 import { connect } from "react-redux";
 import Pagination from "@mui/material/Pagination";
 
-import { listUser } from "../actions";
+import { listUser } from "../../actions";
+import UserAvatar from "./UserAvatar";
 
 import { Avatar, Box, Grid, Typography, Button, Paper } from "@mui/material";
 
@@ -45,7 +46,7 @@ const UserList = ({ listUser, users }) => {
 
   const handleChange = (event, value) => {
     if (value <= 1) {
-      setMinimum(1);
+      setMinimum(0);
       setMaximum(cards_per_page);
     } else {
       setMinimum(value * cards_per_page - cards_per_page);
@@ -108,8 +109,10 @@ const UserList = ({ listUser, users }) => {
                       src="https://letsenhance.io/static/334225cab5be263aad8e3894809594ce/75c5a/MainAfter.jpg"
                     />
                   ) : (
-                    <Avatar
-                      {...stringAvatar(`${user.first_name} ${user.last_name}`)}
+                    <UserAvatar
+                      first_name={user.first_name.toUpperCase()}
+                      last_name={user.last_name.toUpperCase()}
+                      size={45}
                     />
                   )}
                 </Grid>

@@ -10,8 +10,8 @@ import User from "./User";
 import Question from "./quizzes/Question";
 import Result from "./quizzes/Result";
 import Home from "./dashboard/Home";
-import Profile from "./Profile";
-import UserList from "./UserList";
+import Profile from "./profile/Profile";
+import UserList from "./profile/UserList";
 
 const App = () => {
   return (

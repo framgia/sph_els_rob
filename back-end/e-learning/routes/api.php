@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\WordController;
 use App\Http\Controllers\UserCategoryController;
 use App\Http\Controllers\UserAnswerController;
+use App\Http\Controllers\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +47,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
   Route::post('save-answer/{category_id}/{word_id}/{choice_id}', [UserAnswerController::class, 'saveAnswer']);
   Route::get('result/{id}', [UserAnswerController::class, 'result']);
+
+  Route::post('follow/{id}', [FollowerController::class, 'follow']);
+  Route::post('unfollow/{id}', [FollowerController::class, 'unfollow']);
+  Route::get('followings/{id}', [FollowerController::class, 'following']);
+  Route::get('followers/{id}', [FollowerController::class, 'follower']);
 });
 
 Route::post('login', [UserController::class, 'login']);

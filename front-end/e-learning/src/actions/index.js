@@ -333,8 +333,6 @@ export const result = (id, token) => async (dispatch) => {
 };
 
 export const profile = (id, token) => async (dispatch) => {
-  console.log(id);
-  console.log(token);
   try {
     const response = await axios.get(`/api/profile/${id}`, {
       headers: {
@@ -359,4 +357,81 @@ export const errorReset = (type) => (dispatch) => {
     payload: null,
     error: null,
   });
+};
+
+export const follow = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/follow/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "FOLLOW",
+      payload: response.data,
+    });
+    console.log(response.data);
+  } catch (e) {
+    dispatch({
+      type: "FOLLOW",
+      payload: null,
+    });
+  }
+};
+
+export const unfollow = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/unfollow/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "UNFOLLOW",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "UNFOLLOW",
+      payload: null,
+    });
+  }
+};
+
+export const followerList = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/followers/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "FOLLOWERS",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "FOLLOWERS",
+      payload: null,
+    });
+  }
+};
+
+export const followingList = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/followings/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "FOLLOWINGS",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "FOLLOWINGS",
+      payload: null,
+    });
+  }
 };

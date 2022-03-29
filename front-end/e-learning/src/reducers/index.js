@@ -10,6 +10,8 @@ import lessonReducer from "./lessonReducer";
 import userCategoryReducer from "./userCategoryReducer";
 import resultReducer from "./resultReducer";
 import profileReducer from "./profileReducer";
+import followingReducer from "./followingReducer";
+import followerReducer from "./followerReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -22,4 +24,6 @@ export default combineReducers({
   user_categories: userCategoryReducer,
   results: resultReducer,
   user: profileReducer,
+  followings: followingReducer,
+  followers: followerReducer,
 });

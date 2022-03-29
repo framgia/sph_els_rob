@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\UserCategory;
+use App\Models\User;
 
 class User extends Authenticatable
 {
@@ -56,5 +57,33 @@ class User extends Authenticatable
     public function getUserCategory($id)
     {
         return $this->userCategories()->where('category_id', $id)->first();
+    }
+
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'user_following_id');
+    }
+    
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'followers', 'user_following_id', 'user_id');
+    }
+
+    public function isFollowing($id)
+    {
+        $following = $this->followings()->where('user_following_id', $id)->first();
+        if (is_null($following))
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
+    public function getFollower($id)
+    {
+        return $this->followers()->where('user_id', $id)->first();
     }
 }
