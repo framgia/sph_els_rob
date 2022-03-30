@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::post('logout', [UserController::class, 'logout']);
   Route::get('users', [UserController::class, 'user']);
   Route::get('profile/{id}', [UserController::class, 'profile']);
+  Route::post('update-profile', [UserController::class, 'update']);
 
   Route::group(['middleware' => 'role'], function(){
     Route::post('create-category', [CategoryController::class, 'create']);

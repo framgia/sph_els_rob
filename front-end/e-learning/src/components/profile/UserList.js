@@ -106,7 +106,7 @@ const UserList = ({ listUser, users }) => {
                   {user.avatar !== null ? (
                     <Avatar
                       alt="Remy Sharp"
-                      src="https://letsenhance.io/static/334225cab5be263aad8e3894809594ce/75c5a/MainAfter.jpg"
+                      src={`http://127.0.0.1:8000/public/Image/${user.avatar}`}
                     />
                   ) : (
                     <UserAvatar

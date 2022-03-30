@@ -12,6 +12,7 @@ import Result from "./quizzes/Result";
 import Home from "./dashboard/Home";
 import Profile from "./profile/Profile";
 import UserList from "./profile/UserList";
+import UpdateProfile from "./profile/UpdateProfile";
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
           <Route path="/home" exact element={<Home />} />
           <Route path="/profile/:id" exact element={<Profile />} />
           <Route path="/users" exact element={<UserList />} />
+          <Route path="/update" exact element={<UpdateProfile />} />
         </Routes>
       </Router>
     </div>

@@ -95,4 +95,43 @@ class UserController extends Controller
     }
     return response(['profile' => $user, 'words_learned' => $count, 'is_following' => auth()->user()->isFollowing($id)], 201);
   }
+
+  public function update(Request $request)
+  {
+    $user = User::find(auth()->user()->id);
+
+    if ($request->hasFile('file'))
+    {
+      $image = $request->file('file');
+      $imageName = time().'.'.$image->getClientOriginalName();
+      $path = $image->move(public_path('public/Image'), $imageName);
+    }
+    else 
+    {
+      $imageName = $user->avatar;
+    }
+
+    if (!$request->password)
+    {
+      $user->fill([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'email' => $request->email,
+        'avatar' => $imageName
+      ]);
+    }
+    else{
+      $user->fill([
+        'first_name' => $request->first_name,
+        'last_name' => $request->last_name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'avatar' => $imageName
+      ]);
+    }
+    
+    $user->save();
+
+    return response($user, 201);
+  }
 }

@@ -10,6 +10,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
 import Modal from "@mui/material/Modal";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 import {
   profile,
@@ -20,6 +22,8 @@ import {
 } from "../../actions";
 import FollowingFollowerList from "./FollowingFollowerList";
 import UserAvatar from "./UserAvatar";
+import UpdateProfile from "./UpdateProfile";
+import { Card } from "@mui/material";
 
 const ProfileContent = ({
   user,
@@ -30,16 +34,19 @@ const ProfileContent = ({
   followingList,
   follow,
   unfollow,
-  cookies,
   id,
 }) => {
+  const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [open_follow_button, setOpenFollowButton] = useState(true);
   const [openFollowers, setOpenFollowers] = useState(false);
   const [openFollowings, setOpenFollowings] = useState(false);
+  const [openUpdate, setOpenUpdate] = useState(false);
+  const [openNotification, setOpenNotification] = useState("");
 
   const handleClose = () => {
     setOpenFollowers(false);
     setOpenFollowings(false);
+    setOpenUpdate(false);
   };
 
   const handleOpenFollowers = () => {
@@ -51,6 +58,14 @@ const ProfileContent = ({
   };
 
   let navigate = useNavigate();
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleNotificationClose = () => {
+    setOpenNotification(false);
+  };
 
   useEffect(() => {
     if (cookies.token === undefined) {
@@ -68,6 +83,14 @@ const ProfileContent = ({
     followerList(id, cookies.token);
     profile(id, cookies.token);
   }, [open_follow_button, followers.length]);
+
+  useEffect(() => {
+    profile(id, cookies.token);
+    if (user !== null) {
+      removeCookie("user", { path: "/" });
+      setCookie("user", user.profile, { path: "/" });
+    }
+  }, [openUpdate]);
 
   return (
     <div>
@@ -96,7 +119,7 @@ const ProfileContent = ({
               {user.profile.avatar !== null ? (
                 <Avatar
                   alt="Remy Sharp"
-                  src="https://letsenhance.io/static/334225cab5be263aad8e3894809594ce/75c5a/MainAfter.jpg"
+                  src={`http://127.0.0.1:8000/public/Image/${user.profile.avatar}`}
                   sx={{ height: 118, width: 118 }}
                 />
               ) : (
@@ -215,7 +238,25 @@ const ProfileContent = ({
                 }}
               >
                 {user.profile.id === cookies.user.id ? (
-                  ""
+                  <Grid align="center" item xs={12} sx={{ mt: 4 }}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => setOpenUpdate(true)}
+                      sx={{
+                        borderColor: "#BB6464",
+                        maxWidth: "70%",
+                        color: "#BB6464",
+                        "&:hover": {
+                          backgroundColor: "#BB6464",
+                          borderColor: "#BB6464",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      EDIT PROFILE
+                    </Button>
+                  </Grid>
                 ) : (
                   <Grid align="center" item xs={12} sx={{ mt: 4 }}>
                     {user.is_following ? (
@@ -286,6 +327,24 @@ const ProfileContent = ({
       ) : (
         ""
       )}
+      {openNotification ? (
+        <Snackbar
+          anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+          open={openNotification}
+          onClose={handleNotificationClose}
+          autoHideDuration={3000}
+        >
+          <Alert
+            onClose={handleNotificationClose}
+            severity="success"
+            sx={{ width: "100%", bgcolor: "#464E2E" }}
+          >
+            Successfully updated your profile!
+          </Alert>
+        </Snackbar>
+      ) : (
+        ""
+      )}
       <Modal open={openFollowers} onClose={handleClose}>
         <FollowingFollowerList
           data={followers}
@@ -300,12 +359,33 @@ const ProfileContent = ({
           title={"Following"}
         />
       </Modal>
+      <Modal open={openUpdate} onClose={handleClose}>
+        <Card
+          sx={{
+            width: 600,
+            maxHeight: "90%",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            bgcolor: "white",
+            boxShadow: 12,
+            p: 2,
+          }}
+        >
+          <UpdateProfile
+            onOpen={setOpenUpdate}
+            onSetOpenNotification={setOpenNotification}
+          />
+        </Card>
+      </Modal>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.user);
   return {
     user: state.user,
     followers: Object.values(state.followers),

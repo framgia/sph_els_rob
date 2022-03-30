@@ -47,7 +47,7 @@ const Profile = () => {
           }}
         >
           <Grid item xs={4}>
-            <ProfileContent cookies={cookies} id={id} />
+            <ProfileContent id={id} />
           </Grid>
           <Grid item xs={8}>
             <Box
