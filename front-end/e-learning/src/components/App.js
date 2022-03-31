@@ -11,6 +11,7 @@ import Result from "./quizzes/Result";
 import Profile from "./profile/Profile";
 import UserList from "./profile/UserList";
 import UpdateProfile from "./profile/UpdateProfile";
+import LearnedWord from "./profile/LearnedWord";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
           />
           <Route path="/users" exact element={<UserList />} />
           <Route path="/update" exact element={<UpdateProfile />} />
+          <Route path="/learned-words/:id" exact element={<LearnedWord />} />
         </Routes>
       </Router>
     </div>

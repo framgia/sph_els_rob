@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
   Route::post('save-answer/{category_id}/{word_id}/{choice_id}', [UserAnswerController::class, 'saveAnswer']);
   Route::get('result/{id}', [UserAnswerController::class, 'result']);
+  Route::get('learned-words/{id}', [UserAnswerController::class, 'learnedWord']);
 
   Route::post('follow/{id}', [FollowerController::class, 'follow']);
   Route::post('unfollow/{id}', [FollowerController::class, 'unfollow']);

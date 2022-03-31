@@ -48,4 +48,9 @@ class UserCategory extends Model
 	{
 		return $this->morphMany(Activity::class, 'activitable');
 	}
+
+	public function userCorrectAnswers()
+	{
+		return $this->userAnswers()->where('is_correct', 1)->get();
+	}
 }

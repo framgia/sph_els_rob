@@ -10,6 +10,7 @@ use App\Models\UserCategory;
 use App\Models\Choice;
 use App\Models\Word;
 use App\Models\Category;
+use App\Models\User;
 
 class UserAnswerController extends Controller
 {
@@ -93,6 +94,45 @@ class UserAnswerController extends Controller
             }
         }
 
+        return response($collection, 201);
+    }
+
+    public function learnedWord($id)
+    {
+        $collection = new Collection();
+
+        $user = User::find($id);
+
+        $user_categories = $user->userCategories()->get();
+        
+        foreach ($user_categories as $user_category)
+        {
+            $category = Category::find($user_category->category_id);
+
+            $learned_words = $user_category->userCorrectAnswers();
+            
+            $answer_collection = new Collection();
+
+            foreach ($learned_words as $learned_word)
+            {
+                $word = Word::find($learned_word->word_id);
+                $choice = Choice::find($learned_word->choice_id);
+
+                $answer_collection->push([
+                    'id' => $learned_word->id,
+                    'word_id' => $learned_word->id,
+                    'word' => $word->value,
+                    'choice_id' => $learned_word->choice_id,
+                    'choice' => $choice->value,
+                ]);
+            }
+            $collection->push([
+                'id' => $user_category->id,
+                'category_id' => $category->id,
+                'title' => $category->title,
+                'answers' => $answer_collection
+            ]);
+        }
         return response($collection, 201);
     }
 }
