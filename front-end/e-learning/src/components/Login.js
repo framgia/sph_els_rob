@@ -36,11 +36,10 @@ const Login = ({ logIn, auth }) => {
       if (auth.token !== undefined) {
         setCookie("user", auth.user, { path: "/" });
         setCookie("token", auth.token, { path: "/" });
-        navigate("/admin-category");
+        navigate(`/dashboard/${auth.user.id}`);
       }
-    }
-    if (cookies.token !== undefined) {
-      navigate("/admin-category");
+    } else if (cookies.token !== undefined) {
+      navigate(`/dashboard/${cookies.user.id}`);
     }
   }, [auth]);
   return (

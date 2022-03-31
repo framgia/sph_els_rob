@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\User;
 use App\Models\Category;
 use App\Models\UserAnswer;
+use App\Models\Activity;
 
 class UserCategory extends Model
 {
@@ -41,5 +42,10 @@ class UserCategory extends Model
 	public function countCorrectAnswers()
 	{
 		return $this->userAnswers()->where('is_correct', 1)->count();
+	}
+
+	public function activities()
+	{
+		return $this->morphMany(Activity::class, 'activitable');
 	}
 }

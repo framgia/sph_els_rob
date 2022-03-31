@@ -93,7 +93,7 @@ class UserController extends Controller
       $correct_counts = $user_category->countCorrectAnswers();
       $count += $correct_counts;
     }
-    return response(['profile' => $user, 'words_learned' => $count, 'is_following' => auth()->user()->isFollowing($id)], 201);
+    return response(['profile' => $user, 'words_learned' => $count, 'lessons_learned' => $user_categories->count(),'is_following' => auth()->user()->isFollowing($id)], 201);
   }
 
   public function update(Request $request)

@@ -8,6 +8,7 @@ use App\Http\Controllers\WordController;
 use App\Http\Controllers\UserCategoryController;
 use App\Http\Controllers\UserAnswerController;
 use App\Http\Controllers\FollowerController;
+use App\Http\Controllers\ActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,6 +46,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
   Route::post('add-quiz/{id}', [UserCategoryController::class, 'create']);
   Route::get('user-category', [UserCategoryController::class, 'list']);
+  Route::post('submit-lesson/{id}', [UserCategoryController::class, 'submit']);
 
   Route::post('save-answer/{category_id}/{word_id}/{choice_id}', [UserAnswerController::class, 'saveAnswer']);
   Route::get('result/{id}', [UserAnswerController::class, 'result']);
@@ -53,6 +55,9 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
   Route::post('unfollow/{id}', [FollowerController::class, 'unfollow']);
   Route::get('followings/{id}', [FollowerController::class, 'following']);
   Route::get('followers/{id}', [FollowerController::class, 'follower']);
+
+  Route::get('activities/{id}', [ActivityController::class, 'list']);
+  Route::get('activities', [ActivityController::class, 'allList']);
 });
 
 Route::post('login', [UserController::class, 'login']);

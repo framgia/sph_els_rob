@@ -69,8 +69,8 @@ const UpdateProfile = ({ onOpen, updateProf, onSetOpenNotification }) => {
       updateProf(data, cookies.token);
       setTimeout(() => {
         onOpen(false);
+        onSetOpenNotification(true);
       }, 500);
-      onSetOpenNotification(true);
       setTimeout(() => {
         onSetOpenNotification(false);
       }, 3000);
@@ -187,7 +187,7 @@ const UpdateProfile = ({ onOpen, updateProf, onSetOpenNotification }) => {
         </Grid>
       </Box>
       <form>
-        <Grid container spacing={1}>
+        <Grid container spacing={1} sx={{ p: 2 }}>
           <Grid item xs={12} sm={6}>
             <TextField
               autoComplete="given-name"
@@ -304,23 +304,35 @@ const UpdateProfile = ({ onOpen, updateProf, onSetOpenNotification }) => {
         >
           {cookies.user !== undefined ? "" : "Email is not available!"}
         </Box>
-        <Button
-          onClick={onUpdate}
-          type="submit"
-          fullWidth
-          variant="contained"
+        <Box
           sx={{
-            mt: 2,
-            mb: 2,
-            bgcolor: "#05386b",
-            "&:hover": {
-              backgroundColor: "#edf5e1",
-              color: "black",
-            },
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            color: "red",
           }}
         >
-          Save
-        </Button>
+          <Button
+            onClick={onUpdate}
+            type="submit"
+            fullWidth
+            variant="contained"
+            margin="center"
+            sx={{
+              mt: 2,
+              mb: 2,
+              width: "70%",
+              margin: "center",
+              bgcolor: "#05386b",
+              "&:hover": {
+                backgroundColor: "#edf5e1",
+                color: "black",
+              },
+            }}
+          >
+            Save
+          </Button>
+        </Box>
       </form>
     </Box>
   );

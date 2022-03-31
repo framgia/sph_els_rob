@@ -35,6 +35,7 @@ const ProfileContent = ({
   follow,
   unfollow,
   id,
+  type,
 }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
   const [open_follow_button, setOpenFollowButton] = useState(true);
@@ -94,19 +95,19 @@ const ProfileContent = ({
 
   return (
     <div>
-      {user !== null ? (
+      <Box
+        sx={{
+          height: 500,
+        }}
+      >
         <Box
           sx={{
-            height: 500,
+            height: "10%",
+            width: "100%",
+            margin: "auto",
           }}
         >
-          <Box
-            sx={{
-              height: "10%",
-              width: "100%",
-              margin: "auto",
-            }}
-          >
+          {user !== null ? (
             <Avatar
               sx={{
                 width: 130,
@@ -130,17 +131,21 @@ const ProfileContent = ({
                 />
               )}
             </Avatar>
-          </Box>
-          <Box
-            sx={{
-              height: "90%",
-              width: "100%",
-              margin: "auto",
-              borderRadius: 5,
-              border: 7,
-              borderColor: "#BB6464",
-            }}
-          >
+          ) : (
+            ""
+          )}
+        </Box>
+        <Box
+          sx={{
+            height: "90%",
+            width: "100%",
+            margin: "auto",
+            borderRadius: 5,
+            border: 7,
+            borderColor: "#BB6464",
+          }}
+        >
+          {user !== null ? (
             <Box
               sx={{
                 height: "70%",
@@ -159,76 +164,80 @@ const ProfileContent = ({
               >
                 {user.profile.first_name} {user.profile.last_name}
               </Typography>
-              <Grid
-                container
-                columns={12}
-                sx={{
-                  maxWidth: "60%",
-                  margin: "auto",
-                  mt: 4,
-                }}
-              >
-                <Grid align="center" item xs={6} sx={{ margin: "auto" }}>
-                  <Button
-                    onClick={handleOpenFollowers}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "white",
-                      },
-                    }}
-                  >
+              {type === "PROFILE" ? (
+                <Grid
+                  container
+                  columns={12}
+                  sx={{
+                    maxWidth: "60%",
+                    margin: "auto",
+                    mt: 4,
+                  }}
+                >
+                  <Grid align="center" item xs={6} sx={{ margin: "auto" }}>
+                    <Button
+                      onClick={handleOpenFollowers}
+                      sx={{
+                        "&:hover": {
+                          bgcolor: "white",
+                        },
+                      }}
+                    >
+                      <Typography
+                        align="center"
+                        sx={{
+                          color: "#464E2E",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        {followers.length}
+                      </Typography>
+                    </Button>
                     <Typography
                       align="center"
                       sx={{
                         color: "#464E2E",
-                        fontWeight: "bold",
-                        fontSize: 16,
+                        fontSize: 12,
                       }}
                     >
-                      {followers.length}
+                      followers
                     </Typography>
-                  </Button>
-                  <Typography
-                    align="center"
-                    sx={{
-                      color: "#464E2E",
-                      fontSize: 12,
-                    }}
-                  >
-                    followers
-                  </Typography>
-                </Grid>
-                <Grid align="center" item xs={6} sx={{ margin: "auto" }}>
-                  <Button
-                    onClick={handleOpenFollowings}
-                    sx={{
-                      "&:hover": {
-                        bgcolor: "white",
-                      },
-                    }}
-                  >
+                  </Grid>
+                  <Grid align="center" item xs={6} sx={{ margin: "auto" }}>
+                    <Button
+                      onClick={handleOpenFollowings}
+                      sx={{
+                        "&:hover": {
+                          bgcolor: "white",
+                        },
+                      }}
+                    >
+                      <Typography
+                        align="center"
+                        sx={{
+                          color: "#464E2E",
+                          fontWeight: "bold",
+                          fontSize: 16,
+                        }}
+                      >
+                        {followings.length}
+                      </Typography>
+                    </Button>
                     <Typography
                       align="center"
                       sx={{
                         color: "#464E2E",
-                        fontWeight: "bold",
-                        fontSize: 16,
+                        fontSize: 12,
                       }}
                     >
-                      {followings.length}
+                      following
                     </Typography>
-                  </Button>
-                  <Typography
-                    align="center"
-                    sx={{
-                      color: "#464E2E",
-                      fontSize: 12,
-                    }}
-                  >
-                    following
-                  </Typography>
+                  </Grid>
                 </Grid>
-              </Grid>
+              ) : (
+                ""
+              )}
               <Grid
                 container
                 columns={12}
@@ -239,23 +248,40 @@ const ProfileContent = ({
               >
                 {user.profile.id === cookies.user.id ? (
                   <Grid align="center" item xs={12} sx={{ mt: 4 }}>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => setOpenUpdate(true)}
-                      sx={{
-                        borderColor: "#BB6464",
-                        maxWidth: "70%",
-                        color: "#BB6464",
-                        "&:hover": {
-                          backgroundColor: "#BB6464",
+                    {type === "PROFILE" ? (
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => setOpenUpdate(true)}
+                        sx={{
                           borderColor: "#BB6464",
-                          color: "white",
-                        },
-                      }}
-                    >
-                      EDIT PROFILE
-                    </Button>
+                          maxWidth: "70%",
+                          color: "#BB6464",
+                          "&:hover": {
+                            backgroundColor: "#BB6464",
+                            borderColor: "#BB6464",
+                            color: "white",
+                          },
+                        }}
+                      >
+                        EDIT PROFILE
+                      </Button>
+                    ) : (
+                      <Link
+                        variant="button"
+                        href="/"
+                        underline="none"
+                        sx={{
+                          margin: "auto",
+                          "&:hover": {
+                            color: "#BB6464",
+                          },
+                        }}
+                      >
+                        Learned {user.lessons_learned}{" "}
+                        {user.lessons_learned > 1 ? "lessons" : "lesson"}
+                      </Link>
+                    )}
                   </Grid>
                 ) : (
                   <Grid align="center" item xs={12} sx={{ mt: 4 }}>
@@ -317,16 +343,17 @@ const ProfileContent = ({
                       },
                     }}
                   >
-                    Learned {user.words_learned} words
+                    Learned {user.words_learned}{" "}
+                    {user.words_learned > 1 ? "words" : "word"}
                   </Link>
                 </Grid>
               </Grid>
             </Box>
-          </Box>
+          ) : (
+            ""
+          )}
         </Box>
-      ) : (
-        ""
-      )}
+      </Box>
       {openNotification ? (
         <Snackbar
           anchorOrigin={{ vertical: "bottom", horizontal: "left" }}

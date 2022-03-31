@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 
 import Header from "../Header";
 import UserList from "./UserList";
+import Activity from "./Activity";
 import ProfileContent from "./ProfileContent";
 
 import Grid from "@mui/material/Grid";
@@ -16,10 +17,9 @@ import TabPanel from "@material-ui/lab/TabPanel";
 import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
 
-const Profile = () => {
+const Profile = ({ type }) => {
   let { id } = useParams();
   const [value, setValue] = useState("1");
-  const [cookies, setCookie] = useCookies(["user"]);
   const [open, setOpen] = useState(true);
 
   const handleChange = (event, newValue) => {
@@ -34,7 +34,7 @@ const Profile = () => {
 
   return (
     <div>
-      <Header title={"Profile"} />
+      <Header title={type === "PROFILE" ? "Profile" : "Home"} />
       {!open ? (
         <Grid
           container
@@ -47,7 +47,7 @@ const Profile = () => {
           }}
         >
           <Grid item xs={4}>
-            <ProfileContent id={id} />
+            <ProfileContent id={id} type={type} />
           </Grid>
           <Grid item xs={8}>
             <Box
@@ -71,7 +71,13 @@ const Profile = () => {
                     <Tab label="Users" value="2" />
                   </TabList>
                 </Box>
-                <TabPanel value="1">Activities</TabPanel>
+                <TabPanel value="1">
+                  {type === "PROFILE" ? (
+                    <Activity id={id} type={"LIST_FOR_USER"} />
+                  ) : (
+                    <Activity id={id} type={"LIST_FOR_ALL"} />
+                  )}
+                </TabPanel>
                 <TabPanel value="2">
                   <Box
                     sx={{

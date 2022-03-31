@@ -74,6 +74,22 @@ const Header = ({ title, logOut }) => {
           </nav>
         ) : (
           <nav>
+            <Link
+              variant="button"
+              color="text.primary"
+              href={`/dashboard/${cookies.user.id}`}
+              underline="none"
+              sx={{
+                my: 1,
+                mx: 1.5,
+                color: "white",
+                "&:hover": {
+                  color: "#BB6464",
+                },
+              }}
+            >
+              Dashboard
+            </Link>
             {cookies.user.role === "admin" ? (
               <Link
                 variant="button"
