@@ -12,6 +12,7 @@ import resultReducer from "./resultReducer";
 import profileReducer from "./profileReducer";
 import followingReducer from "./followingReducer";
 import followerReducer from "./followerReducer";
+import activityReducer from "./activityReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -26,4 +27,5 @@ export default combineReducers({
   user: profileReducer,
   followings: followingReducer,
   followers: followerReducer,
+  activities: activityReducer,
 });

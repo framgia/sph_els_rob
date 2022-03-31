@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { connect } from "react-redux";
+
 import Pagination from "@mui/material/Pagination";
 
 import { listUser } from "../../actions";
@@ -16,33 +17,6 @@ const UserList = ({ listUser, users }) => {
   const [maximum, setMaximum] = useState(cards_per_page);
 
   let navigate = useNavigate();
-
-  const stringToColor = (name) => {
-    let hash = 0;
-    let i;
-
-    for (i = 0; i < name.length; i += 1) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-
-    let color = "#";
-
-    for (i = 0; i < 3; i += 1) {
-      const value = (hash >> (i * 8)) & 0xff;
-      color += `00${value.toString(16)}`.substr(-2);
-    }
-
-    return color;
-  };
-
-  const stringAvatar = (name) => {
-    return {
-      sx: {
-        bgcolor: stringToColor(name),
-      },
-      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-    };
-  };
 
   const handleChange = (event, value) => {
     if (value <= 1) {
@@ -73,9 +47,10 @@ const UserList = ({ listUser, users }) => {
           p: "1%",
         }}
       >
-        {users.slice(minimum, maximum).map((user) => {
+        {users.slice(minimum, maximum).map((user, index) => {
           return (
             <Box
+              key={index}
               sx={{
                 height: "70px",
                 width: "100%",
@@ -190,7 +165,6 @@ const UserList = ({ listUser, users }) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.users);
   return {
     users: Object.values(state.users),
   };

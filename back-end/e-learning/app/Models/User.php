@@ -12,6 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 use App\Models\UserCategory;
 use App\Models\User;
+use App\Models\Activity;
 
 class User extends Authenticatable
 {
@@ -62,7 +63,7 @@ class User extends Authenticatable
 
     public function followings()
     {
-        return $this->belongsToMany(User::class, 'followers', 'user_id', 'user_following_id');
+        return $this->belongsToMany(User::class, 'followers', 'user_id', 'user_following_id')->withPivot('id');
     }
     
     public function followers()
@@ -79,6 +80,11 @@ class User extends Authenticatable
 
     public function getFollower($id)
     {
-        return $this->followers()->where('user_id', $id)->first();
+        return $this->followers()->where('user_id', $id)->withPivot('id')->first();
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(Activity::class);
     }
 }

@@ -16,9 +16,16 @@ import ArrowBackIosRoundedIcon from "@mui/icons-material/ArrowBackIosRounded";
 import Box from "@mui/material/Box";
 import LinearProgress from "@mui/material/LinearProgress";
 
-import { listWord, saveAnswer } from "../../actions";
+import { listWord, saveAnswer, submitLesson } from "../../actions";
 
-const Question = ({ listWord, words_choices, saveAnswer, data, token }) => {
+const Question = ({
+  listWord,
+  words_choices,
+  saveAnswer,
+  data,
+  token,
+  submitLesson,
+}) => {
   const [currentWord, setCurrentWord] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [count, setCount] = useState(0);
@@ -193,6 +200,7 @@ const Question = ({ listWord, words_choices, saveAnswer, data, token }) => {
                 <Button
                   color="primary"
                   onClick={() => {
+                    submitLesson(data.id, token);
                     navigate(`/result/${data.id}`);
                   }}
                 >
@@ -213,4 +221,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { listWord, saveAnswer })(Question);
+export default connect(mapStateToProps, { listWord, saveAnswer, submitLesson })(
+  Question
+);

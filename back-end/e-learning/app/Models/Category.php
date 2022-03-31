@@ -31,4 +31,9 @@ class Category extends Model
 	{
 		return $this->hasMany(UserCategory::class);
 	}
+
+	public function getUserCategory($id)
+	{
+		return $this->userCategories()->where('user_id', $id)->first();
+	}
 }

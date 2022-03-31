@@ -454,3 +454,61 @@ export const updateProf = (formValues, token) => async (dispatch) => {
     });
   }
 };
+
+export const submitLesson = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.post(`/api/submit-lesson/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+    });
+    dispatch({
+      type: "SUBMIT_LESSON",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "SUBMIT_LESSON",
+      payload: { error_message: e.message },
+    });
+  }
+};
+
+export const activityList = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/activities/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "ACTIVITIES",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "ACTIVITIES",
+      payload: null,
+    });
+  }
+};
+
+export const allActivityList = (token) => async (dispatch) => {
+  try {
+    const response = await axios.get("/api/activities", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "ACTIVITIES",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "ACTIVITIES",
+      payload: null,
+    });
+  }
+};

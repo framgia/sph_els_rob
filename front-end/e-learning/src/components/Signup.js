@@ -78,11 +78,10 @@ const Signup = ({ signUp, auth }) => {
       if (auth.token !== undefined) {
         setCookie("user", auth.user, { path: "/" });
         setCookie("token", auth.token, { path: "/" });
-        navigate("/home");
+        navigate(`/dashboard/${auth.user.id}`);
       }
-    }
-    if (cookies.token !== undefined) {
-      navigate("/home");
+    } else if (cookies.token !== undefined) {
+      navigate(`/dashboard/${cookies.user.id}`);
     }
   }, [auth]);
 

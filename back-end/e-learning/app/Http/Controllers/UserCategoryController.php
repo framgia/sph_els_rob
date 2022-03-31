@@ -8,14 +8,14 @@ use Illuminate\Support\Collection;
 use App\Models\UserCategory;
 use App\Models\Category;
 use App\Models\UserAnswer;
+use App\Models\Activity;
 
 class UserCategoryController extends Controller
 {
     public function create($id)
     {
-        $user_category = UserCategory::where([
-            ['user_id', auth()->user()->id], ['category_id', $id]
-        ])->first();
+        $category = Category::find($id);
+        $user_category = $category->getUserCategory(auth()->user()->id);
 
         if ($user_category)
             return response([ 'message' => 'Already enrolled to this lesson!' ], 201); 
@@ -42,16 +42,12 @@ class UserCategoryController extends Controller
         {
             $words = $category->words()->count();
 
-            $user_category = UserCategory::where([
-                ['user_id', auth()->user()->id], ['category_id', $category->id]
-            ])->first();
+            $user_category = $category->getUserCategory(auth()->user()->id);
             
             if ($user_category)
             {
-                $learned = UserAnswer::where([
-                    ['user_category_id', $user_category->id], ['is_correct', 1]
-                ])->count();
-                
+                $learned = $user_category->countCorrectAnswers();
+
                 $collection->push([
                     'id' => $category->id,
                     'title' => $category->title,
@@ -74,5 +70,18 @@ class UserCategoryController extends Controller
             }
         }
         return response($collection, 201);
+    }
+
+    public function submit($id)
+    {
+        $category = Category::find($id);
+        
+        $activity = new Activity(['user_id' => auth()->user()->id]);
+
+        $user_category = $category->getUserCategory(auth()->user()->id);
+        
+        $user_category->activities()->save($activity);
+        
+        return response($user_category->activities, 201);
     }
 }
