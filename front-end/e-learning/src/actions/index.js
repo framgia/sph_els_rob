@@ -512,3 +512,22 @@ export const allActivityList = (token) => async (dispatch) => {
     });
   }
 };
+
+export const learnedWord = (id, token) => async (dispatch) => {
+  try {
+    const response = await axios.get(`/api/learned-words/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    dispatch({
+      type: "LEARNED_WORDS",
+      payload: response.data,
+    });
+  } catch (e) {
+    dispatch({
+      type: "LEARNED_WORDS",
+      payload: { error_message: e.message },
+    });
+  }
+};

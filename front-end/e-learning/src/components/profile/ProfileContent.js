@@ -24,6 +24,7 @@ import FollowingFollowerList from "./FollowingFollowerList";
 import UserAvatar from "./UserAvatar";
 import UpdateProfile from "./UpdateProfile";
 import { Card } from "@mui/material";
+import LearnedWord from "./LearnedWord";
 
 const ProfileContent = ({
   user,
@@ -42,12 +43,14 @@ const ProfileContent = ({
   const [openFollowers, setOpenFollowers] = useState(false);
   const [openFollowings, setOpenFollowings] = useState(false);
   const [openUpdate, setOpenUpdate] = useState(false);
+  const [openLearnedWords, setOpenLearnedWords] = useState(false);
   const [openNotification, setOpenNotification] = useState("");
 
   const handleClose = () => {
     setOpenFollowers(false);
     setOpenFollowings(false);
     setOpenUpdate(false);
+    setOpenLearnedWords(false);
   };
 
   const handleOpenFollowers = () => {
@@ -269,10 +272,11 @@ const ProfileContent = ({
                     ) : (
                       <Link
                         variant="button"
-                        href="/"
                         underline="none"
+                        onClick={() => setOpenLearnedWords(true)}
                         sx={{
                           margin: "auto",
+                          cursor: "pointer",
                           "&:hover": {
                             color: "#BB6464",
                           },
@@ -334,10 +338,11 @@ const ProfileContent = ({
                 <Grid align="center" item xs={12} sx={{ mt: 4 }}>
                   <Link
                     variant="button"
-                    href="/"
                     underline="none"
+                    onClick={() => setOpenLearnedWords(true)}
                     sx={{
                       margin: "auto",
+                      cursor: "pointer",
                       "&:hover": {
                         color: "#BB6464",
                       },
@@ -406,6 +411,34 @@ const ProfileContent = ({
             onOpen={setOpenUpdate}
             onSetOpenNotification={setOpenNotification}
           />
+        </Card>
+      </Modal>
+      <Modal open={openLearnedWords} onClose={handleClose}>
+        <Card
+          sx={{
+            width: 800,
+            height: "70%",
+            position: "absolute",
+            left: "50%",
+            top: "50%",
+            transform: "translate(-50%, -50%)",
+            display: "flex",
+            flexDirection: "column",
+            bgcolor: "white",
+            boxShadow: 12,
+            p: 2,
+          }}
+        >
+          <Typography
+            sx={{
+              color: "#05386b",
+              fontWeight: "bold",
+              fontSize: 18,
+            }}
+          >
+            Words learned
+          </Typography>
+          <LearnedWord id={id} />
         </Card>
       </Modal>
     </div>

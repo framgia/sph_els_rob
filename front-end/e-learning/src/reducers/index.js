@@ -13,6 +13,7 @@ import profileReducer from "./profileReducer";
 import followingReducer from "./followingReducer";
 import followerReducer from "./followerReducer";
 import activityReducer from "./activityReducer";
+import learnedWordReducer from "./learnedWordReducer";
 
 export default combineReducers({
   auth: authReducer,
@@ -28,4 +29,5 @@ export default combineReducers({
   followings: followingReducer,
   followers: followerReducer,
   activities: activityReducer,
+  learned_words: learnedWordReducer,
 });
