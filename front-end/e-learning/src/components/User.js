@@ -17,9 +17,12 @@ import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
+import Snackbar from "@mui/material/Snackbar";
+import MuiAlert from "@mui/material/Alert";
 
 import { listUser, changeRole } from "../actions";
 import Header from "./Header";
+import ChangeRole from "./ChangeRole";
 
 const columns = [
   {
@@ -53,8 +56,21 @@ const User = ({ listUser, users, changeRole }) => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [openChangeRole, setOpenChangeRole] = useState(false);
+  const [changeID, setChangeID] = useState(0);
+  const [userName, setUserName] = useState("");
 
   let navigate = useNavigate();
+
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+  });
+
+  const handleNotificationClose = () => {
+    setOpen(false);
+  };
 
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -157,8 +173,9 @@ const User = ({ listUser, users, changeRole }) => {
                               variant="caption"
                               underline="hover"
                               onClick={() => {
-                                changeRole(user.id, cookies.token);
-                                console.log(cookies.token);
+                                setChangeID(user.id);
+                                setOpenChangeRole(true);
+                                setUserName(user.first_name);
                               }}
                               sx={{
                                 fontSize: 14,
@@ -205,12 +222,39 @@ const User = ({ listUser, users, changeRole }) => {
           }}
         />
       </Paper>
+      {openChangeRole ? (
+        <ChangeRole
+          user_id={changeID}
+          token={cookies.token}
+          isOpen={true}
+          onSetOpenNotification={setOpen}
+          onSetMessage={setMessage}
+          onSetChangeID={setChangeID}
+          onSetOpenChangeRole={setOpenChangeRole}
+          user_name={userName}
+        />
+      ) : (
+        ""
+      )}
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
+        open={open}
+        onClose={handleNotificationClose}
+        autoHideDuration={3000}
+      >
+        <Alert
+          onClose={handleNotificationClose}
+          severity="success"
+          sx={{ width: "100%", bgcolor: "#464E2E" }}
+        >
+          {message}
+        </Alert>
+      </Snackbar>
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state.users);
   return {
     users: Object.values(state.users),
   };

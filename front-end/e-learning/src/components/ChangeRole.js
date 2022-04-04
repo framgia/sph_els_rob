@@ -11,38 +11,39 @@ import Slide from "@mui/material/Slide";
 
 import { changeRole } from "../actions";
 
-const ChangeRole = (
+const ChangeRole = ({
   changeRole,
   user_id,
-  onSetState,
-  isOpen,
   token,
   onSetOpenNotification,
-  onSetMessage
-) => {
-  const [open, setOpen] = useState(isOpen);
+  onSetMessage,
+  onSetChangeID,
+  onSetOpenChangeRole,
+  user_name,
+}) => {
+  const [open, setOpen] = useState(true);
 
   const onChange = (e) => {
     e.preventDefault();
     changeRole(user_id, token);
     setOpen(false);
-    onSetState(0);
     onSetOpenNotification(true);
-    onSetMessage("Successfully change user ID #" + user_id + "'s role!");
+    onSetChangeID(0);
+    onSetOpenChangeRole(false);
+    onSetMessage(`Successfully change user ${user_name}'s role!`);
   };
 
   const handleClose = () => {
     setOpen(false);
-    onSetState(0);
+    onSetChangeID(0);
+    onSetOpenChangeRole(false);
   };
 
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-  useEffect(() => {
-    console.log("clicked");
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <Dialog
@@ -52,7 +53,7 @@ const ChangeRole = (
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle>{"Change role for user ID #" + user_id}</DialogTitle>
+      <DialogTitle>{`Change role for user ${user_name}`}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
           Do you really want to change the role of this user?
@@ -92,4 +93,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { changeRole })(changeRole);
+export default connect(mapStateToProps, { changeRole })(ChangeRole);
