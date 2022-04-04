@@ -128,8 +128,8 @@ const ProfileContent = ({
                 />
               ) : (
                 <UserAvatar
-                  first_name={user.profile.first_name.toUpperCase()}
-                  last_name={user.profile.last_name.toUpperCase()}
+                  first_name={user.profile.first_name}
+                  last_name={user.profile.last_name}
                   size={118}
                 />
               )}
@@ -369,7 +369,7 @@ const ProfileContent = ({
           <Alert
             onClose={handleNotificationClose}
             severity="success"
-            sx={{ width: "100%", bgcolor: "#464E2E" }}
+            sx={{ width: "100%" }}
           >
             Successfully updated your profile!
           </Alert>
