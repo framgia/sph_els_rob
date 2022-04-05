@@ -38,7 +38,7 @@ const Result = ({ result, results }) => {
   useEffect(() => {
     let count = 0;
     results.map((res) => {
-      if (res.is_correct === 1) {
+      if (res.is_correct) {
         count++;
       }
     });
@@ -171,7 +171,7 @@ const Result = ({ result, results }) => {
                     <Grid item xs={2} sx={{ margin: "auto" }}>
                       {result.is_correct !== null ? (
                         <div>
-                          {result.is_correct === 1 ? (
+                          {result.is_correct ? (
                             <CircleOutlinedIcon
                               fontSize="large"
                               sx={{ color: "green" }}
