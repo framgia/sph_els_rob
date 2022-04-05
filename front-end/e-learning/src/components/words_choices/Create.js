@@ -91,6 +91,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
     if (validate()) {
       createWord(data, token, id);
       setSubmit(true);
+      setFields(initialFields);
     }
   };
 
@@ -273,7 +274,7 @@ const Create = ({ createWord, words_choices, token, id }) => {
           <Alert
             onClose={handleNotificationClose}
             severity="success"
-            sx={{ width: "100%", bgcolor: "#464E2E" }}
+            sx={{ width: "100%" }}
           >
             Successfully added word!
           </Alert>

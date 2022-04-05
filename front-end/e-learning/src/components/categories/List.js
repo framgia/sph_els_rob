@@ -269,7 +269,7 @@ const List = ({ listCategory, categories, token, user }) => {
         <Alert
           onClose={handleNotificationClose}
           severity="success"
-          sx={{ width: "100%", bgcolor: "#464E2E" }}
+          sx={{ width: "100%" }}
         >
           {message}
         </Alert>

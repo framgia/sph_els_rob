@@ -53,7 +53,7 @@ const List = ({ listWord, words_choices, token, id }) => {
 
   useEffect(() => {
     listWord(token, id);
-  }, [edit]);
+  }, [edit, words_choices.length]);
 
   return (
     <Container maxWidth="96%">
@@ -191,7 +191,7 @@ const List = ({ listWord, words_choices, token, id }) => {
         <Alert
           onClose={handleNotificationClose}
           severity="success"
-          sx={{ width: "100%", bgcolor: "#464E2E" }}
+          sx={{ width: "100" }}
         >
           {message}
         </Alert>
