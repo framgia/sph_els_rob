@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,9 +14,9 @@ import { logOut } from "../actions";
 
 const roles = ["admin", "member"];
 
-const Header = ({ title, logOut }) => {
+const Header = ({ title, logOut, active }) => {
   const [cookies, setCookie, removeCookie] = useCookies(["user"]);
-  const [anchorCategory, setAnchorCategory] = React.useState(null);
+  const [anchorCategory, setAnchorCategory] = useState(null);
 
   let navigate = useNavigate();
 
@@ -76,13 +76,12 @@ const Header = ({ title, logOut }) => {
           <nav>
             <Link
               variant="button"
-              color="text.primary"
+              color={active === "dashboard" ? "#BB6464" : "white"}
               href={`/dashboard/${cookies.user.id}`}
               underline="none"
               sx={{
                 my: 1,
                 mx: 1.5,
-                color: "white",
                 "&:hover": {
                   color: "#BB6464",
                 },
@@ -93,13 +92,12 @@ const Header = ({ title, logOut }) => {
             {cookies.user.role === "admin" ? (
               <Link
                 variant="button"
-                color="text.primary"
+                color={active === "users" ? "#BB6464" : "white"}
                 href="/admin-users"
                 underline="none"
                 sx={{
                   my: 1,
                   mx: 1.5,
-                  color: "white",
                   "&:hover": {
                     color: "#BB6464",
                   },
@@ -114,13 +112,12 @@ const Header = ({ title, logOut }) => {
               <Link
                 component="button"
                 variant="button"
-                color="text.primary"
+                color={active === "categories" ? "#BB6464" : "white"}
                 underline="none"
                 onClick={handleOpenCategoryMenu}
                 sx={{
                   my: 1,
                   mx: 1.5,
-                  color: "white",
                   "&:hover": {
                     color: "#BB6464",
                   },
@@ -131,13 +128,12 @@ const Header = ({ title, logOut }) => {
             ) : (
               <Link
                 variant="button"
-                color="text.primary"
+                color={active === "categories" ? "#BB6464" : "white"}
                 href="/admin-category"
                 underline="none"
                 sx={{
                   my: 1,
                   mx: 1.5,
-                  color: "white",
                   "&:hover": {
                     color: "#BB6464",
                   },
@@ -173,13 +169,12 @@ const Header = ({ title, logOut }) => {
             </Menu>
             <Link
               variant="button"
-              color="text.primary"
+              color={active === "profile" ? "#BB6464" : "white"}
               href={`/profile/${cookies.user.id}`}
               underline="none"
               sx={{
                 my: 1,
                 mx: 1.5,
-                color: "white",
                 "&:hover": {
                   color: "#BB6464",
                 },

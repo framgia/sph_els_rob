@@ -20,11 +20,19 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteRoundedIcon from "@mui/icons-material/DeleteRounded";
 import DoubleArrowRoundedIcon from "@mui/icons-material/DoubleArrowRounded";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
 
 import { listCategory } from "../../actions";
 import Update from "./Update";
 import Delete from "./Delete";
-import { isNull } from "lodash";
+import { isNull, set } from "lodash";
+import Create from "./Create";
+import { width } from "@mui/system";
 
 const List = ({ listCategory, categories, token, user }) => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -34,6 +42,9 @@ const List = ({ listCategory, categories, token, user }) => {
   const [del, setDelete] = useState(null);
   const [openNotification, setOpenNotification] = useState(false);
   const [message, setMessage] = useState("");
+  const [category_id, setCategoryID] = useState(0);
+  const [show_more, setShowMore] = useState(false);
+  const [search_term, setSearchTerm] = useState("");
 
   let navigate = useNavigate();
 
@@ -116,6 +127,67 @@ const List = ({ listCategory, categories, token, user }) => {
 
   return (
     <div>
+      <Container maxWidth="xl" sx={{ margin: "auto", mb: 2 }}>
+        <Box
+          sx={{
+            marginTop: 3,
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Grid container spacing={2}>
+            <Grid
+              item
+              xs={3}
+              sx={{ display: "flex", justifyContent: "flex-start" }}
+            >
+              <Typography variant="h4" color="inherit">
+                Categories
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              xs={6}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <Paper
+                component="form"
+                sx={{
+                  p: "2px 4px",
+                  display: "flex",
+                  alignItems: "center",
+                  width: 400,
+                }}
+              >
+                <InputBase
+                  sx={{ ml: 1, flex: 1 }}
+                  placeholder="Search category"
+                  value={search_term}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <IconButton
+                  type="submit"
+                  sx={{ p: "10px" }}
+                  aria-label="search"
+                >
+                  <SearchIcon />
+                </IconButton>
+              </Paper>
+            </Grid>
+            <Grid
+              item
+              xs={3}
+              sx={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              {cookies.role === "admin" ? (
+                <Create token={cookies.token} user={cookies.user} />
+              ) : (
+                ""
+              )}
+            </Grid>
+          </Grid>
+        </Box>
+      </Container>
       <Paper sx={{ width: "96%", overflow: "hidden", margin: "auto" }}>
         <TableContainer sx={{ maxHeight: 500 }}>
           <Table stickyHeader aria-label="sticky table">
@@ -136,6 +208,17 @@ const List = ({ listCategory, categories, token, user }) => {
               {categories
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .reverse()
+                .filter((category) => {
+                  if (!search_term) {
+                    return category;
+                  } else if (
+                    category.title
+                      .toLowerCase()
+                      .includes(search_term.toLowerCase())
+                  ) {
+                    return category;
+                  }
+                })
                 .map((category) => {
                   if (!isNull(category))
                     if (category.id !== undefined)
@@ -164,16 +247,67 @@ const List = ({ listCategory, categories, token, user }) => {
                             style={{ width: "55%" }}
                             align="left"
                           >
-                            <Typography
-                              paragraph={false}
-                              align="justify"
-                              style={{
-                                display: "inline-block",
-                                whiteSpace: "pre-line",
-                              }}
-                            >
-                              {category.description}
-                            </Typography>
+                            {category.description.length <= 300 ? (
+                              <Typography
+                                paragraph={false}
+                                align="justify"
+                                style={{
+                                  display: "inline-block",
+                                  whiteSpace: "pre-line",
+                                }}
+                              >
+                                {category.description}
+                              </Typography>
+                            ) : (
+                              <div>
+                                {category_id === category.id && show_more ? (
+                                  <Typography
+                                    paragraph={false}
+                                    align="justify"
+                                    style={{
+                                      display: "inline-block",
+                                      whiteSpace: "pre-line",
+                                    }}
+                                  >
+                                    {category.description}{" "}
+                                    <Button
+                                      onClick={() => {
+                                        setCategoryID(0);
+                                        setShowMore(false);
+                                      }}
+                                      sx={{
+                                        textTransform: "lowercase",
+                                        "&:hover": {
+                                          color: "#BB6464",
+                                          backgroundColor: "transparent",
+                                        },
+                                      }}
+                                    >
+                                      show less
+                                    </Button>
+                                  </Typography>
+                                ) : (
+                                  <Typography paragraph={false} align="justify">
+                                    {category.description.substring(0, 300)}...
+                                    <Button
+                                      onClick={() => {
+                                        setCategoryID(category.id);
+                                        setShowMore(true);
+                                      }}
+                                      sx={{
+                                        textTransform: "lowercase",
+                                        "&:hover": {
+                                          color: "#BB6464",
+                                          backgroundColor: "transparent",
+                                        },
+                                      }}
+                                    >
+                                      show more
+                                    </Button>
+                                  </Typography>
+                                )}
+                              </div>
+                            )}
                           </StyledTableCell>
                           <StyledTableCell
                             style={{ width: 150 }}

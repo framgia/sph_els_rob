@@ -85,6 +85,7 @@ const Create = ({ createCategory, categories, token, user }) => {
           mt: 2,
           mb: 2,
           bgcolor: "#05386b",
+          margin: "auto",
           color: "white",
           "&:hover": {
             backgroundColor: "#edf5e1",

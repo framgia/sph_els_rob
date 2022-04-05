@@ -34,7 +34,10 @@ const Profile = ({ type }) => {
 
   return (
     <div>
-      <Header title={type === "PROFILE" ? "Profile" : "Home"} />
+      <Header
+        title={type === "PROFILE" ? "Profile" : "Home"}
+        active={type === "PROFILE" ? "profile" : "dashboard"}
+      />
       {!open ? (
         <Grid
           container

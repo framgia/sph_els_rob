@@ -47,7 +47,7 @@ const Result = ({ result, results }) => {
 
   return (
     <div>
-      <Header title="Result" />
+      <Header title="Result" active="categories" />
       <Grid
         container
         sx={{
