@@ -19,6 +19,9 @@ import Typography from "@mui/material/Typography";
 import Link from "@mui/material/Link";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
+import InputBase from "@mui/material/InputBase";
+import SearchIcon from "@mui/icons-material/Search";
+import IconButton from "@mui/material/IconButton";
 
 import { listUser, changeRole } from "../actions";
 import Header from "./Header";
@@ -61,6 +64,7 @@ const User = ({ listUser, users, changeRole }) => {
   const [openChangeRole, setOpenChangeRole] = useState(false);
   const [changeID, setChangeID] = useState(0);
   const [userName, setUserName] = useState("");
+  const [search_term, setSearchTerm] = useState("");
 
   let navigate = useNavigate();
 
@@ -101,7 +105,10 @@ const User = ({ listUser, users, changeRole }) => {
 
   return (
     <div>
-      <Header title={cookies.user.role === "admin" ? "Admin" : ""} />
+      <Header
+        title={cookies.user.role === "admin" ? "Admin" : ""}
+        active="users"
+      />
       <Container maxWidth="xl">
         <Box
           sx={{
@@ -116,7 +123,34 @@ const User = ({ listUser, users, changeRole }) => {
         </Box>
       </Container>
       <Paper sx={{ width: "70%", overflow: "hidden", margin: "auto" }}>
-        <TableContainer sx={{ maxHeight: 500, mt: "20px" }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Paper
+            component="form"
+            sx={{
+              p: "2px 4px",
+              display: "flex",
+              alignItems: "center",
+              width: 500,
+            }}
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search user"
+              value={search_term}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <IconButton type="submit" sx={{ p: "10px" }} aria-label="search">
+              <SearchIcon />
+            </IconButton>
+          </Paper>
+        </Box>
+
+        <TableContainer sx={{ maxHeight: 500, mt: 1 }}>
           <Table stickyHeader aria-label="sticky table">
             <TableHead>
               <TableRow>
@@ -134,6 +168,16 @@ const User = ({ listUser, users, changeRole }) => {
             <TableBody>
               {users
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .filter((user) => {
+                  var text = `${user.first_name} ${user.last_name} ${user.email}`;
+                  if (!search_term) {
+                    return user;
+                  } else if (
+                    text.toLowerCase().includes(search_term.toLowerCase())
+                  ) {
+                    return user;
+                  }
+                })
                 .map((user) => {
                   if (!isNull(user))
                     if (user.id !== undefined)
