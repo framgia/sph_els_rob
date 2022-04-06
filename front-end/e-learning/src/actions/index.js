@@ -238,6 +238,7 @@ export const saveAnswer =
     try {
       const response = await axios.post(
         `/api/save-answer/${category_id}/${word_id}/${choice_id}`,
+        {},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -260,7 +261,15 @@ export const saveAnswer =
 
 export const addQuiz = (id, token) => async (dispatch) => {
   try {
-    const response = await axios.post(`/api/add-quiz/${id}`);
+    const response = await axios.post(
+      `/api/add-quiz/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     dispatch({
       type: "ADD_QUIZ",
       payload: response.data,
@@ -296,11 +305,15 @@ export const userCategory = (token) => async (dispatch) => {
 
 export const logOut = (token) => async (dispatch) => {
   try {
-    const response = await axios.post("/api/logout", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      "/api/logout",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     dispatch({
       type: "LOG_OUT",
       payload: response.data,
@@ -361,11 +374,15 @@ export const errorReset = (type) => (dispatch) => {
 
 export const follow = (id, token) => async (dispatch) => {
   try {
-    const response = await axios.post(`/api/follow/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `/api/follow/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     dispatch({
       type: "FOLLOW",
       payload: response.data,
@@ -380,11 +397,15 @@ export const follow = (id, token) => async (dispatch) => {
 
 export const unfollow = (id, token) => async (dispatch) => {
   try {
-    const response = await axios.post(`/api/unfollow/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await axios.post(
+      `/api/unfollow/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
     dispatch({
       type: "UNFOLLOW",
       payload: response.data,
@@ -457,12 +478,16 @@ export const updateProf = (formValues, token) => async (dispatch) => {
 
 export const submitLesson = (id, token) => async (dispatch) => {
   try {
-    const response = await axios.post(`/api/submit-lesson/${id}`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await axios.post(
+      `/api/submit-lesson/${id}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      }
+    );
     dispatch({
       type: "SUBMIT_LESSON",
       payload: response.data,

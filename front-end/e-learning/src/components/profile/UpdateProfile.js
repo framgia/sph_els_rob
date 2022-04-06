@@ -131,7 +131,7 @@ const UpdateProfile = ({ onOpen, updateProf, onSetOpenNotification }) => {
                 alt="Remy Sharp"
                 src={
                   avatar === ""
-                    ? `http://127.0.0.1:8000/public/Image/${cookies.user.avatar}`
+                    ? `https://elearning-backend-rob.herokuapp.com/public/Image/${cookies.user.avatar}`
                     : URL.createObjectURL(avatar)
                 }
                 sx={{ height: 118, width: 118 }}

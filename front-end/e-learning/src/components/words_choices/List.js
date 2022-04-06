@@ -101,7 +101,7 @@ const List = ({ listWord, words_choices, token, id }) => {
                                 <Listmui disablePadding>
                                   <ListItem>
                                     <ListItemIcon>
-                                      {choice.is_correct_answer === 1 ? (
+                                      {choice.is_correct_answer ? (
                                         <CircleRoundedIcon fontSize="small" />
                                       ) : (
                                         <RadioButtonUncheckedRoundedIcon fontSize="small" />
@@ -111,7 +111,7 @@ const List = ({ listWord, words_choices, token, id }) => {
                                       primary={
                                         <Typography
                                           color={
-                                            choice.is_correct_answer === 1
+                                            choice.is_correct_answer
                                               ? "#32CD32"
                                               : ""
                                           }

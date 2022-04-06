@@ -188,7 +188,7 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
                             >
                               {user_category.title}
                             </Typography>
-                            {user_category.status === 1 ? (
+                            {user_category.status ? (
                               <Box sx={{ width: "100%", mt: 1, mb: 3 }}>
                                 <Grid
                                   container
@@ -285,7 +285,7 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
                             {user_category.status !== 1 ? (
                               <Button
                                 onClick={() => {
-                                  addQuiz(user_category.id);
+                                  addQuiz(user_category.id, cookies.token);
                                   setOpen(true);
                                   setStart(user_category.id);
                                   setCookie("category", user_category, {

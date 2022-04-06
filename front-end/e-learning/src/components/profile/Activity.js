@@ -79,7 +79,7 @@ const Activity = ({ activityList, activities, id, type, allActivityList }) => {
                   {activity.avatar !== null ? (
                     <Avatar
                       alt="Remy Sharp"
-                      src={`http://127.0.0.1:8000/public/Image/${activity.avatar}`}
+                      src={`https://elearning-backend-rob.herokuapp.com/public/Image/${activity.avatar}`}
                     />
                   ) : (
                     <UserAvatar
