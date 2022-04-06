@@ -104,7 +104,7 @@ class UserAnswerController extends Controller
         $user = User::find($id);
 
         $user_categories = $user->userCategories()->get();
-        
+
         foreach ($user_categories as $user_category)
         {
             $category = Category::find($user_category->category_id);
@@ -126,9 +126,10 @@ class UserAnswerController extends Controller
                     'choice' => $choice->value,
                 ]);
             }
-            $collection->push([
+
+            if ($category) $collection->push([
                 'id' => $user_category->id,
-                'category_id' => $category->id,
+                'category_id' => $user_category->category_id,
                 'title' => $category->title,
                 'answers' => $answer_collection
             ]);

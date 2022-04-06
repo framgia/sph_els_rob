@@ -69,116 +69,134 @@ const List = ({ listWord, words_choices, token, id }) => {
       >
         <Box marginTop="10px" sx={{ maxHeight: 600 }}>
           <Grid container spacing={2}>
-            {words_choices.map((word_choice, index) => {
-              if (!isNull(word_choice))
-                if (word_choice.word !== undefined)
-                  return (
-                    <Grid item key={index} xs={12} sm={6} md={3}>
-                      <Card
-                        sx={{
-                          height: "100%",
-                          display: "flex",
-                          flexDirection: "column",
-                          "&:hover": {
-                            backgroundColor: "#edf5e1",
-                            color: "black",
-                          },
-                        }}
-                      >
-                        <CardHeader title={word_choice.word.value} />
-                        <CardContent sx={{ flexGrow: 1 }}>
-                          <Typography
-                            align="center"
-                            variant="caption"
-                            display="block"
-                            gutterBottom
-                          >
-                            Options
-                          </Typography>
-                          {word_choice.choices.map((choice) => (
-                            <Grid spacing={2} key={choice.id}>
-                              <Grid item>
-                                <Listmui disablePadding>
-                                  <ListItem>
-                                    <ListItemIcon>
-                                      {choice.is_correct_answer ? (
-                                        <CircleRoundedIcon fontSize="small" />
-                                      ) : (
-                                        <RadioButtonUncheckedRoundedIcon fontSize="small" />
-                                      )}
-                                    </ListItemIcon>
-                                    <ListItemText
-                                      primary={
-                                        <Typography
-                                          color={
-                                            choice.is_correct_answer
-                                              ? "#32CD32"
-                                              : ""
-                                          }
-                                          sx={{ display: "inline" }}
-                                          component="span"
-                                          variant="body1"
-                                        >
-                                          {choice.value}
-                                        </Typography>
-                                      }
-                                    />
-                                  </ListItem>
-                                </Listmui>
-                              </Grid>
-                            </Grid>
-                          ))}
-                        </CardContent>
-                        <CardActions
-                          disableSpacing
-                          sx={{ display: "flex", justifyContent: "flex-end" }}
+            {words_choices.length > 0 ? (
+              words_choices.map((word_choice, index) => {
+                if (!isNull(word_choice))
+                  if (word_choice.word !== undefined)
+                    return (
+                      <Grid item key={index} xs={12} sm={6} md={3}>
+                        <Card
+                          sx={{
+                            height: "100%",
+                            display: "flex",
+                            flexDirection: "column",
+                            "&:hover": {
+                              backgroundColor: "#edf5e1",
+                              color: "black",
+                            },
+                          }}
                         >
-                          <Tooltip title="Update" placement="top">
-                            <IconButton
-                              onClick={() => setEdit(word_choice.word.id)}
+                          <CardHeader title={word_choice.word.value} />
+                          <CardContent sx={{ flexGrow: 1 }}>
+                            <Typography
+                              align="center"
+                              variant="caption"
+                              display="block"
+                              gutterBottom
                             >
-                              <StyledEditIcon />
-                            </IconButton>
-                          </Tooltip>
-                          <Tooltip title="Remove" placement="top">
-                            <IconButton
-                              onClick={() => setDelete(word_choice.word.id)}
-                            >
-                              <StyledDeleteIcon />
-                            </IconButton>
-                          </Tooltip>
-                        </CardActions>
-                      </Card>
-                      {word_choice.word.id === edit ? (
-                        <Update
-                          category_word={word_choice.word}
-                          choices={word_choice.choices}
-                          onSetState={setEdit}
-                          onSetOpenNotification={setOpenNotification}
-                          onSetMessage={setMessage}
-                          isOpen={true}
-                          token={token}
-                          id={id}
-                        />
-                      ) : (
-                        ""
-                      )}
-                      {word_choice.word.id === del ? (
-                        <Delete
-                          category_word={word_choice.word}
-                          onSetState={setDelete}
-                          onSetOpenNotification={setOpenNotification}
-                          onSetMessage={setMessage}
-                          isOpen={true}
-                          token={token}
-                          id={id}
-                        />
-                      ) : (
-                        ""
-                      )}
-                    </Grid>
-                  );
-            })}
+                              Options
+                            </Typography>
+                            {word_choice.choices.map((choice) => (
+                              <Grid spacing={2} key={choice.id}>
+                                <Grid item>
+                                  <Listmui disablePadding>
+                                    <ListItem>
+                                      <ListItemIcon>
+                                        {choice.is_correct_answer ? (
+                                          <CircleRoundedIcon fontSize="small" />
+                                        ) : (
+                                          <RadioButtonUncheckedRoundedIcon fontSize="small" />
+                                        )}
+                                      </ListItemIcon>
+                                      <ListItemText
+                                        primary={
+                                          <Typography
+                                            color={
+                                              choice.is_correct_answer
+                                                ? "#32CD32"
+                                                : ""
+                                            }
+                                            sx={{ display: "inline" }}
+                                            component="span"
+                                            variant="body1"
+                                          >
+                                            {choice.value}
+                                          </Typography>
+                                        }
+                                      />
+                                    </ListItem>
+                                  </Listmui>
+                                </Grid>
+                              </Grid>
+                            ))}
+                          </CardContent>
+                          <CardActions
+                            disableSpacing
+                            sx={{
+                              display: "flex",
+                              justifyContent: "flex-end",
+                            }}
+                          >
+                            <Tooltip title="Update" placement="top">
+                              <IconButton
+                                onClick={() => setEdit(word_choice.word.id)}
+                              >
+                                <StyledEditIcon />
+                              </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Remove" placement="top">
+                              <IconButton
+                                onClick={() => setDelete(word_choice.word.id)}
+                              >
+                                <StyledDeleteIcon />
+                              </IconButton>
+                            </Tooltip>
+                          </CardActions>
+                        </Card>
+                        {word_choice.word.id === edit ? (
+                          <Update
+                            category_word={word_choice.word}
+                            choices={word_choice.choices}
+                            onSetState={setEdit}
+                            onSetOpenNotification={setOpenNotification}
+                            onSetMessage={setMessage}
+                            isOpen={true}
+                            token={token}
+                            id={id}
+                          />
+                        ) : (
+                          ""
+                        )}
+                        {word_choice.word.id === del ? (
+                          <Delete
+                            category_word={word_choice.word}
+                            onSetState={setDelete}
+                            onSetOpenNotification={setOpenNotification}
+                            onSetMessage={setMessage}
+                            isOpen={true}
+                            token={token}
+                            id={id}
+                          />
+                        ) : (
+                          ""
+                        )}
+                      </Grid>
+                    );
+              })
+            ) : (
+              <Box width="100%">
+                <Typography
+                  textAlign="center"
+                  sx={{
+                    color: "red",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                  }}
+                >
+                  No words!
+                </Typography>
+              </Box>
+            )}
           </Grid>
         </Box>
       </Paper>

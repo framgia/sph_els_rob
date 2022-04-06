@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { connect } from "react-redux";
 
-import Pagination from "@mui/material/Pagination";
-
 import { listUser } from "../../actions";
 import UserAvatar from "./UserAvatar";
 
+import Pagination from "@mui/material/Pagination";
 import { Avatar, Box, Grid, Typography, Button, Paper } from "@mui/material";
 
 const UserList = ({ listUser, users }) => {
@@ -47,102 +46,117 @@ const UserList = ({ listUser, users }) => {
           p: "1%",
         }}
       >
-        {users.slice(minimum, maximum).map((user, index) => {
-          return (
-            <Box
-              key={index}
-              sx={{
-                height: "70px",
-                width: "100%",
-                margin: "auto",
-                mt: 1,
-                border: 1,
-                borderRadius: 4,
-                borderColor: "#BB6464",
-              }}
-            >
-              <Grid
-                container
-                columns={12}
+        {users.length > 0 ? (
+          users.slice(minimum, maximum).map((user, index) => {
+            return (
+              <Box
+                key={index}
                 sx={{
+                  height: "70px",
                   width: "100%",
-                  height: "100%",
+                  margin: "auto",
+                  mt: 1,
+                  border: 1,
+                  borderRadius: 4,
+                  borderColor: "#BB6464",
                 }}
               >
                 <Grid
-                  item
-                  xs={1.5}
-                  align="center"
+                  container
+                  columns={12}
                   sx={{
-                    margin: "auto",
-                    p: 1,
+                    width: "100%",
+                    height: "100%",
                   }}
                 >
-                  {user.avatar !== null ? (
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={`https://elearning-backend-rob.herokuapp.com/public/Image/${user.avatar}`}
-                    />
-                  ) : (
-                    <UserAvatar
-                      first_name={user.first_name.toUpperCase()}
-                      last_name={user.last_name.toUpperCase()}
-                      size={45}
-                    />
-                  )}
-                </Grid>
-                <Grid item xs={8.5}>
                   <Grid
-                    container
-                    columns={12}
+                    item
+                    xs={1.5}
+                    align="center"
                     sx={{
-                      width: "100%",
-                      height: "100%",
+                      margin: "auto",
                       p: 1,
                     }}
                   >
-                    <Grid item xs={12}>
-                      <Typography
-                        sx={{
-                          color: "#05386b",
-                          fontWeight: "bold",
-                          fontSize: 16,
-                          textTransform: "capitalize",
-                        }}
-                      >
-                        {user.first_name} {user.last_name}
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Typography
-                        sx={{
-                          fontSize: 14,
-                        }}
-                      >
-                        {user.email}
-                      </Typography>
+                    {user.avatar !== null ? (
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={`https://elearning-backend-rob.herokuapp.com/public/Image/${user.avatar}`}
+                      />
+                    ) : (
+                      <UserAvatar
+                        first_name={user.first_name.toUpperCase()}
+                        last_name={user.last_name.toUpperCase()}
+                        size={45}
+                      />
+                    )}
+                  </Grid>
+                  <Grid item xs={8.5}>
+                    <Grid
+                      container
+                      columns={12}
+                      sx={{
+                        width: "100%",
+                        height: "100%",
+                        p: 1,
+                      }}
+                    >
+                      <Grid item xs={12}>
+                        <Typography
+                          sx={{
+                            color: "#05386b",
+                            fontWeight: "bold",
+                            fontSize: 16,
+                            textTransform: "capitalize",
+                          }}
+                        >
+                          {user.first_name} {user.last_name}
+                        </Typography>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <Typography
+                          sx={{
+                            fontSize: 14,
+                          }}
+                        >
+                          {user.email}
+                        </Typography>
+                      </Grid>
                     </Grid>
                   </Grid>
+                  <Grid item xs={2} align="center" sx={{ margin: "auto" }}>
+                    <Button
+                      color="primary"
+                      onClick={() => navigate(`/profile/${user.id}`)}
+                      sx={{
+                        width: "50%",
+                        color: "primary",
+                        "&:hover": {
+                          color: "#BB6464",
+                        },
+                      }}
+                    >
+                      View
+                    </Button>
+                  </Grid>
                 </Grid>
-                <Grid item xs={2} align="center" sx={{ margin: "auto" }}>
-                  <Button
-                    color="primary"
-                    onClick={() => navigate(`/profile/${user.id}`)}
-                    sx={{
-                      width: "50%",
-                      color: "primary",
-                      "&:hover": {
-                        color: "#BB6464",
-                      },
-                    }}
-                  >
-                    View
-                  </Button>
-                </Grid>
-              </Grid>
-            </Box>
-          );
-        })}
+              </Box>
+            );
+          })
+        ) : (
+          <Box width="100%">
+            <Typography
+              textAlign="center"
+              sx={{
+                color: "red",
+                fontWeight: "bold",
+                fontSize: 15,
+              }}
+            >
+              No Users
+            </Typography>
+          </Box>
+        )}
       </Paper>
       <Pagination
         count={
