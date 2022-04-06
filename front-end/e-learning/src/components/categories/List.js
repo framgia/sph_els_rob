@@ -205,161 +205,184 @@ const List = ({ listCategory, categories, token, user }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {categories
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .reverse()
-                .filter((category) => {
-                  if (!search_term) {
-                    return category;
-                  } else if (
-                    category.title
-                      .toLowerCase()
-                      .includes(search_term.toLowerCase())
-                  ) {
-                    return category;
-                  }
-                })
-                .map((category) => {
-                  if (!isNull(category))
-                    if (category.id !== undefined)
-                      return (
-                        <TableRow
-                          key={category.id}
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                        >
-                          <StyledTableCell
-                            component="th"
-                            scope="row"
-                            style={{ width: "5%" }}
-                            align="left"
+              {categories.length > 0 ? (
+                categories
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .reverse()
+                  .filter((category) => {
+                    if (!search_term) {
+                      return category;
+                    } else if (
+                      category.title
+                        .toLowerCase()
+                        .includes(search_term.toLowerCase())
+                    ) {
+                      return category;
+                    }
+                  })
+                  .map((category) => {
+                    if (!isNull(category))
+                      if (category.id !== undefined)
+                        return (
+                          <TableRow
+                            key={category.id}
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
                           >
-                            {category.id}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: "25%" }}
-                            align="left"
-                          >
-                            {category.title}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: "55%" }}
-                            align="left"
-                          >
-                            {category.description.length <= 300 ? (
-                              <Typography
-                                paragraph={false}
-                                align="justify"
-                                style={{
-                                  display: "inline-block",
-                                  whiteSpace: "pre-line",
-                                }}
-                              >
-                                {category.description}
-                              </Typography>
-                            ) : (
-                              <div>
-                                {category_id === category.id && show_more ? (
-                                  <Typography
-                                    paragraph={false}
-                                    align="justify"
-                                    style={{
-                                      display: "inline-block",
-                                      whiteSpace: "pre-line",
-                                    }}
-                                  >
-                                    {category.description}{" "}
-                                    <Button
-                                      onClick={() => {
-                                        setCategoryID(0);
-                                        setShowMore(false);
-                                      }}
-                                      sx={{
-                                        textTransform: "lowercase",
-                                        "&:hover": {
-                                          color: "#BB6464",
-                                          backgroundColor: "transparent",
-                                        },
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              style={{ width: "5%" }}
+                              align="left"
+                            >
+                              {category.id}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: "25%" }}
+                              align="left"
+                            >
+                              {category.title}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: "55%" }}
+                              align="left"
+                            >
+                              {category.description.length <= 300 ? (
+                                <Typography
+                                  paragraph={false}
+                                  align="justify"
+                                  style={{
+                                    display: "inline-block",
+                                    whiteSpace: "pre-line",
+                                  }}
+                                >
+                                  {category.description}
+                                </Typography>
+                              ) : (
+                                <div>
+                                  {category_id === category.id && show_more ? (
+                                    <Typography
+                                      paragraph={false}
+                                      align="justify"
+                                      style={{
+                                        display: "inline-block",
+                                        whiteSpace: "pre-line",
                                       }}
                                     >
-                                      show less
-                                    </Button>
-                                  </Typography>
-                                ) : (
-                                  <Typography paragraph={false} align="justify">
-                                    {category.description.substring(0, 300)}...
-                                    <Button
-                                      onClick={() => {
-                                        setCategoryID(category.id);
-                                        setShowMore(true);
-                                      }}
-                                      sx={{
-                                        textTransform: "lowercase",
-                                        "&:hover": {
-                                          color: "#BB6464",
-                                          backgroundColor: "transparent",
-                                        },
-                                      }}
+                                      {category.description}{" "}
+                                      <Button
+                                        onClick={() => {
+                                          setCategoryID(0);
+                                          setShowMore(false);
+                                        }}
+                                        sx={{
+                                          textTransform: "lowercase",
+                                          "&:hover": {
+                                            color: "#BB6464",
+                                            backgroundColor: "transparent",
+                                          },
+                                        }}
+                                      >
+                                        show less
+                                      </Button>
+                                    </Typography>
+                                  ) : (
+                                    <Typography
+                                      paragraph={false}
+                                      align="justify"
                                     >
-                                      show more
-                                    </Button>
-                                  </Typography>
-                                )}
-                              </div>
-                            )}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: 150 }}
-                            align="center"
-                          >
-                            <Tooltip title="Update" placement="top">
-                              <IconButton onClick={() => setEdit(category.id)}>
-                                <StyledEditIcon />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Remove" placement="top">
-                              <IconButton
-                                onClick={() => setDelete(category.id)}
-                              >
-                                <StyledDeleteIcon />
-                              </IconButton>
-                            </Tooltip>
-                            <Tooltip title="View" placement="top">
-                              <IconButton onClick={() => navigateTo(category)}>
-                                <StyledViewIcon />
-                              </IconButton>
-                            </Tooltip>
-                            {category.id === edit ? (
-                              <Update
-                                data={category}
-                                onSetState={setEdit}
-                                onSetOpenNotification={setOpenNotification}
-                                onSetMessage={setMessage}
-                                isOpen={true}
-                                token={token}
-                                user={user}
-                              />
-                            ) : (
-                              ""
-                            )}
-                            {category.id === del ? (
-                              <Delete
-                                data={category}
-                                onSetState={setDelete}
-                                onSetOpenNotification={setOpenNotification}
-                                onSetMessage={setMessage}
-                                isOpen={true}
-                                token={token}
-                                user={user}
-                              />
-                            ) : (
-                              ""
-                            )}
-                          </StyledTableCell>
-                        </TableRow>
-                      );
-                })}
+                                      {category.description.substring(0, 300)}
+                                      ...
+                                      <Button
+                                        onClick={() => {
+                                          setCategoryID(category.id);
+                                          setShowMore(true);
+                                        }}
+                                        sx={{
+                                          textTransform: "lowercase",
+                                          "&:hover": {
+                                            color: "#BB6464",
+                                            backgroundColor: "transparent",
+                                          },
+                                        }}
+                                      >
+                                        show more
+                                      </Button>
+                                    </Typography>
+                                  )}
+                                </div>
+                              )}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: 150 }}
+                              align="center"
+                            >
+                              <Tooltip title="Update" placement="top">
+                                <IconButton
+                                  onClick={() => setEdit(category.id)}
+                                >
+                                  <StyledEditIcon />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="Remove" placement="top">
+                                <IconButton
+                                  onClick={() => setDelete(category.id)}
+                                >
+                                  <StyledDeleteIcon />
+                                </IconButton>
+                              </Tooltip>
+                              <Tooltip title="View" placement="top">
+                                <IconButton
+                                  onClick={() => navigateTo(category)}
+                                >
+                                  <StyledViewIcon />
+                                </IconButton>
+                              </Tooltip>
+                              {category.id === edit ? (
+                                <Update
+                                  data={category}
+                                  onSetState={setEdit}
+                                  onSetOpenNotification={setOpenNotification}
+                                  onSetMessage={setMessage}
+                                  isOpen={true}
+                                  token={token}
+                                  user={user}
+                                />
+                              ) : (
+                                ""
+                              )}
+                              {category.id === del ? (
+                                <Delete
+                                  data={category}
+                                  onSetState={setDelete}
+                                  onSetOpenNotification={setOpenNotification}
+                                  onSetMessage={setMessage}
+                                  isOpen={true}
+                                  token={token}
+                                  user={user}
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </StyledTableCell>
+                          </TableRow>
+                        );
+                  })
+              ) : (
+                <Box width="100%">
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      color: "red",
+                      fontWeight: "bold",
+                      fontSize: 15,
+                    }}
+                  >
+                    No category
+                  </Typography>
+                </Box>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

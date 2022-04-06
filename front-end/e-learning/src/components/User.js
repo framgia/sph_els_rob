@@ -166,72 +166,92 @@ const User = ({ listUser, users, changeRole }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {users
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .filter((user) => {
-                  var text = `${user.first_name} ${user.last_name} ${user.email}`;
-                  if (!search_term) {
-                    return user;
-                  } else if (
-                    text.toLowerCase().includes(search_term.toLowerCase())
-                  ) {
-                    return user;
-                  }
-                })
-                .map((user) => {
-                  if (!isNull(user))
-                    if (user.id !== undefined)
-                      return (
-                        <TableRow
-                          key={user.id}
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                        >
-                          <StyledTableCell
-                            component="th"
-                            scope="row"
-                            style={{ width: "5%" }}
-                            align="left"
+              {users.length > 0 ? (
+                users
+                  .filter((user) => {
+                    if (user !== null) {
+                      var text = `${user.first_name} ${user.last_name} ${user.email}`;
+                    }
+                    if (!search_term) {
+                      return user;
+                    } else if (user !== null) {
+                      var text = `${user.first_name} ${user.last_name} ${user.email}`;
+                      if (
+                        text.toLowerCase().includes(search_term.toLowerCase())
+                      ) {
+                        return user;
+                      }
+                    }
+                  })
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((user) => {
+                    if (!isNull(user))
+                      if (user.id !== undefined)
+                        return (
+                          <TableRow
+                            key={user.id}
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
                           >
-                            {user.id}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: "35%" }}
-                            align="left"
-                          >
-                            {user.first_name} {user.last_name}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: "45%" }}
-                            align="left"
-                          >
-                            {user.email}
-                          </StyledTableCell>
-                          <StyledTableCell
-                            style={{ width: 150 }}
-                            align="center"
-                          >
-                            <Link
-                              component="button"
-                              variant="caption"
-                              underline="hover"
-                              onClick={() => {
-                                setChangeID(user.id);
-                                setOpenChangeRole(true);
-                                setUserName(user.first_name);
-                              }}
-                              sx={{
-                                fontSize: 14,
-                                color: "#05386b",
-                              }}
+                            <StyledTableCell
+                              component="th"
+                              scope="row"
+                              style={{ width: "5%" }}
+                              align="left"
                             >
-                              {user.role}
-                            </Link>
-                          </StyledTableCell>
-                        </TableRow>
-                      );
-                })}
+                              {user.id}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: "35%" }}
+                              align="left"
+                            >
+                              {user.first_name} {user.last_name}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: "45%" }}
+                              align="left"
+                            >
+                              {user.email}
+                            </StyledTableCell>
+                            <StyledTableCell
+                              style={{ width: 150 }}
+                              align="center"
+                            >
+                              <Link
+                                component="button"
+                                variant="caption"
+                                underline="hover"
+                                onClick={() => {
+                                  setChangeID(user.id);
+                                  setOpenChangeRole(true);
+                                  setUserName(user.first_name);
+                                }}
+                                sx={{
+                                  fontSize: 14,
+                                  color: "#05386b",
+                                }}
+                              >
+                                {user.role}
+                              </Link>
+                            </StyledTableCell>
+                          </TableRow>
+                        );
+                  })
+              ) : (
+                <Box width="100%">
+                  <Typography
+                    textAlign="center"
+                    sx={{
+                      color: "red",
+                      fontWeight: "bold",
+                      fontSize: 15,
+                    }}
+                  >
+                    No Users!
+                  </Typography>
+                </Box>
+              )}
             </TableBody>
           </Table>
         </TableContainer>

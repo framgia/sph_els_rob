@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 
 const LearnedWord = ({ learnedWord, learned_words, id }) => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -63,53 +64,68 @@ const LearnedWord = ({ learnedWord, learned_words, id }) => {
                 <AccordionDetails
                   sx={{ border: 2, borderColor: "#BB6464", borderRadius: 2 }}
                 >
-                  <Grid
-                    container
-                    columns={12}
-                    sx={{
-                      width: "100%",
-                      height: "100%",
-                    }}
-                  >
+                  {learned_word.answers.length > 0 ? (
                     <Grid
-                      item
-                      xs={6}
-                      align="center"
+                      container
+                      columns={12}
                       sx={{
-                        margin: "auto",
-                        p: 1,
+                        width: "100%",
+                        height: "100%",
                       }}
                     >
-                      <Typography
+                      <Grid
+                        item
+                        xs={6}
+                        align="center"
                         sx={{
-                          color: "#05386b",
+                          margin: "auto",
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#05386b",
+                            fontWeight: "bold",
+                            fontSize: 15,
+                          }}
+                        >
+                          Words
+                        </Typography>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={6}
+                        align="center"
+                        sx={{
+                          margin: "auto",
+                          p: 1,
+                        }}
+                      >
+                        <Typography
+                          sx={{
+                            color: "#05386b",
+                            fontWeight: "bold",
+                            fontSize: 15,
+                          }}
+                        >
+                          Answers
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  ) : (
+                    <Box width="100%">
+                      <Typography
+                        textAlign="center"
+                        sx={{
+                          color: "red",
                           fontWeight: "bold",
                           fontSize: 15,
                         }}
                       >
-                        Words
+                        No leaned word/s
                       </Typography>
-                    </Grid>
-                    <Grid
-                      item
-                      xs={6}
-                      align="center"
-                      sx={{
-                        margin: "auto",
-                        p: 1,
-                      }}
-                    >
-                      <Typography
-                        sx={{
-                          color: "#05386b",
-                          fontWeight: "bold",
-                          fontSize: 15,
-                        }}
-                      >
-                        Answers
-                      </Typography>
-                    </Grid>
-                  </Grid>
+                    </Box>
+                  )}
                   {learned_word.answers.map((answer, index) => {
                     return (
                       <Grid

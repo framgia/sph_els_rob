@@ -31,11 +31,10 @@ class ActivityController extends Controller
             if (Str::contains($activity->activitable_type, 'Follower'))
             {
                 $following = Follower::find($activity->activitable_id);
-                
-                $user = User::find($following->user_following_id);
 
                 if ($following)
                 {
+                    $user = User::find($following->user_following_id);
                     $collection->push([
                         'id' => $activity->id,
                         'type' => 'Follower',
@@ -62,30 +61,33 @@ class ActivityController extends Controller
             {
                 $user_category = UserCategory::find($activity->activitable_id);
 
-                $category = Category::find($user_category->category_id);
-
-                $items = $category->words()->count();
-
-                $score = $user_category->countCorrectAnswers();
-
                 if ($user_category)
                 {
-                    $collection->push([
-                        'id' => $activity->id,
-                        'type' => 'UserCategory',
-                        'user_id' => $activity->user_id,
-                        'user_name' => $current_user->first_name,
-                        'last_name' => $current_user->last_name,
-                        'avatar' => $current_user->avatar,
-                        'user_following_id' => null,
-                        'following_name' => null,
-                        'category_id' => $category->id,
-                        'category_title' => $category->title,
-                        'items' => $items,
-                        'score' => $score,
-                        'created_at' => $activity->created_at,
-                        'updated_at' => $date
-                    ]);
+                    $category = Category::find($user_category->category_id);
+                    
+                    if ($category)
+                    {
+                        $items = $category->words()->count();
+                    
+                        $score = $user_category->countCorrectAnswers();
+                    
+                        $collection->push([
+                            'id' => $activity->id,
+                            'type' => 'UserCategory',
+                            'user_id' => $activity->user_id,
+                            'user_name' => $current_user->first_name,
+                            'last_name' => $current_user->last_name,
+                            'avatar' => $current_user->avatar,
+                            'user_following_id' => null,
+                            'following_name' => null,
+                            'category_id' => $category->id,
+                            'category_title' => $category->title,
+                            'items' => $items,
+                            'score' => $score,
+                            'created_at' => $activity->created_at,
+                            'updated_at' => $date
+                        ]);
+                    }
                 }
                 else
                 {
@@ -164,22 +166,31 @@ class ActivityController extends Controller
 
                     if ($user_category)
                     {
-                        $collection->push([
-                            'id' => $activity->id,
-                            'type' => 'UserCategory',
-                            'user_id' => $activity->user_id,
-                            'user_name' => $current_user->first_name,
-                            'last_name' => $current_user->last_name,
-                            'avatar' => $current_user->avatar,
-                            'user_following_id' => null,
-                            'following_name' => null,
-                            'category_id' => $category->id,
-                            'category_title' => $category->title,
-                            'items' => $items,
-                            'score' => $score,
-                            'created_at' => $activity->created_at,
-                            'updated_at' => $date
-                        ]);
+                        $category = Category::find($user_category->category_id);
+
+                        if ($category)
+                        {
+                            $items = $category->words()->count();
+                            
+                            $score = $user_category->countCorrectAnswers();
+                            
+                            $collection->push([
+                                'id' => $activity->id,
+                                'type' => 'UserCategory',
+                                'user_id' => $activity->user_id,
+                                'user_name' => $current_user->first_name,
+                                'last_name' => $current_user->last_name,
+                                'avatar' => $current_user->avatar,
+                                'user_following_id' => null,
+                                'following_name' => null,
+                                'category_id' => $category->id,
+                                'category_title' => $category->title,
+                                'items' => $items,
+                                'score' => $score,
+                                'created_at' => $activity->created_at,
+                                'updated_at' => $date
+                            ]);
+                        }
                     }
                     else
                     {

@@ -143,210 +143,235 @@ const ListForUser = ({ userCategory, user_categories, addQuiz }) => {
       >
         <Box marginTop="10px" sx={{ maxHeight: 600 }}>
           <Grid container spacing={2}>
-            {user_categories
-              .reverse()
-              .filter((user_category) => {
-                if (!search_term) {
-                  if (status === -1) return user_category;
-                  else if (status === user_category.status)
-                    return user_category;
-                } else if (
-                  user_category.title
-                    .toLowerCase()
-                    .includes(search_term.toLowerCase())
-                ) {
-                  if (status === -1) return user_category;
-                  else if (status === user_category.status)
-                    return user_category;
-                }
-              })
-              .map((user_category, index) => {
-                if (!isNull(user_category))
-                  if (user_category !== undefined)
-                    return (
-                      <Grid item key={index} xs={12} sm={6} md={3}>
-                        <Card
-                          sx={{
-                            p: "10px",
-                            height: "100%",
-                            display: "flex",
-                            flexDirection: "column",
-                            "&:hover": {
-                              backgroundColor: "#edf5e1",
-                              color: "black",
-                            },
-                          }}
-                        >
-                          <CardContent sx={{ flexGrow: 1 }}>
-                            <Typography
-                              gutterBottom
-                              sx={{
-                                color: "#464E2E",
-                                fontWeight: "bold",
-                                mb: "20px",
-                              }}
-                            >
-                              {user_category.title}
-                            </Typography>
-                            {user_category.status ? (
-                              <Box sx={{ width: "100%", mt: 1, mb: 3 }}>
-                                <Grid
-                                  container
-                                  spacing={0}
-                                  sx={{ width: "100%", margin: "auto" }}
-                                >
-                                  <Grid item xs={10.5} sx={{ margin: "auto" }}>
-                                    <LinearProgress
-                                      variant="determinate"
-                                      color={
-                                        (user_category.words_learned /
-                                          user_category.words_count) *
-                                          100 >=
-                                        75
-                                          ? "success"
-                                          : "primary"
-                                      }
-                                      value={
-                                        (user_category.words_learned /
-                                          user_category.words_count) *
-                                        100
-                                      }
-                                    />
-                                  </Grid>
+            {user_categories.length > 0 ? (
+              user_categories
+                .reverse()
+                .filter((user_category) => {
+                  if (!search_term) {
+                    if (status === -1) return user_category;
+                    else if (status === user_category.status)
+                      return user_category;
+                  } else if (
+                    user_category.title
+                      .toLowerCase()
+                      .includes(search_term.toLowerCase())
+                  ) {
+                    if (status === -1) return user_category;
+                    else if (status === user_category.status)
+                      return user_category;
+                  }
+                })
+                .map((user_category, index) => {
+                  if (!isNull(user_category))
+                    if (user_category !== undefined)
+                      return (
+                        <Grid item key={index} xs={12} sm={6} md={3}>
+                          <Card
+                            sx={{
+                              p: "10px",
+                              height: "100%",
+                              display: "flex",
+                              flexDirection: "column",
+                              "&:hover": {
+                                backgroundColor: "#edf5e1",
+                                color: "black",
+                              },
+                            }}
+                          >
+                            <CardContent sx={{ flexGrow: 1 }}>
+                              <Typography
+                                gutterBottom
+                                sx={{
+                                  color: "#464E2E",
+                                  fontWeight: "bold",
+                                  mb: "20px",
+                                }}
+                              >
+                                {user_category.title}
+                              </Typography>
+                              {user_category.status ? (
+                                <Box sx={{ width: "100%", mt: 1, mb: 3 }}>
                                   <Grid
-                                    item
-                                    xs={1.5}
-                                    sx={{
-                                      display: "flex",
-                                      justifyContent: "flex-end",
-                                    }}
+                                    container
+                                    spacing={0}
+                                    sx={{ width: "100%", margin: "auto" }}
                                   >
-                                    <Typography
-                                      gutterBottom
+                                    <Grid
+                                      item
+                                      xs={10.5}
+                                      sx={{ margin: "auto" }}
+                                    >
+                                      <LinearProgress
+                                        variant="determinate"
+                                        color={
+                                          (user_category.words_learned /
+                                            user_category.words_count) *
+                                            100 >=
+                                          75
+                                            ? "success"
+                                            : "primary"
+                                        }
+                                        value={
+                                          (user_category.words_learned /
+                                            user_category.words_count) *
+                                          100
+                                        }
+                                      />
+                                    </Grid>
+                                    <Grid
+                                      item
+                                      xs={1.5}
                                       sx={{
-                                        color: "#464E2E",
-                                        fontWeight: "bold",
-                                        mb: "20px",
-                                        fontSize: 11,
+                                        display: "flex",
+                                        justifyContent: "flex-end",
                                       }}
                                     >
-                                      {user_category.words_learned}/
-                                      {user_category.words_count}
-                                    </Typography>
-                                  </Grid>
-                                </Grid>
-                              </Box>
-                            ) : (
-                              ""
-                            )}
-                            <Typography
-                              align="justify"
-                              variant="body2"
-                              style={{
-                                display: "inline-block",
-                                whiteSpace: "pre-line",
-                              }}
-                            >
-                              {user_category.description.length >= 300 ? (
-                                <div>
-                                  {user_category.description.substring(0, 300)}
-                                  ...
-                                  <Tooltip
-                                    title={
                                       <Typography
-                                        paragraph={false}
-                                        align="justify"
-                                        style={{
-                                          display: "inline-block",
-                                          whiteSpace: "pre-line",
+                                        gutterBottom
+                                        sx={{
+                                          color: "#464E2E",
+                                          fontWeight: "bold",
+                                          mb: "20px",
                                           fontSize: 11,
                                         }}
                                       >
-                                        {user_category.description}
+                                        {user_category.words_learned}/
+                                        {user_category.words_count}
                                       </Typography>
-                                    }
-                                    placement="top"
-                                    will-change="transform"
-                                  >
-                                    <IconButton>
-                                      <StyledVisibleIcon fontSize="small" />
-                                    </IconButton>
-                                  </Tooltip>
-                                </div>
+                                    </Grid>
+                                  </Grid>
+                                </Box>
                               ) : (
-                                user_category.description
+                                ""
                               )}
-                            </Typography>
-                          </CardContent>
-                          <CardActions
-                            disableSpacing
-                            sx={{ display: "flex", justifyContent: "flex-end" }}
-                          >
-                            {user_category.status !== 1 ? (
-                              <Button
-                                onClick={() => {
-                                  addQuiz(user_category.id, cookies.token);
-                                  setOpen(true);
-                                  setStart(user_category.id);
-                                  setCookie("category", user_category, {
-                                    path: "/",
-                                  });
-                                }}
-                                sx={{
-                                  "&:hover": {
-                                    backgroundColor: "#464E2E",
-                                    color: "white",
-                                  },
+                              <Typography
+                                align="justify"
+                                variant="body2"
+                                style={{
+                                  display: "inline-block",
+                                  whiteSpace: "pre-line",
                                 }}
                               >
-                                Start
-                              </Button>
-                            ) : (
-                              <Button
-                                onClick={() => {
-                                  setCookie("category", user_category, {
-                                    path: "/",
-                                  });
-                                  navigate(`/result/${user_category.id}`);
-                                }}
-                                sx={{
-                                  color: "green",
-                                  "&:hover": {
-                                    backgroundColor: "#464E2E",
-                                    color: "white",
-                                  },
-                                }}
-                              >
-                                Result
-                              </Button>
-                            )}
+                                {user_category.description.length >= 300 ? (
+                                  <div>
+                                    {user_category.description.substring(
+                                      0,
+                                      300
+                                    )}
+                                    ...
+                                    <Tooltip
+                                      title={
+                                        <Typography
+                                          paragraph={false}
+                                          align="justify"
+                                          style={{
+                                            display: "inline-block",
+                                            whiteSpace: "pre-line",
+                                            fontSize: 11,
+                                          }}
+                                        >
+                                          {user_category.description}
+                                        </Typography>
+                                      }
+                                      placement="top"
+                                      will-change="transform"
+                                    >
+                                      <IconButton>
+                                        <StyledVisibleIcon fontSize="small" />
+                                      </IconButton>
+                                    </Tooltip>
+                                  </div>
+                                ) : (
+                                  user_category.description
+                                )}
+                              </Typography>
+                            </CardContent>
+                            <CardActions
+                              disableSpacing
+                              sx={{
+                                display: "flex",
+                                justifyContent: "flex-end",
+                              }}
+                            >
+                              {user_category.status !== 1 ? (
+                                <Button
+                                  onClick={() => {
+                                    addQuiz(user_category.id, cookies.token);
+                                    setOpen(true);
+                                    setStart(user_category.id);
+                                    setCookie("category", user_category, {
+                                      path: "/",
+                                    });
+                                  }}
+                                  sx={{
+                                    "&:hover": {
+                                      backgroundColor: "#464E2E",
+                                      color: "white",
+                                    },
+                                  }}
+                                >
+                                  Start
+                                </Button>
+                              ) : (
+                                <Button
+                                  onClick={() => {
+                                    setCookie("category", user_category, {
+                                      path: "/",
+                                    });
+                                    navigate(`/result/${user_category.id}`);
+                                  }}
+                                  sx={{
+                                    color: "green",
+                                    "&:hover": {
+                                      backgroundColor: "#464E2E",
+                                      color: "white",
+                                    },
+                                  }}
+                                >
+                                  Result
+                                </Button>
+                              )}
 
-                            {user_category.id === start ? (
-                              <Modal
-                                open={open}
-                                BackdropProps={{
-                                  style: {
-                                    backgroundColor: "black",
-                                    opacity: 0.9,
-                                  },
-                                }}
-                              >
-                                <Question
-                                  data={user_category}
-                                  onSetState={setStart}
-                                  onSetOpen={setOpen}
-                                  isOpen={true}
-                                  token={cookies.token}
-                                />
-                              </Modal>
-                            ) : (
-                              ""
-                            )}
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    );
-              })}
+                              {user_category.id === start ? (
+                                <Modal
+                                  open={open}
+                                  BackdropProps={{
+                                    style: {
+                                      backgroundColor: "black",
+                                      opacity: 0.9,
+                                    },
+                                  }}
+                                >
+                                  <Question
+                                    data={user_category}
+                                    onSetState={setStart}
+                                    onSetOpen={setOpen}
+                                    isOpen={true}
+                                    token={cookies.token}
+                                  />
+                                </Modal>
+                              ) : (
+                                ""
+                              )}
+                            </CardActions>
+                          </Card>
+                        </Grid>
+                      );
+                })
+            ) : (
+              <Box width="100%">
+                <Typography
+                  textAlign="center"
+                  sx={{
+                    color: "red",
+                    fontWeight: "bold",
+                    fontSize: 15,
+                  }}
+                >
+                  No Lessons
+                </Typography>
+              </Box>
+            )}
           </Grid>
         </Box>
       </Paper>

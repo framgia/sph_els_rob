@@ -23,7 +23,7 @@ import {
 import FollowingFollowerList from "./FollowingFollowerList";
 import UserAvatar from "./UserAvatar";
 import UpdateProfile from "./UpdateProfile";
-import { Card } from "@mui/material";
+import { Card, CircularProgress } from "@mui/material";
 import LearnedWord from "./LearnedWord";
 
 const ProfileContent = ({
@@ -270,21 +270,7 @@ const ProfileContent = ({
                         EDIT PROFILE
                       </Button>
                     ) : (
-                      <Link
-                        variant="button"
-                        underline="none"
-                        onClick={() => setOpenLearnedWords(true)}
-                        sx={{
-                          margin: "auto",
-                          cursor: "pointer",
-                          "&:hover": {
-                            color: "#BB6464",
-                          },
-                        }}
-                      >
-                        Learned {user.lessons_learned}{" "}
-                        {user.lessons_learned > 1 ? "lessons" : "lesson"}
-                      </Link>
+                      ""
                     )}
                   </Grid>
                 ) : (
@@ -355,7 +341,27 @@ const ProfileContent = ({
               </Grid>
             </Box>
           ) : (
-            ""
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                mt: "40%",
+              }}
+            >
+              <CircularProgress color="inherit" />
+              <Typography
+                gutterBottom
+                sx={{
+                  color: "#05386b",
+                  mb: "20px",
+                  fontSize: 18,
+                  mt: 2,
+                }}
+              >
+                Loading...
+              </Typography>
+            </Box>
           )}
         </Box>
       </Box>
